@@ -1,0 +1,213 @@
+2016-11-23 23:02:32.615 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
+2016-11-23 23:02:33.269 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 6.3.0
+2016-11-23 23:02:33.270 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
+2016-11-23 23:02:33.270 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0
+2016-11-23 23:02:33.427 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2016-11-23T23:02:33.272Z
+2016-11-23 23:02:33.428 INFO  (main) [   ] o.a.s.s.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
+2016-11-23 23:02:33.463 INFO  (main) [   ] o.a.s.c.SolrResourceLoader Using system property solr.solr.home: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-11-23 23:02:33.482 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/solr.xml
+2016-11-23 23:02:34.108 INFO  (main) [   ] o.a.s.u.UpdateShardHandler Creating UpdateShardHandler HTTP client with params: socketTimeout=600000&connTimeout=60000&retry=true
+2016-11-23 23:02:34.232 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 0 core definitions underneath /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-11-23 23:02:34.275 INFO  (main) [   ] o.e.j.s.ServerConnector Started ServerConnector@395f7074{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-11-23 23:02:34.275 INFO  (main) [   ] o.e.j.s.Server Started @2891ms
+2016-11-23 23:02:36.274 INFO  (qtp1123225098-15) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479942155687} status=0 QTime=119
+2016-11-23 23:02:36.392 INFO  (qtp1123225098-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942155688} status=0 QTime=240
+2016-11-23 23:02:36.393 INFO  (qtp1123225098-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942155688} status=0 QTime=246
+2016-11-23 23:02:36.980 INFO  (qtp1123225098-11) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479942155687} status=0 QTime=0
+2016-11-23 23:02:36.982 INFO  (qtp1123225098-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1479942155687} status=0 QTime=0
+2016-11-23 23:02:37.025 INFO  (qtp1123225098-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942155688} status=0 QTime=37
+2016-11-23 23:02:52.108 INFO  (qtp1123225098-16) [   ] o.a.s.h.a.CoreAdminOperation core create command schema=schema_cepal.xml&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479942155687
+2016-11-23 23:02:52.300 INFO  (qtp1123225098-16) [   ] o.a.s.c.SolrResourceLoader [cepal] Added 51 libs to classloader, from paths: [/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/clustering/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/extraction/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/langid/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/velocity/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/dist]
+2016-11-23 23:02:52.579 INFO  (qtp1123225098-16) [   ] o.a.s.c.SolrConfig Using Lucene MatchVersion: 6.3.0
+2016-11-23 23:02:52.803 INFO  (qtp1123225098-16) [   ] o.a.s.s.ManagedIndexSchemaFactory The schema is configured as managed, but managed schema resource managed-schema not found - loading non-managed schema schema_cepal.xml instead
+2016-11-23 23:02:52.851 INFO  (qtp1123225098-16) [   ] o.a.s.s.IndexSchema [cepal] Schema name=cepal
+2016-11-23 23:02:52.919 INFO  (qtp1123225098-16) [   ] o.a.s.s.IndexSchema Loaded schema cepal/1.6 with uniqueid field cat
+2016-11-23 23:02:52.995 INFO  (qtp1123225098-16) [   ] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf/managed-schema
+2016-11-23 23:02:53.003 INFO  (qtp1123225098-16) [   ] o.a.s.s.ManagedIndexSchemaFactory After upgrading to managed schema, renamed the non-managed schema /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml to /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml.bak
+2016-11-23 23:02:53.005 INFO  (qtp1123225098-16) [   ] o.a.s.c.CoreContainer Creating SolrCore 'cepal' using configuration from instancedir /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal
+2016-11-23 23:02:53.131 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.c.SolrCore [[cepal] ] Opening new SolrCore at [/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal], dataDir=[/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/]
+2016-11-23 23:02:53.396 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.r.XSLTResponseWriter xsltCacheLifetimeSeconds=5
+2016-11-23 23:02:54.236 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2016-11-23 23:02:54.243 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2016-11-23 23:02:54.248 ERROR (qtp1123225098-16) [   x:cepal] o.a.s.u.UpdateLog Unable to use updateLog: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+org.apache.solr.common.SolrException: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.update.VersionInfo.getAndCheckVersionField(VersionInfo.java:68)
+	at org.apache.solr.update.VersionInfo.<init>(VersionInfo.java:94)
+	at org.apache.solr.update.UpdateLog.init(UpdateLog.java:308)
+	at org.apache.solr.update.UpdateHandler.<init>(UpdateHandler.java:137)
+	at org.apache.solr.update.UpdateHandler.<init>(UpdateHandler.java:94)
+	at org.apache.solr.update.DirectUpdateHandler2.<init>(DirectUpdateHandler2.java:102)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:706)
+	at org.apache.solr.core.SolrCore.createUpdateHandler(SolrCore.java:768)
+	at org.apache.solr.core.SolrCore.initUpdateHandler(SolrCore.java:1009)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:874)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:776)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:842)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:779)
+	at org.apache.solr.handler.admin.CoreAdminOperation.lambda$static$0(CoreAdminOperation.java:88)
+	at org.apache.solr.handler.admin.CoreAdminOperation.execute(CoreAdminOperation.java:377)
+	at org.apache.solr.handler.admin.CoreAdminHandler$CallInfo.call(CoreAdminHandler.java:365)
+	at org.apache.solr.handler.admin.CoreAdminHandler.handleRequestBody(CoreAdminHandler.java:156)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:153)
+	at org.apache.solr.servlet.HttpSolrCall.handleAdminRequest(HttpSolrCall.java:660)
+	at org.apache.solr.servlet.HttpSolrCall.call(HttpSolrCall.java:441)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:303)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:254)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1668)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:143)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:226)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1160)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:185)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1092)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:213)
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:119)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at org.eclipse.jetty.server.Server.handle(Server.java:518)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:244)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:246)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:156)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
+	at java.lang.Thread.run(Thread.java:745)
+2016-11-23 23:02:54.261 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.c.SolrCore [cepal]  CLOSING SolrCore org.apache.solr.core.SolrCore@7d9e6bc1
+2016-11-23 23:02:54.264 ERROR (qtp1123225098-16) [   x:cepal] o.a.s.c.CoreContainer Error creating core [cepal]: Unable to use updateLog: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+org.apache.solr.common.SolrException: Unable to use updateLog: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:903)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:776)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:842)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:779)
+	at org.apache.solr.handler.admin.CoreAdminOperation.lambda$static$0(CoreAdminOperation.java:88)
+	at org.apache.solr.handler.admin.CoreAdminOperation.execute(CoreAdminOperation.java:377)
+	at org.apache.solr.handler.admin.CoreAdminHandler$CallInfo.call(CoreAdminHandler.java:365)
+	at org.apache.solr.handler.admin.CoreAdminHandler.handleRequestBody(CoreAdminHandler.java:156)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:153)
+	at org.apache.solr.servlet.HttpSolrCall.handleAdminRequest(HttpSolrCall.java:660)
+	at org.apache.solr.servlet.HttpSolrCall.call(HttpSolrCall.java:441)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:303)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:254)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1668)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:143)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:226)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1160)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:185)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1092)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:213)
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:119)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at org.eclipse.jetty.server.Server.handle(Server.java:518)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:244)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:246)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:156)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.apache.solr.common.SolrException: Unable to use updateLog: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.update.UpdateLog.init(UpdateLog.java:312)
+	at org.apache.solr.update.UpdateHandler.<init>(UpdateHandler.java:137)
+	at org.apache.solr.update.UpdateHandler.<init>(UpdateHandler.java:94)
+	at org.apache.solr.update.DirectUpdateHandler2.<init>(DirectUpdateHandler2.java:102)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:706)
+	at org.apache.solr.core.SolrCore.createUpdateHandler(SolrCore.java:768)
+	at org.apache.solr.core.SolrCore.initUpdateHandler(SolrCore.java:1009)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:874)
+	... 36 more
+Caused by: org.apache.solr.common.SolrException: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.update.VersionInfo.getAndCheckVersionField(VersionInfo.java:68)
+	at org.apache.solr.update.VersionInfo.<init>(VersionInfo.java:94)
+	at org.apache.solr.update.UpdateLog.init(UpdateLog.java:308)
+	... 47 more
+2016-11-23 23:02:54.271 ERROR (qtp1123225098-16) [   x:cepal] o.a.s.h.RequestHandlerBase org.apache.solr.common.SolrException: Error CREATEing SolrCore 'cepal': Unable to create core [cepal] Caused by: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:813)
+	at org.apache.solr.handler.admin.CoreAdminOperation.lambda$static$0(CoreAdminOperation.java:88)
+	at org.apache.solr.handler.admin.CoreAdminOperation.execute(CoreAdminOperation.java:377)
+	at org.apache.solr.handler.admin.CoreAdminHandler$CallInfo.call(CoreAdminHandler.java:365)
+	at org.apache.solr.handler.admin.CoreAdminHandler.handleRequestBody(CoreAdminHandler.java:156)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:153)
+	at org.apache.solr.servlet.HttpSolrCall.handleAdminRequest(HttpSolrCall.java:660)
+	at org.apache.solr.servlet.HttpSolrCall.call(HttpSolrCall.java:441)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:303)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:254)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1668)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:143)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:226)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1160)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:185)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1092)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:213)
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:119)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at org.eclipse.jetty.server.Server.handle(Server.java:518)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:244)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:246)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:156)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.apache.solr.common.SolrException: Unable to create core [cepal]
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:855)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:779)
+	... 33 more
+Caused by: org.apache.solr.common.SolrException: Unable to use updateLog: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:903)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:776)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:842)
+	... 34 more
+Caused by: org.apache.solr.common.SolrException: Unable to use updateLog: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.update.UpdateLog.init(UpdateLog.java:312)
+	at org.apache.solr.update.UpdateHandler.<init>(UpdateHandler.java:137)
+	at org.apache.solr.update.UpdateHandler.<init>(UpdateHandler.java:94)
+	at org.apache.solr.update.DirectUpdateHandler2.<init>(DirectUpdateHandler2.java:102)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.apache.solr.core.SolrCore.createInstance(SolrCore.java:706)
+	at org.apache.solr.core.SolrCore.createUpdateHandler(SolrCore.java:768)
+	at org.apache.solr.core.SolrCore.initUpdateHandler(SolrCore.java:1009)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:874)
+	... 36 more
+Caused by: org.apache.solr.common.SolrException: _version_ field must exist in schema and be searchable (indexed or docValues) and retrievable(stored or docValues) and not multiValued (_version_ does not exist)
+	at org.apache.solr.update.VersionInfo.getAndCheckVersionField(VersionInfo.java:68)
+	at org.apache.solr.update.VersionInfo.<init>(VersionInfo.java:94)
+	at org.apache.solr.update.UpdateLog.init(UpdateLog.java:308)
+	... 47 more
+
+2016-11-23 23:02:54.271 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={schema=schema_cepal.xml&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479942155687} status=400 QTime=2163
+2016-11-23 23:04:58.817 INFO  (qtp1123225098-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479942298456} status=0 QTime=0
+2016-11-23 23:04:58.850 INFO  (qtp1123225098-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942298457} status=0 QTime=27
+2016-11-23 23:04:58.867 INFO  (qtp1123225098-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942298457} status=0 QTime=47
+2016-11-23 23:05:14.377 INFO  (ShutdownMonitor) [   ] o.e.j.s.ServerConnector Stopped ServerConnector@395f7074{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-11-23 23:05:14.378 INFO  (ShutdownMonitor) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1003752023
+2016-11-23 23:05:14.393 WARN  (ShutdownMonitor) [   ] o.e.j.s.ServletContextHandler ServletContextHandler.setHandler should not be called directly. Use insertHandler or setSessionHandler etc.

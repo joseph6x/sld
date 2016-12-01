@@ -1,0 +1,7 @@
+{
+  "Config": {
+    "SolrServer": "http://localhost:8983/solr/cepal",
+    "Wildcard": "|?|",
+    "Repositories": [{"Endpoint":"http://190.15.141.102:8891/myservice/sparql","MainClass":"http://purl.org/ontology/bibo/Document","Query":"select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"}]
+  }
+}

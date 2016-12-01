@@ -1,0 +1,149 @@
+2016-11-24 04:00:57.316 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
+2016-11-24 04:00:57.691 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 6.3.0
+2016-11-24 04:00:57.691 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
+2016-11-24 04:00:57.691 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0
+2016-11-24 04:00:57.752 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2016-11-24T04:00:57.692Z
+2016-11-24 04:00:57.753 INFO  (main) [   ] o.a.s.s.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
+2016-11-24 04:00:57.773 INFO  (main) [   ] o.a.s.c.SolrResourceLoader Using system property solr.solr.home: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-11-24 04:00:57.779 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/solr.xml
+2016-11-24 04:00:58.182 INFO  (main) [   ] o.a.s.u.UpdateShardHandler Creating UpdateShardHandler HTTP client with params: socketTimeout=600000&connTimeout=60000&retry=true
+2016-11-24 04:00:58.235 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 0 core definitions underneath /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-11-24 04:00:58.261 INFO  (main) [   ] o.e.j.s.ServerConnector Started ServerConnector@e9b2568{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-11-24 04:00:58.261 INFO  (main) [   ] o.e.j.s.Server Started @1522ms
+2016-11-24 04:01:04.621 INFO  (qtp1123225098-15) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479960064298} status=0 QTime=69
+2016-11-24 04:01:04.662 INFO  (qtp1123225098-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479960064299} status=0 QTime=92
+2016-11-24 04:01:04.667 INFO  (qtp1123225098-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479960064299} status=0 QTime=99
+2016-11-24 04:01:07.268 INFO  (qtp1123225098-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479960064298} status=0 QTime=0
+2016-11-24 04:01:07.271 INFO  (qtp1123225098-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1479960064298} status=0 QTime=0
+2016-11-24 04:01:07.302 INFO  (qtp1123225098-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479960064299} status=0 QTime=31
+2016-11-24 04:01:22.745 INFO  (qtp1123225098-11) [   ] o.a.s.h.a.CoreAdminOperation core create command schema=schema_cepal.xml&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479960064298
+2016-11-24 04:01:22.866 INFO  (qtp1123225098-11) [   ] o.a.s.c.SolrResourceLoader [cepal] Added 51 libs to classloader, from paths: [/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/clustering/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/extraction/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/langid/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/velocity/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/dist]
+2016-11-24 04:01:23.056 INFO  (qtp1123225098-11) [   ] o.a.s.c.SolrConfig Using Lucene MatchVersion: 6.3.0
+2016-11-24 04:01:23.166 INFO  (qtp1123225098-11) [   ] o.a.s.s.ManagedIndexSchemaFactory The schema is configured as managed, but managed schema resource managed-schema not found - loading non-managed schema schema_cepal.xml instead
+2016-11-24 04:01:23.201 INFO  (qtp1123225098-11) [   ] o.a.s.s.IndexSchema [cepal] Schema name=cepal
+2016-11-24 04:01:23.411 INFO  (qtp1123225098-11) [   ] o.a.s.s.IndexSchema Loaded schema cepal/1.6 with uniqueid field uri
+2016-11-24 04:01:23.440 INFO  (qtp1123225098-11) [   ] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf/managed-schema
+2016-11-24 04:01:23.446 INFO  (qtp1123225098-11) [   ] o.a.s.s.ManagedIndexSchemaFactory After upgrading to managed schema, renamed the non-managed schema /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml to /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml.bak
+2016-11-24 04:01:23.449 INFO  (qtp1123225098-11) [   ] o.a.s.c.CoreContainer Creating SolrCore 'cepal' using configuration from instancedir /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal
+2016-11-24 04:01:23.480 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.c.SolrCore [[cepal] ] Opening new SolrCore at [/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal], dataDir=[/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/]
+2016-11-24 04:01:23.737 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.r.XSLTResponseWriter xsltCacheLifetimeSeconds=5
+2016-11-24 04:01:24.063 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2016-11-24 04:01:24.064 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2016-11-24 04:01:24.124 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.u.CommitTracker Hard AutoCommit: if uncommited for 15000ms; 
+2016-11-24 04:01:24.124 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+2016-11-24 04:01:24.170 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.s.SolrIndexSearcher Opening [Searcher@3288a319[cepal] main]
+2016-11-24 04:01:24.185 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.r.ManagedResourceStorage File-based storage initialized to use dir: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf
+2016-11-24 04:01:24.219 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.h.c.SpellCheckComponent Initializing spell checkers
+2016-11-24 04:01:24.235 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.s.DirectSolrSpellChecker init: {name=default,field=_text_,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+2016-11-24 04:01:24.238 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.QuerySenderListener QuerySenderListener sending requests to Searcher@3288a319[cepal] main{ExitableDirectoryReader(UninvertingDirectoryReader())}
+2016-11-24 04:01:24.238 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2016-11-24 04:01:24.238 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.c.SolrCore [cepal]  CLOSING SolrCore org.apache.solr.core.SolrCore@5dd9eac7
+2016-11-24 04:01:24.238 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
+2016-11-24 04:01:24.242 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.SolrCore [cepal] Registered new searcher Searcher@3288a319[cepal] main{ExitableDirectoryReader(UninvertingDirectoryReader())}
+2016-11-24 04:01:24.256 ERROR (qtp1123225098-11) [   x:cepal] o.a.s.c.CoreContainer Error creating core [cepal]: Error initializing QueryElevationComponent.
+org.apache.solr.common.SolrException: Error initializing QueryElevationComponent.
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:903)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:776)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:842)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:779)
+	at org.apache.solr.handler.admin.CoreAdminOperation.lambda$static$0(CoreAdminOperation.java:88)
+	at org.apache.solr.handler.admin.CoreAdminOperation.execute(CoreAdminOperation.java:377)
+	at org.apache.solr.handler.admin.CoreAdminHandler$CallInfo.call(CoreAdminHandler.java:365)
+	at org.apache.solr.handler.admin.CoreAdminHandler.handleRequestBody(CoreAdminHandler.java:156)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:153)
+	at org.apache.solr.servlet.HttpSolrCall.handleAdminRequest(HttpSolrCall.java:660)
+	at org.apache.solr.servlet.HttpSolrCall.call(HttpSolrCall.java:441)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:303)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:254)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1668)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:143)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:226)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1160)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:185)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1092)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:213)
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:119)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at org.eclipse.jetty.server.Server.handle(Server.java:518)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:244)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:246)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:156)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.apache.solr.common.SolrException: Error initializing QueryElevationComponent.
+	at org.apache.solr.handler.component.QueryElevationComponent.inform(QueryElevationComponent.java:255)
+	at org.apache.solr.core.SolrResourceLoader.inform(SolrResourceLoader.java:695)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:883)
+	... 36 more
+Caused by: org.apache.solr.common.SolrException: QueryElevationComponent missing config file: 'elevate.xml
+either: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf/elevate.xml or /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/elevate.xml must exist, but not both.
+	at org.apache.solr.handler.component.QueryElevationComponent.inform(QueryElevationComponent.java:232)
+	... 38 more
+2016-11-24 04:01:24.265 ERROR (qtp1123225098-11) [   x:cepal] o.a.s.h.RequestHandlerBase org.apache.solr.common.SolrException: Error CREATEing SolrCore 'cepal': Unable to create core [cepal] Caused by: QueryElevationComponent missing config file: 'elevate.xml
+either: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf/elevate.xml or /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/elevate.xml must exist, but not both.
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:813)
+	at org.apache.solr.handler.admin.CoreAdminOperation.lambda$static$0(CoreAdminOperation.java:88)
+	at org.apache.solr.handler.admin.CoreAdminOperation.execute(CoreAdminOperation.java:377)
+	at org.apache.solr.handler.admin.CoreAdminHandler$CallInfo.call(CoreAdminHandler.java:365)
+	at org.apache.solr.handler.admin.CoreAdminHandler.handleRequestBody(CoreAdminHandler.java:156)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:153)
+	at org.apache.solr.servlet.HttpSolrCall.handleAdminRequest(HttpSolrCall.java:660)
+	at org.apache.solr.servlet.HttpSolrCall.call(HttpSolrCall.java:441)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:303)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:254)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1668)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:143)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:226)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1160)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:185)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1092)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:213)
+	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:119)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
+	at org.eclipse.jetty.server.Server.handle(Server.java:518)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:244)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
+	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:246)
+	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:156)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.apache.solr.common.SolrException: Unable to create core [cepal]
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:855)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:779)
+	... 33 more
+Caused by: org.apache.solr.common.SolrException: Error initializing QueryElevationComponent.
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:903)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:776)
+	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:842)
+	... 34 more
+Caused by: org.apache.solr.common.SolrException: Error initializing QueryElevationComponent.
+	at org.apache.solr.handler.component.QueryElevationComponent.inform(QueryElevationComponent.java:255)
+	at org.apache.solr.core.SolrResourceLoader.inform(SolrResourceLoader.java:695)
+	at org.apache.solr.core.SolrCore.<init>(SolrCore.java:883)
+	... 36 more
+Caused by: org.apache.solr.common.SolrException: QueryElevationComponent missing config file: 'elevate.xml
+either: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf/elevate.xml or /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/elevate.xml must exist, but not both.
+	at org.apache.solr.handler.component.QueryElevationComponent.inform(QueryElevationComponent.java:232)
+	... 38 more
+
+2016-11-24 04:01:24.266 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={schema=schema_cepal.xml&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479960064298} status=400 QTime=1520
+2016-11-24 04:03:25.358 INFO  (ShutdownMonitor) [   ] o.e.j.s.ServerConnector Stopped ServerConnector@e9b2568{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-11-24 04:03:25.359 INFO  (ShutdownMonitor) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1003752023
+2016-11-24 04:03:25.366 WARN  (ShutdownMonitor) [   ] o.e.j.s.ServletContextHandler ServletContextHandler.setHandler should not be called directly. Use insertHandler or setSessionHandler etc.

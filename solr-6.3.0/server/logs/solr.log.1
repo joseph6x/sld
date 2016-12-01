@@ -1,0 +1,53 @@
+2016-11-24 04:12:03.730 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
+2016-11-24 04:12:04.191 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 6.3.0
+2016-11-24 04:12:04.192 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
+2016-11-24 04:12:04.192 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0
+2016-11-24 04:12:04.273 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2016-11-24T04:12:04.193Z
+2016-11-24 04:12:04.274 INFO  (main) [   ] o.a.s.s.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
+2016-11-24 04:12:04.290 INFO  (main) [   ] o.a.s.c.SolrResourceLoader Using system property solr.solr.home: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-11-24 04:12:04.295 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/solr.xml
+2016-11-24 04:12:04.629 INFO  (main) [   ] o.a.s.u.UpdateShardHandler Creating UpdateShardHandler HTTP client with params: socketTimeout=600000&connTimeout=60000&retry=true
+2016-11-24 04:12:04.689 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 0 core definitions underneath /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-11-24 04:12:04.716 INFO  (main) [   ] o.e.j.s.ServerConnector Started ServerConnector@395f7074{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-11-24 04:12:04.717 INFO  (main) [   ] o.e.j.s.Server Started @1679ms
+2016-11-24 04:12:11.283 INFO  (qtp1123225098-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479960730954} status=0 QTime=71
+2016-11-24 04:12:11.317 INFO  (qtp1123225098-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479960730955} status=0 QTime=100
+2016-11-24 04:12:11.324 INFO  (qtp1123225098-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479960730955} status=0 QTime=92
+2016-11-24 04:12:13.827 INFO  (qtp1123225098-11) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479960730954} status=0 QTime=0
+2016-11-24 04:12:13.833 INFO  (qtp1123225098-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1479960730954} status=0 QTime=0
+2016-11-24 04:12:13.874 INFO  (qtp1123225098-15) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479960730955} status=0 QTime=46
+2016-11-24 04:12:49.774 INFO  (qtp1123225098-17) [   ] o.a.s.h.a.CoreAdminOperation core create command schema=managed-schema&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479960730954
+2016-11-24 04:12:49.873 INFO  (qtp1123225098-17) [   ] o.a.s.c.SolrResourceLoader [cepal] Added 51 libs to classloader, from paths: [/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/clustering/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/extraction/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/langid/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/velocity/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/dist]
+2016-11-24 04:12:50.028 INFO  (qtp1123225098-17) [   ] o.a.s.c.SolrConfig Using Lucene MatchVersion: 6.3.0
+2016-11-24 04:12:50.214 INFO  (qtp1123225098-17) [   ] o.a.s.s.IndexSchema [cepal] Schema name=cepal
+2016-11-24 04:12:51.006 INFO  (qtp1123225098-17) [   ] o.a.s.s.IndexSchema Loaded schema cepal/1.6 with uniqueid field uri
+2016-11-24 04:12:51.056 INFO  (qtp1123225098-17) [   ] o.a.s.c.CoreContainer Creating SolrCore 'cepal' using configuration from instancedir /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal
+2016-11-24 04:12:51.076 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.c.SolrCore [[cepal] ] Opening new SolrCore at [/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal], dataDir=[/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/]
+2016-11-24 04:12:51.158 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.r.XSLTResponseWriter xsltCacheLifetimeSeconds=5
+2016-11-24 04:12:51.434 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2016-11-24 04:12:51.434 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2016-11-24 04:12:51.448 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.u.CommitTracker Hard AutoCommit: if uncommited for 15000ms; 
+2016-11-24 04:12:51.448 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+2016-11-24 04:12:51.469 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.s.SolrIndexSearcher Opening [Searcher@4938c0ad[cepal] main]
+2016-11-24 04:12:51.477 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.r.ManagedResourceStorage File-based storage initialized to use dir: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf
+2016-11-24 04:12:51.489 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.h.c.SpellCheckComponent Initializing spell checkers
+2016-11-24 04:12:51.494 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.s.DirectSolrSpellChecker init: {name=default,field=_text_,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+2016-11-24 04:12:51.496 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.h.c.QueryElevationComponent Loading QueryElevation from: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf/elevate.xml
+2016-11-24 04:12:51.506 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.h.ReplicationHandler Commits will be reserved for  10000
+2016-11-24 04:12:51.596 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.QuerySenderListener QuerySenderListener sending requests to Searcher@4938c0ad[cepal] main{ExitableDirectoryReader(UninvertingDirectoryReader())}
+2016-11-24 04:12:51.597 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2016-11-24 04:12:51.597 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
+2016-11-24 04:12:51.598 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.SolrCore [cepal] Registered new searcher Searcher@4938c0ad[cepal] main{ExitableDirectoryReader(UninvertingDirectoryReader())}
+2016-11-24 04:12:51.620 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.u.UpdateLog Could not find max version in index or recent updates, using new clock 1551851346062213120
+2016-11-24 04:12:51.633 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={schema=managed-schema&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479960730954} status=0 QTime=1859
+2016-11-24 04:12:51.763 INFO  (qtp1123225098-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479960730954} status=0 QTime=0
+2016-11-24 04:12:51.771 INFO  (qtp1123225098-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1479960730954} status=0 QTime=6
+2016-11-24 04:12:51.820 INFO  (qtp1123225098-11) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479960730955} status=0 QTime=53
+2016-11-24 04:17:04.456 INFO  (qtp1123225098-14) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/admin/ping params={wt=javabin&version=2} hits=0 status=0 QTime=57
+2016-11-24 04:17:04.457 INFO  (qtp1123225098-14) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/admin/ping params={wt=javabin&version=2} status=0 QTime=81
+2016-11-24 04:18:02.990 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/admin/ping params={wt=javabin&version=2} hits=0 status=0 QTime=1
+2016-11-24 04:18:02.991 INFO  (qtp1123225098-16) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/admin/ping params={wt=javabin&version=2} status=0 QTime=1
+2016-11-24 14:55:12.276 INFO  (Thread-0) [   ] o.e.j.s.ServerConnector Stopped ServerConnector@395f7074{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-11-24 14:55:12.507 INFO  (Thread-0) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1003752023
+2016-11-24 14:55:12.661 INFO  (coreCloseExecutor-12-thread-1) [   x:cepal] o.a.s.c.SolrCore [cepal]  CLOSING SolrCore org.apache.solr.core.SolrCore@4e113185
+2016-11-24 14:55:15.084 WARN  (Thread-0) [   ] o.e.j.s.ServletContextHandler ServletContextHandler.setHandler should not be called directly. Use insertHandler or setSessionHandler etc.
