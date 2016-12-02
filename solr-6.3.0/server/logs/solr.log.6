@@ -1,137 +1,72 @@
-2016-11-23 23:01:06.931 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
-2016-11-23 23:01:07.722 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 6.3.0
-2016-11-23 23:01:07.723 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
-2016-11-23 23:01:07.729 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0
-2016-11-23 23:01:07.873 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2016-11-23T23:01:07.730Z
-2016-11-23 23:01:07.873 INFO  (main) [   ] o.a.s.s.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
-2016-11-23 23:01:07.903 INFO  (main) [   ] o.a.s.c.SolrResourceLoader Using system property solr.solr.home: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
-2016-11-23 23:01:07.910 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/solr.xml
-2016-11-23 23:01:08.545 INFO  (main) [   ] o.a.s.u.UpdateShardHandler Creating UpdateShardHandler HTTP client with params: socketTimeout=600000&connTimeout=60000&retry=true
-2016-11-23 23:01:08.681 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 0 core definitions underneath /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
-2016-11-23 23:01:08.724 INFO  (main) [   ] o.e.j.s.ServerConnector Started ServerConnector@395f7074{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
-2016-11-23 23:01:08.724 INFO  (main) [   ] o.e.j.s.Server Started @2985ms
-2016-11-23 23:01:10.473 INFO  (qtp1123225098-15) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479942069946} status=0 QTime=195
-2016-11-23 23:01:10.518 INFO  (qtp1123225098-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942069948} status=0 QTime=122
-2016-11-23 23:01:10.539 INFO  (qtp1123225098-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942069948} status=0 QTime=147
-2016-11-23 23:01:11.772 INFO  (qtp1123225098-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1479942069946} status=0 QTime=0
-2016-11-23 23:01:11.778 INFO  (qtp1123225098-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1479942069946} status=0 QTime=0
-2016-11-23 23:01:11.822 INFO  (qtp1123225098-11) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1479942069948} status=0 QTime=46
-2016-11-23 23:01:27.790 INFO  (qtp1123225098-14) [   ] o.a.s.h.a.CoreAdminOperation core create command schema=schema_cepal.xml&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479942069946
-2016-11-23 23:01:27.960 INFO  (qtp1123225098-14) [   ] o.a.s.c.SolrResourceLoader [cepal] Added 51 libs to classloader, from paths: [/media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/clustering/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/extraction/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/langid/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/velocity/lib, /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/dist]
-2016-11-23 23:01:28.328 INFO  (qtp1123225098-14) [   ] o.a.s.c.SolrConfig Using Lucene MatchVersion: 6.3.0
-2016-11-23 23:01:28.641 INFO  (qtp1123225098-14) [   ] o.a.s.s.ManagedIndexSchemaFactory The schema is configured as managed, but managed schema resource managed-schema not found - loading non-managed schema schema_cepal.xml instead
-2016-11-23 23:01:28.699 INFO  (qtp1123225098-14) [   ] o.a.s.s.IndexSchema [cepal] Schema name=cepal
-2016-11-23 23:01:28.793 ERROR (qtp1123225098-14) [   ] o.a.s.c.CoreContainer Error creating core [cepal]: Could not load conf for core cepal: Can't load schema /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml: Unknown fieldType 'text' specified on field id
-org.apache.solr.common.SolrException: Could not load conf for core cepal: Can't load schema /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml: Unknown fieldType 'text' specified on field id
-	at org.apache.solr.core.ConfigSetService.getConfig(ConfigSetService.java:85)
-	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:840)
-	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:779)
-	at org.apache.solr.handler.admin.CoreAdminOperation.lambda$static$0(CoreAdminOperation.java:88)
-	at org.apache.solr.handler.admin.CoreAdminOperation.execute(CoreAdminOperation.java:377)
-	at org.apache.solr.handler.admin.CoreAdminHandler$CallInfo.call(CoreAdminHandler.java:365)
-	at org.apache.solr.handler.admin.CoreAdminHandler.handleRequestBody(CoreAdminHandler.java:156)
-	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:153)
-	at org.apache.solr.servlet.HttpSolrCall.handleAdminRequest(HttpSolrCall.java:660)
-	at org.apache.solr.servlet.HttpSolrCall.call(HttpSolrCall.java:441)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:303)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:254)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1668)
-	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:143)
-	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
-	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:226)
-	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1160)
-	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:185)
-	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1092)
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
-	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:213)
-	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:119)
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
-	at org.eclipse.jetty.server.Server.handle(Server.java:518)
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:244)
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:246)
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:156)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
+2016-12-02 17:51:01.552 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
+2016-12-02 17:51:01.828 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 6.3.0
+2016-12-02 17:51:01.828 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
+2016-12-02 17:51:01.828 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0
+2016-12-02 17:51:01.888 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2016-12-02T17:51:01.829Z
+2016-12-02 17:51:01.889 INFO  (main) [   ] o.a.s.s.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
+2016-12-02 17:51:01.904 INFO  (main) [   ] o.a.s.c.SolrResourceLoader Using system property solr.solr.home: /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-12-02 17:51:01.910 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/solr.xml
+2016-12-02 17:51:02.187 INFO  (main) [   ] o.a.s.u.UpdateShardHandler Creating UpdateShardHandler HTTP client with params: socketTimeout=600000&connTimeout=60000&retry=true
+2016-12-02 17:51:02.258 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 1 core definitions underneath /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr
+2016-12-02 17:51:02.266 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Cores are: [cepal]
+2016-12-02 17:51:02.296 INFO  (main) [   ] o.e.j.s.ServerConnector Started ServerConnector@77f1baf5{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-12-02 17:51:02.296 INFO  (main) [   ] o.e.j.s.Server Started @1195ms
+2016-12-02 17:51:02.384 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrResourceLoader [cepal] Added 51 libs to classloader, from paths: [/home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/clustering/lib, /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/extraction/lib, /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/langid/lib, /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/contrib/velocity/lib, /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/dist]
+2016-12-02 17:51:02.595 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrConfig Using Lucene MatchVersion: 6.3.0
+2016-12-02 17:51:02.755 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.s.IndexSchema [cepal] Schema name=cepal
+2016-12-02 17:51:03.480 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.s.IndexSchema Loaded schema cepal/1.6 with uniqueid field uri
+2016-12-02 17:51:03.514 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.CoreContainer Creating SolrCore 'cepal' using configuration from instancedir /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal
+2016-12-02 17:51:03.553 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.c.SolrCore [[cepal] ] Opening new SolrCore at [/home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal], dataDir=[/home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/]
+2016-12-02 17:51:03.600 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.r.XSLTResponseWriter xsltCacheLifetimeSeconds=5
+2016-12-02 17:51:03.854 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2016-12-02 17:51:03.854 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2016-12-02 17:51:03.872 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.u.CommitTracker Hard AutoCommit: if uncommited for 15000ms; 
+2016-12-02 17:51:03.872 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+2016-12-02 17:51:04.005 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.s.SolrIndexSearcher Opening [Searcher@14ec6d01[cepal] main]
+2016-12-02 17:51:04.014 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.r.ManagedResourceStorage File-based storage initialized to use dir: /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf
+2016-12-02 17:51:04.032 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.h.c.SpellCheckComponent Initializing spell checkers
+2016-12-02 17:51:04.037 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.s.DirectSolrSpellChecker init: {name=default,field=_text_,classname=solr.DirectSolrSpellChecker,distanceMeasure=internal,accuracy=0.5,maxEdits=2,minPrefix=1,maxInspections=5,minQueryLength=4,maxQueryFrequency=0.01}
+2016-12-02 17:51:04.039 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.h.c.QueryElevationComponent Loading QueryElevation from: /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/conf/elevate.xml
+2016-12-02 17:51:04.064 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.h.ReplicationHandler Commits will be reserved for  10000
+2016-12-02 17:51:04.085 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.QuerySenderListener QuerySenderListener sending requests to Searcher@14ec6d01[cepal] main{ExitableDirectoryReader(UninvertingDirectoryReader(Uninverting(_jg(6.3.0):C351)))}
+2016-12-02 17:51:04.085 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2016-12-02 17:51:04.085 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
+2016-12-02 17:51:04.085 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.SolrCore [cepal] Registered new searcher Searcher@14ec6d01[cepal] main{ExitableDirectoryReader(UninvertingDirectoryReader(Uninverting(_jg(6.3.0):C351)))}
+2016-12-02 17:51:10.795 INFO  (qtp1123225098-15) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1480701070557} status=0 QTime=18
+2016-12-02 17:51:10.833 INFO  (qtp1123225098-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1480701070558} status=0 QTime=61
+2016-12-02 17:51:10.865 INFO  (qtp1123225098-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1480701070558} status=0 QTime=92
+2016-12-02 17:51:12.572 INFO  (qtp1123225098-11) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1480701070557} status=0 QTime=0
+2016-12-02 17:51:12.584 INFO  (qtp1123225098-11) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/replication params={wt=json&command=details&_=1480701072527} status=0 QTime=10
+2016-12-02 17:51:12.594 INFO  (qtp1123225098-17) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/admin/luke params={numTerms=0&show=index&wt=json&_=1480701072527} status=0 QTime=20
+2016-12-02 17:51:12.622 INFO  (qtp1123225098-18) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/admin/ping params={action=status&wt=json&_=1480701070558&ts=1480701070558} status=503 QTime=43
+2016-12-02 17:51:12.637 INFO  (qtp1123225098-20) [   x:cepal] o.a.s.c.S.Request [cepal]  webapp=/solr path=/admin/system params={wt=json&_=1480701072527} status=0 QTime=57
+2016-12-02 17:51:12.646 INFO  (qtp1123225098-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1480701070558} status=0 QTime=70
+2016-12-02 17:51:53.126 INFO  (ShutdownMonitor) [   ] o.e.j.s.ServerConnector Stopped ServerConnector@77f1baf5{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-12-02 17:51:53.127 INFO  (ShutdownMonitor) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1003752023
+2016-12-02 17:51:53.133 INFO  (coreCloseExecutor-12-thread-1) [   x:cepal] o.a.s.c.SolrCore [cepal]  CLOSING SolrCore org.apache.solr.core.SolrCore@3c6c68ba
+2016-12-02 17:51:53.137 ERROR (coreCloseExecutor-12-thread-1) [   x:cepal] o.a.s.u.SolrIndexWriter Error closing IndexWriter
+java.nio.file.NoSuchFileException: /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/cepal_data/index
+	at sun.nio.fs.UnixException.translateToIOException(UnixException.java:86)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:102)
+	at sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:107)
+	at sun.nio.fs.UnixPath.toRealPath(UnixPath.java:837)
+	at org.apache.lucene.util.IOUtils.spins(IOUtils.java:468)
+	at org.apache.lucene.util.IOUtils.spins(IOUtils.java:451)
+	at org.apache.lucene.index.ConcurrentMergeScheduler.initDynamicDefaults(ConcurrentMergeScheduler.java:376)
+	at org.apache.lucene.index.ConcurrentMergeScheduler.merge(ConcurrentMergeScheduler.java:464)
+	at org.apache.lucene.index.IndexWriter.waitForMerges(IndexWriter.java:2425)
+	at org.apache.lucene.index.IndexWriter.shutdown(IndexWriter.java:1118)
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1162)
+	at org.apache.solr.update.SolrIndexWriter.close(SolrIndexWriter.java:151)
+	at org.apache.solr.update.DirectUpdateHandler2.closeWriter(DirectUpdateHandler2.java:817)
+	at org.apache.solr.update.DefaultSolrCoreState.closeIndexWriter(DefaultSolrCoreState.java:88)
+	at org.apache.solr.update.DefaultSolrCoreState.close(DefaultSolrCoreState.java:379)
+	at org.apache.solr.update.SolrCoreState.decrefSolrCoreState(SolrCoreState.java:74)
+	at org.apache.solr.core.SolrCore.close(SolrCore.java:1303)
+	at org.apache.solr.core.SolrCores.lambda$close$0(SolrCores.java:129)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at org.apache.solr.common.util.ExecutorUtil$MDCAwareThreadPoolExecutor.lambda$execute$0(ExecutorUtil.java:229)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
-Caused by: org.apache.solr.common.SolrException: Can't load schema /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml: Unknown fieldType 'text' specified on field id
-	at org.apache.solr.schema.IndexSchema.readSchema(IndexSchema.java:598)
-	at org.apache.solr.schema.IndexSchema.<init>(IndexSchema.java:183)
-	at org.apache.solr.schema.ManagedIndexSchema.<init>(ManagedIndexSchema.java:104)
-	at org.apache.solr.schema.ManagedIndexSchemaFactory.create(ManagedIndexSchemaFactory.java:173)
-	at org.apache.solr.schema.ManagedIndexSchemaFactory.create(ManagedIndexSchemaFactory.java:45)
-	at org.apache.solr.schema.IndexSchemaFactory.buildIndexSchema(IndexSchemaFactory.java:75)
-	at org.apache.solr.core.ConfigSetService.createIndexSchema(ConfigSetService.java:107)
-	at org.apache.solr.core.ConfigSetService.getConfig(ConfigSetService.java:78)
-	... 35 more
-Caused by: org.apache.solr.common.SolrException: Unknown fieldType 'text' specified on field id
-	at org.apache.solr.schema.IndexSchema.loadFields(IndexSchema.java:656)
-	at org.apache.solr.schema.IndexSchema.readSchema(IndexSchema.java:494)
-	... 42 more
-2016-11-23 23:01:28.799 ERROR (qtp1123225098-14) [   ] o.a.s.h.RequestHandlerBase org.apache.solr.common.SolrException: Error CREATEing SolrCore 'cepal': Unable to create core [cepal] Caused by: Unknown fieldType 'text' specified on field id
-	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:813)
-	at org.apache.solr.handler.admin.CoreAdminOperation.lambda$static$0(CoreAdminOperation.java:88)
-	at org.apache.solr.handler.admin.CoreAdminOperation.execute(CoreAdminOperation.java:377)
-	at org.apache.solr.handler.admin.CoreAdminHandler$CallInfo.call(CoreAdminHandler.java:365)
-	at org.apache.solr.handler.admin.CoreAdminHandler.handleRequestBody(CoreAdminHandler.java:156)
-	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:153)
-	at org.apache.solr.servlet.HttpSolrCall.handleAdminRequest(HttpSolrCall.java:660)
-	at org.apache.solr.servlet.HttpSolrCall.call(HttpSolrCall.java:441)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:303)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:254)
-	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1668)
-	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:581)
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:143)
-	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
-	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:226)
-	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1160)
-	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:511)
-	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:185)
-	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1092)
-	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
-	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:213)
-	at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:119)
-	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:134)
-	at org.eclipse.jetty.server.Server.handle(Server.java:518)
-	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:308)
-	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:244)
-	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:273)
-	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:95)
-	at org.eclipse.jetty.io.SelectChannelEndPoint$2.run(SelectChannelEndPoint.java:93)
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.produceAndRun(ExecuteProduceConsume.java:246)
-	at org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.run(ExecuteProduceConsume.java:156)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:654)
-	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:572)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: org.apache.solr.common.SolrException: Unable to create core [cepal]
-	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:855)
-	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:779)
-	... 33 more
-Caused by: org.apache.solr.common.SolrException: Could not load conf for core cepal: Can't load schema /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml: Unknown fieldType 'text' specified on field id
-	at org.apache.solr.core.ConfigSetService.getConfig(ConfigSetService.java:85)
-	at org.apache.solr.core.CoreContainer.create(CoreContainer.java:840)
-	... 34 more
-Caused by: org.apache.solr.common.SolrException: Can't load schema /media/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0/server/solr/cepal/schema_cepal.xml: Unknown fieldType 'text' specified on field id
-	at org.apache.solr.schema.IndexSchema.readSchema(IndexSchema.java:598)
-	at org.apache.solr.schema.IndexSchema.<init>(IndexSchema.java:183)
-	at org.apache.solr.schema.ManagedIndexSchema.<init>(ManagedIndexSchema.java:104)
-	at org.apache.solr.schema.ManagedIndexSchemaFactory.create(ManagedIndexSchemaFactory.java:173)
-	at org.apache.solr.schema.ManagedIndexSchemaFactory.create(ManagedIndexSchemaFactory.java:45)
-	at org.apache.solr.schema.IndexSchemaFactory.buildIndexSchema(IndexSchemaFactory.java:75)
-	at org.apache.solr.core.ConfigSetService.createIndexSchema(ConfigSetService.java:107)
-	at org.apache.solr.core.ConfigSetService.getConfig(ConfigSetService.java:78)
-	... 35 more
-Caused by: org.apache.solr.common.SolrException: Unknown fieldType 'text' specified on field id
-	at org.apache.solr.schema.IndexSchema.loadFields(IndexSchema.java:656)
-	at org.apache.solr.schema.IndexSchema.readSchema(IndexSchema.java:494)
-	... 42 more
-
-2016-11-23 23:01:28.800 INFO  (qtp1123225098-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={schema=schema_cepal.xml&dataDir=cepal_data&name=cepal&action=CREATE&config=solrconfig.xml&instanceDir=cepal&wt=json&_=1479942069946} status=400 QTime=1009
-2016-11-23 23:02:26.243 INFO  (ShutdownMonitor) [   ] o.e.j.s.ServerConnector Stopped ServerConnector@395f7074{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
-2016-11-23 23:02:26.244 INFO  (ShutdownMonitor) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1003752023
-2016-11-23 23:02:26.254 WARN  (ShutdownMonitor) [   ] o.e.j.s.ServletContextHandler ServletContextHandler.setHandler should not be called directly. Use insertHandler or setSessionHandler etc.
+2016-12-02 17:51:53.145 WARN  (ShutdownMonitor) [   ] o.e.j.s.ServletContextHandler ServletContextHandler.setHandler should not be called directly. Use insertHandler or setSessionHandler etc.

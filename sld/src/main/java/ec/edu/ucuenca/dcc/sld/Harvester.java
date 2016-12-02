@@ -83,9 +83,12 @@ public class Harvester {
         SolrClient solr1 = SolrConnection.getInstance().getSolr();
         SolrInputDocument document = new SolrInputDocument();
         document.addField("uri", uri);
-        document.addField("originalData", txt);
         document.addField("originalText", txt);
-        document.addField("ProcessedText", txt);
+        document.addField("originalTextSyn", "");
+        document.addField("finalText", txt);
+        document.addField("state", 0);
+        //state
+        
         UpdateResponse response = solr.add(document);
 
         solr.commit();

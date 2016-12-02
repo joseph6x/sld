@@ -8,9 +8,9 @@
    <field name="_version_" type="long" indexed="false" stored="false"/>
    <field name="state" type="int" indexed="true" stored="true"/>
    
-   <field name="originalData" type="string" indexed="false" stored="true"/>
    <field name="originalText" type="string" indexed="false" stored="true"/>
-   <field name="ProcessedText" type="text_general" indexed="true" stored="false"/>
+   <field name="originalTextSyn" type="string" indexed="false" stored="true"/>
+   <field name="finalText" type="text_general" indexed="true" stored="false"/>
 
    
  <!-- Field to use to determine and enforce document uniqueness. 

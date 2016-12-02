@@ -1,6 +1,6 @@
-2016-11-24 15:22:34.399 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
-2016-11-24 15:22:34.797 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 6.3.0
-2016-11-24 15:22:34.797 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
-2016-11-24 15:22:34.797 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0
-2016-11-24 15:22:34.908 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2016-11-24T15:22:34.798Z
-2016-11-24 15:22:34.909 INFO  (main) [   ] o.a.s.s.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
+2016-12-02 21:59:06.314 INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
+2016-12-02 21:59:06.571 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter  ___      _       Welcome to Apache Solr™ version 6.3.0
+2016-12-02 21:59:06.571 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter / __| ___| |_ _   Starting in standalone mode on port 8983
+2016-12-02 21:59:06.572 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter \__ \/ _ \ | '_|  Install dir: /home/cedia/Ext/EnlacesCEPAL/sld/solr-6.3.0
+2016-12-02 21:59:06.629 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter |___/\___/_|_|    Start time: 2016-12-02T21:59:06.573Z
+2016-12-02 21:59:06.630 INFO  (main) [   ] o.a.s.s.StartupLoggingUtils Property solr.log.muteconsole given. Muting ConsoleAppender named CONSOLE
