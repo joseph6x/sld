@@ -13,10 +13,11 @@ import org.apache.jena.atlas.json.JsonObject;
  *
  * @author cedia
  */
-public class HarvestingDemon extends Thread {
+public class LinksDemon extends Thread {
 
     @Override
     public void run() {
+
         ConfigInfo instance = ConfigInfo.getInstance();
         JsonArray get = instance.getConfig().get("Repositories").getAsArray();
 
@@ -24,19 +25,19 @@ public class HarvestingDemon extends Thread {
             for (int i = 0; i < get.size(); i++) {
                 try {
                     JsonObject get1 = get.get(i).getAsObject();
-                    Harvester hv = new Harvester(get1.get("Endpoint").getAsString().value(), get1.get("MainClass").getAsString().value(), get1.get("Query").getAsString().value());
-                    hv.Harvest();
+                    LinksDiscovery hv = new LinksDiscovery(get1.get("Endpoint").getAsString().value(), get1.get("MainClass").getAsString().value(), get1.get("Query").getAsString().value(), get1.get("Name").getAsString().value());
+                    hv.Discovery();
                 } catch (Exception ex) {
                     ex.printStackTrace(new PrintStream(System.out));
                 }
             }
+
             try {
-                Thread.sleep(3600 * 24);
+                Thread.sleep(3600 * 1);
             } catch (Exception ex) {
             }
 
         }
 
     }
-
 }

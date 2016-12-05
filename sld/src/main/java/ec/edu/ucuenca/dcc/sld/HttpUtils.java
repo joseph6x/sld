@@ -5,19 +5,31 @@
  */
 package ec.edu.ucuenca.dcc.sld;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  *
  * @author cedia
  */
 public class HttpUtils {
+    
+    private static final String USER_AGENT = "Mozilla/5.0";
 
     public static synchronized String Http(String s) throws SQLException, IOException {
 
@@ -34,6 +46,84 @@ public class HttpUtils {
             resp += line + "\n";
         }
         reader.close();
+
+        return resp;
+    }
+
+    public static String sendPost2(String operation, String body) throws Exception {
+        //   System.out.println ("body "+body);
+        String url = "http://api.cortical.io/rest/" + operation + "?retina_name=en_associative";
+
+        DefaultHttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+
+        // add header
+        post.setHeader("User-Agent", USER_AGENT);
+        post.setHeader("api-key", "0e30f600-7b62-11e6-a057-97f4c970893c");
+        post.setHeader("content-type", "application/json");
+        //   post.setHeader("api-key","0e30f600-7b62-11e6-a057-97f4c970893c");
+        post.setHeader("charset", "utf-8");
+        StringEntity params = new StringEntity(body);
+        //List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+        //urlParameters.add(new BasicNameValuePair("body", body));
+        //urlParameters.add(new BasicNameValuePair("retina_name","en_associative"));
+        /*urlParameters.add(new BasicNameValuePair("locale", ""));
+		urlParameters.add(new BasicNameValuePair("caller", ""));
+		urlParameters.add(new BasicNameValuePair("num", "12345"));*/
+
+        post.setEntity(params);
+        //  post.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+        HttpResponse response = client.execute(post);
+       // System.out.println("\nSending 'POST' request to URL : " + url);
+       // System.out.println("Post parameters : " + post.getEntity());
+       // System.out.println("Response Code : "
+           //     + response.getStatusLine().getStatusCode());
+
+        BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+
+      //  System.out.println(result.toString());
+        int code = response.getStatusLine().getStatusCode();
+        if (400 == code) {
+            return "{\"overlappingAll\":0 , \"weightedScoring\": 0 } ";
+        } else {
+            return result.toString();
+        }
+    }
+
+    public static synchronized String Http2(String s, Map<String, String> mp) throws SQLException, IOException {
+        String resp = "";
+        HttpClient client = new HttpClient();
+        PostMethod method = new PostMethod(s);
+        method.getParams().setContentCharset("utf-8");
+
+        client.getParams().setParameter("api-key", "58ef39e0-b91a-11e6-a057-97f4c970893c");
+        client.getParams().setParameter("Content-Type", "application/json");
+
+        //Add any parameter if u want to send it with Post req.
+        for (Entry<String, String> mcc : mp.entrySet()) {
+            method.addParameter(mcc.getKey(), mcc.getValue());
+        }
+
+        int statusCode = client.executeMethod(method);
+
+        if (statusCode != -1) {
+            InputStream in = method.getResponseBodyAsStream();
+            final Scanner reader = new Scanner(in, "UTF-8");
+            while (reader.hasNextLine()) {
+                final String line = reader.nextLine();
+                resp += line + "\n";
+            }
+            reader.close();
+
+        }
 
         return resp;
     }

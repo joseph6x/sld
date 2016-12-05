@@ -33,18 +33,13 @@ public class Harvester {
     }
 
     public void Harvest() throws SolrServerException, IOException {
-
         int bulk = 1000;
-        ConfigInfo instance = ConfigInfo.getInstance();
         SPARQL sp = new SPARQL();
         String Count = "select (count(*) as ?c) where { ?r a <" + MainClass + "> }";
-
         String resources = "select ?r where { ?r a <" + MainClass + "> } limit " + bulk;
-
         List<RDFNode> SimpleQuery = sp.SimpleQuery(Count, Endpoint, "c");
         RDFNode get = SimpleQuery.get(0);
         int aInt = get.asLiteral().getInt();
-
         for (int i = 0; i < aInt; i += 1000) {
             String qry = resources + " offset " + i;
             List<RDFNode> SimpleQuery1 = sp.SimpleQuery(qry, Endpoint, "r");
@@ -52,13 +47,11 @@ public class Harvester {
                 String uri = d.asResource().getURI();
                 if (!SolrConnection.getInstance().exists(uri)) {
                     String Query2 = Query.replaceAll("\\|\\?\\|", uri);
-
-
                     List<RDFNode> SimpleQuery2 = sp.SimpleQuery(Query2, Endpoint, "d");
                     AddUpdate(uri, SimpleQuery2);
-                }else{
-                    System.out.println("Ya existe"+uri);
-                
+                } else {
+                    //System.out.println("Ya existe" + uri);
+
                 }
             }
         }
@@ -67,7 +60,6 @@ public class Harvester {
     public void AddUpdate(String uri, List<RDFNode> ls) throws SolrServerException, IOException {
 
         //System.out.println(ls);
-
         SolrClient solr = SolrConnection.getInstance().getSolr();
 
         String txt = "";
@@ -80,7 +72,6 @@ public class Harvester {
             }
         }
 
-        SolrClient solr1 = SolrConnection.getInstance().getSolr();
         SolrInputDocument document = new SolrInputDocument();
         document.addField("uri", uri);
         document.addField("originalText", txt);
@@ -88,7 +79,7 @@ public class Harvester {
         document.addField("finalText", txt);
         document.addField("state", 0);
         //state
-        
+
         UpdateResponse response = solr.add(document);
 
         solr.commit();
@@ -98,20 +89,13 @@ public class Harvester {
     public String DbpediaLabel(String uri) {
 
         String txt = "";
-
         String qry = "select (str(?t) as ?T) where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?t .  filter (lang(?t) = 'en')} LIMIT 1";
         SPARQL sp = new SPARQL();
-
-
         List<RDFNode> SimpleQuery = sp.SimpleQuery(qry, "http://dbpedia.org/sparql", "T");
-
         RDFNode get = null;
-
         if (SimpleQuery.size() > 0) {
             get = SimpleQuery.get(0);
-
             String string = get.asLiteral().getString();
-
             txt = string;
         }
         return txt;

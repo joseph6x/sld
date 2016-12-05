@@ -27,12 +27,26 @@ public class test {
         
         
         
-        boolean s= SolrConnection.getInstance().exists("http://190.15.141.66:8899/ucuenca/recurso/16606");
+        //boolean s= SolrConnection.getInstance().exists("http://190.15.141.66:8899/ucuenca/recurso/16606");
         
-        System.out.println(s);
+        //System.out.println(CorticalAPI.Similarity("", ""));
+        
+        //HarvestingDemon myThread = new HarvestingDemon();
+          //  myThread.start();
+        
+        
+        //SynonymsDemon myThread = new SynonymsDemon();
+        
+        //myThread.start();
         
         
         
+       //  CorticalDemon myThread = new CorticalDemon();
+         //  myThread.start();
+         
+         LinksDemon myThread = new LinksDemon();
+          myThread.start();
+         
     }
 
 }

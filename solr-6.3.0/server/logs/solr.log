@@ -33,3 +33,7 @@
 2016-12-02 21:59:09.109 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
 2016-12-02 21:59:09.109 INFO  (searcherExecutor-7-thread-1-processing-x:cepal) [   x:cepal] o.a.s.c.SolrCore [cepal] Registered new searcher Searcher@716eb00c[cepal] main{ExitableDirectoryReader(UninvertingDirectoryReader())}
 2016-12-02 21:59:09.112 INFO  (coreLoadExecutor-6-thread-1) [   x:cepal] o.a.s.u.UpdateLog Could not find max version in index or recent updates, using new clock 1552643207056064512
+2016-12-02 22:59:56.467 INFO  (Thread-0) [   ] o.e.j.s.ServerConnector Stopped ServerConnector@77f1baf5{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2016-12-02 22:59:56.468 INFO  (Thread-0) [   ] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1003752023
+2016-12-02 22:59:56.476 INFO  (coreCloseExecutor-12-thread-1) [   x:cepal] o.a.s.c.SolrCore [cepal]  CLOSING SolrCore org.apache.solr.core.SolrCore@30e96236
+2016-12-02 22:59:56.492 WARN  (Thread-0) [   ] o.e.j.s.ServletContextHandler ServletContextHandler.setHandler should not be called directly. Use insertHandler or setSessionHandler etc.

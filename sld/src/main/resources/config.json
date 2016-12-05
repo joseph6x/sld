@@ -1,7 +1,28 @@
 {
-  "Config": {
-    "SolrServer": "http://localhost:8983/solr/cepal",
-    "Wildcard": "|?|",
-    "Repositories": [{"Endpoint":"http://190.15.141.102:8891/myservice/sparql","MainClass":"http://purl.org/ontology/bibo/Document","Query":"select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"}]
-  }
+    "Config": {
+        "SolrServer": "http://localhost:8983/solr/cepal",
+        "Output": "/home/cedia/CEPAL/Links/Output/",
+        "Wildcard": "|?|",
+        "CorticalThreshold": 75,
+        "LinksThreshold": 75,
+        "SynNumber": 5,
+        "Repositories": [
+            {
+                "Name": "CEPALSTAT",
+                "Endpoint": "http://localhost:8891/CEPALSTAT/sparql",
+                "MainClass": "http://purl.org/linked-data/cube#DataSet",
+                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
+            },{
+                "Name": "BIBLIOGUIAS",
+                "Endpoint": "http://localhost:8891/BIBLIOGUIAS/sparql",
+                "MainClass": "http://dbpedia.org/resource/Guide_to_information_sources",
+                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"
+            },{
+                "Name": "REPOSITORIO",
+                "Endpoint": "http://localhost:8891/REPOSITORIO/sparql",
+                "MainClass": "http://purl.org/dc/terms/BibliographicResource",
+                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"
+            }
+            ]
+    }
 }

@@ -6,6 +6,8 @@
 package ec.edu.ucuenca.dcc.sld;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -45,11 +47,49 @@ public class SolrConnection {
 
     }
     
+    public List<String> Find (String var, String val, double minScore) throws SolrServerException, IOException{
     
-    public String[] FindOne(String var, String val, String vals, String uri) throws SolrServerException, IOException{
+        List<String> ls = new ArrayList<>();
+        
+        NamedList params = new NamedList();
+        params.add("q", var+":"+""+val+"");
+        params.add("fl", "*,score");
+        
+        SolrParams toSolrParams = SolrParams.toSolrParams(params);
+        
+        //System.out.println(toSolrParams.toQueryString());
+        
+        QueryResponse query = Solr.query(toSolrParams);
+        SolrDocumentList results = query.getResults();
+        if (!query.getResults().isEmpty()){
+            for (int i=0; i<results.size(); i++){
+                SolrDocument get = results.get(i);
+                Object fieldValue = get.getFieldValue("score");
+                Object fieldValue1 = get.getFieldValue("uri");
+                
+                double parseDouble = Double.parseDouble(fieldValue+"");
+                if (parseDouble>=minScore){
+                    ls.add(fieldValue1+"");
+                }else{
+                    break;
+                }
+                
+                
+            }
+            
+        }
+        
+        return ls;
+    }
+    
+    
+    
+    
+    public String[] FindOne(String var, String val, String vals, String uri, String syn) throws SolrServerException, IOException{
         String txt[]=null;
         NamedList params = new NamedList();
         params.add("q", var+":"+"\""+val+"\"");
+        params.add("fl", "*,score");
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
         QueryResponse query = Solr.query(toSolrParams);
         SolrDocumentList results = query.getResults();
@@ -57,7 +97,8 @@ public class SolrConnection {
             SolrDocument get = results.get(0);
             Object fieldValue = get.getFieldValue(vals);
             Object fieldValue2 = get.getFieldValue(uri);
-            txt = new String []{fieldValue2+"",fieldValue+""};
+            Object fieldValue3 = get.getFieldValue(syn);
+            txt = new String []{fieldValue2+"",fieldValue+"",fieldValue3+""};
         }
         return txt;
     }
