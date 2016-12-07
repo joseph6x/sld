@@ -55,7 +55,7 @@ public class SynonymsDemon extends Thread {
 
                         } else {
                             upd = false;
-                            Thread.sleep(3600*60*1);
+                            Thread.sleep(1000*60*60*6);
                             break;
                         }
                     }

@@ -31,7 +31,7 @@ public class HarvestingDemon extends Thread {
                 }
             }
             try {
-                Thread.sleep(3600 * 24);
+                Thread.sleep(1000 * 12 * 60 * 60);
             } catch (Exception ex) {
             }
 

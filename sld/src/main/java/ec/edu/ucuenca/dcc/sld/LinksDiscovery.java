@@ -34,7 +34,7 @@ public class LinksDiscovery {
         this.Name = Name;
     }
 
-    public List<String> FindLinks(String uri) throws SolrServerException, IOException {
+    public static List<String> FindLinks(String uri) throws SolrServerException, IOException {
         SolrConnection instance = SolrConnection.getInstance();
         String[] FindOne = instance.FindOne("uri", uri, "originalText", "uri", "finalText");
         if (FindOne == null) {

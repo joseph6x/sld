@@ -6,6 +6,7 @@
 package ec.edu.ucuenca.dcc.sld;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,6 +18,18 @@ import java.util.List;
 public class test {
 
     public static void main(String[] args) throws Exception {
+        
+        List <String>  dsd= new ArrayList<>();
+        
+        
+        dsd.add("ddd");
+        
+        dsd.add("ddd");
+        dsd.add("ddd");
+        
+        System.out.print(dsd);
+        
+        
         //SPARQL sp = new SPARQL();
         //String Count = "select (count(*) as ?c) where { ?r a <http://purl.org/ontology/bibo/Document> }";
         
@@ -44,8 +57,8 @@ public class test {
        //  CorticalDemon myThread = new CorticalDemon();
          //  myThread.start();
          
-         LinksDemon myThread = new LinksDemon();
-          myThread.start();
+         //LinksDemon myThread = new LinksDemon();
+         // myThread.start();
          
     }
 
