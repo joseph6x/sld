@@ -66,10 +66,11 @@ public class SolrConnection {
                 SolrDocument get = results.get(i);
                 Object fieldValue = get.getFieldValue("score");
                 Object fieldValue1 = get.getFieldValue("uri");
+                Object fieldValueEP = get.getFieldValue("endpoint");
                 
                 double parseDouble = Double.parseDouble(fieldValue+"");
                 if (parseDouble>=minScore){
-                    ls.add(fieldValue1+"");
+                    ls.add(fieldValueEP + "|"+fieldValue1+"");
                 }else{
                     break;
                 }
@@ -85,7 +86,7 @@ public class SolrConnection {
     
     
     
-    public String[] FindOne(String var, String val, String vals, String uri, String syn) throws SolrServerException, IOException{
+    public String[] FindOne(String var, String val, String vals, String uri, String syn, String ep) throws SolrServerException, IOException{
         String txt[]=null;
         NamedList params = new NamedList();
         params.add("q", var+":"+"\""+val+"\"");
@@ -98,7 +99,8 @@ public class SolrConnection {
             Object fieldValue = get.getFieldValue(vals);
             Object fieldValue2 = get.getFieldValue(uri);
             Object fieldValue3 = get.getFieldValue(syn);
-            txt = new String []{fieldValue2+"",fieldValue+"",fieldValue3+""};
+            Object fieldValue4 = get.getFieldValue(ep);
+            txt = new String []{fieldValue2+"",fieldValue+"",fieldValue3+"",fieldValue4+""};
         }
         return txt;
     }

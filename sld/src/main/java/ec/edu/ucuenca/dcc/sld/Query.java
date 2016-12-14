@@ -46,7 +46,7 @@ public class Query extends HttpServlet {
                 String txt = "";
 
                 for (int i = 0; i < FindLinks.size(); i++) {
-                    txt += "\"" + FindLinks.get(i) + "\"" + (i == FindLinks.size() - 1 ? "" : ",");
+                    txt += "\"" + FindLinks.get(i).split("|")[1] + "\"" + (i == FindLinks.size() - 1 ? "" : ",");
 
                 }
                 res += txt + "]";

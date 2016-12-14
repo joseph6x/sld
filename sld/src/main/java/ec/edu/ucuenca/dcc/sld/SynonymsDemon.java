@@ -28,14 +28,15 @@ public class SynonymsDemon extends Thread {
 
             try {
                 SolrConnection instance = SolrConnection.getInstance();
-                String[] FindOne = instance.FindOne("state", "0", "originalText", "uri", "originalTextSyn");
+                String[] FindOne = instance.FindOne("state", "0", "originalText", "uri", "originalTextSyn", "endpoint");
 
                 if (FindOne == null) {
-                    Thread.sleep(1000*60*60);
+                    Thread.sleep(1000*60*60*6);
                 } else {
                     boolean upd = true;
                     String uri = FindOne[0];
                     String orgtxt = FindOne[1];
+                    String ep = FindOne[3];
                     ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(orgtxt.split(",")));
                     arrayList.removeAll(Arrays.asList("", null));
 
@@ -72,6 +73,7 @@ public class SynonymsDemon extends Thread {
                         document.addField("originalTextSyn", nsyn);
                         document.addField("finalText", orgtxt + " " + nsyn);
                         document.addField("state", 1);
+                        document.addField("endpoint", ep);
 
                         UpdateResponse add = solr.add(document);
                         solr.commit();

@@ -29,14 +29,15 @@ public class CorticalDemon extends Thread {
             try {
                 SolrConnection instance = SolrConnection.getInstance();
                 String[] FindOne;
-                FindOne = instance.FindOne("state", "1", "originalText", "uri", "originalTextSyn");
+                FindOne = instance.FindOne("state", "1", "originalText", "uri", "originalTextSyn", "endpoint");
                 if (FindOne == null) {
-                    Thread.sleep(60000);
+                    Thread.sleep(1000*60*60*3);
                 } else {
                     boolean upd = true;
                     String uri = FindOne[0];
                     String orgtxt = FindOne[1];
                     String orgtxtsyn = FindOne[2];
+                    String ep = FindOne[3];
 
                     String fntxt = "";
 
@@ -68,6 +69,7 @@ public class CorticalDemon extends Thread {
                         document.addField("originalTextSyn", orgtxtsyn);
                         document.addField("finalText", orgtxt + " " + fntxt);
                         document.addField("state", 2);
+                        document.addField("endpoint", ep);
                         UpdateResponse add = solr.add(document);
                         solr.commit();
 

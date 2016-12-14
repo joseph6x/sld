@@ -36,7 +36,7 @@ public class LinksDiscovery {
 
     public static List<String> FindLinks(String uri) throws SolrServerException, IOException {
         SolrConnection instance = SolrConnection.getInstance();
-        String[] FindOne = instance.FindOne("uri", uri, "originalText", "uri", "finalText");
+        String[] FindOne = instance.FindOne("uri", uri, "originalText", "uri", "finalText", "endpoint");
         if (FindOne == null) {
             return new ArrayList<>();
         }
@@ -53,13 +53,7 @@ public class LinksDiscovery {
 
     public void Discovery() throws SolrServerException, IOException {
 
-        String value = ConfigInfo.getInstance().getConfig().get("Output").getAsString().value();
-
-        String filename = value + Name + ".ttl";
         
-        PrintWriter writer = new PrintWriter(filename);
-        writer.print("");
-        writer.close();
 
         int bulk = 1000;
         SPARQL sp = new SPARQL();
@@ -91,15 +85,25 @@ public class LinksDiscovery {
         String value = instance.getConfig().get("Output").getAsString().value();
 
         try {
-            String filename = value + Name + ".ttl";
+            String filename = value + Name + ".nt";
             FileWriter fw = new FileWriter(filename, true); //the true will append the new data
-            for (String uri2 : links) {
+            for (String uri_ : links) {
+                
+                String uri2= uri_.split("|")[1];
+                String end= uri_.split("|")[0];
+                
                 if (uri.trim().compareTo(uri2.trim()) != 0) {
-                    fw.write("<" + uri + "> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <" + uri2 + ">\n");//appends the string to the file
+                    fw.write("<" + uri + "> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <" + uri2 + "> .\n");//appends the string to the file
                 }
+                
+                String filename2 = value + end + ".nt";
+                FileWriter fw2 = new FileWriter(filename2, true);
+                fw2.write("<" + uri2 + "> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <" + uri + "> .\n");
+                fw2.flush();
+                fw2.close();
 
             }
-
+            fw.flush();
             fw.close();
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());

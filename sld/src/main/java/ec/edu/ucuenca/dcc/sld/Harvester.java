@@ -25,8 +25,9 @@ public class Harvester {
     private String MainClass;
 
     private String Query;
+    private String Name;
 
-    public Harvester(String Endpoint, String MainClass, String Query) {
+    public Harvester(String Name, String Endpoint, String MainClass, String Query) {
         this.Endpoint = Endpoint;
         this.MainClass = MainClass;
         this.Query = Query;
@@ -78,6 +79,7 @@ public class Harvester {
         document.addField("originalTextSyn", "");
         document.addField("finalText", txt);
         document.addField("state", 0);
+        document.addField("endpoint", this.Name);
         //state
 
         UpdateResponse response = solr.add(document);
@@ -123,6 +125,14 @@ public class Harvester {
 
     public void setQuery(String Query) {
         this.Query = Query;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
 }

@@ -3,22 +3,22 @@
         "SolrServer": "http://localhost:8983/solr/cepal",
         "Output": "/home/cedia/CEPAL/Links/Output/",
         "Wildcard": "|?|",
-        "CorticalThreshold": 75,
-        "LinksThreshold": 75,
-        "SynNumber": 5,
+        "CorticalThreshold": 70,
+        "LinksThreshold": 5,
+        "SynNumber": 20,
         "Repositories": [
             {
-                "Name": "CEPALSTAT",
+                "Name": "cepalstat",
                 "Endpoint": "http://localhost:8891/cepalstat/sparql",
                 "MainClass": "http://purl.org/linked-data/cube#DataSet",
                 "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
             },{
-                "Name": "BIBLIOGUIAS",
+                "Name": "biblioguias",
                 "Endpoint": "http://localhost:8891/biblioguias/sparql",
                 "MainClass": "http://dbpedia.org/resource/Guide_to_information_sources",
                 "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"
             },{
-                "Name": "REPOSITORIO",
+                "Name": "repositorio",
                 "Endpoint": "http://localhost:8891/repositorio/sparql",
                 "MainClass": "http://purl.org/dc/terms/BibliographicResource",
                 "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"

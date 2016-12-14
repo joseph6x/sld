@@ -7,6 +7,7 @@
     <field name="uri" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
    <field name="_version_" type="long" indexed="false" stored="false"/>
    <field name="state" type="int" indexed="true" stored="true"/>
+   <field name="endpoint" type="string" indexed="true" stored="true"/>
    
    <field name="originalText" type="string" indexed="false" stored="true"/>
    <field name="originalTextSyn" type="string" indexed="false" stored="true"/>

@@ -24,7 +24,7 @@ public class HarvestingDemon extends Thread {
             for (int i = 0; i < get.size(); i++) {
                 try {
                     JsonObject get1 = get.get(i).getAsObject();
-                    Harvester hv = new Harvester(get1.get("Endpoint").getAsString().value(), get1.get("MainClass").getAsString().value(), get1.get("Query").getAsString().value());
+                    Harvester hv = new Harvester(get1.get("Name").getAsString().value(),get1.get("Endpoint").getAsString().value(), get1.get("MainClass").getAsString().value(), get1.get("Query").getAsString().value());
                     hv.Harvest();
                 } catch (Exception ex) {
                     ex.printStackTrace(new PrintStream(System.out));
