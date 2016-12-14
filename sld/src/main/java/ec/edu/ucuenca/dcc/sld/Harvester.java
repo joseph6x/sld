@@ -31,6 +31,7 @@ public class Harvester {
         this.Endpoint = Endpoint;
         this.MainClass = MainClass;
         this.Query = Query;
+        this.Name = Name;
     }
 
     public void Harvest() throws SolrServerException, IOException {

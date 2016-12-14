@@ -43,7 +43,7 @@ public class LinksDemon extends Thread {
                 ex.printStackTrace(new PrintStream(System.out));
             }
             try {
-                Thread.sleep(3600 * 12 * 1000);
+                Thread.sleep(3600 * 1 * 1000);
             } catch (Exception ex) {
             }
 
