@@ -53,8 +53,6 @@ public class LinksDiscovery {
 
     public void Discovery() throws SolrServerException, IOException {
 
-        
-
         int bulk = 1000;
         SPARQL sp = new SPARQL();
         String Count = "select (count(*) as ?c) where { ?r a <" + MainClass + "> }";
@@ -85,26 +83,28 @@ public class LinksDiscovery {
         String value = instance.getConfig().get("Output").getAsString().value();
 
         try {
-            String filename = value + Name + ".nt";
-            FileWriter fw = new FileWriter(filename, true); //the true will append the new data
+
             for (String uri_ : links) {
-                
-                String uri2= uri_.split("|")[1];
-                String end= uri_.split("|")[0];
-                
+
+                String uri2 = uri_.split("\\|")[1];
+                String end = uri_.split("\\|")[0];
+
                 if (uri.trim().compareTo(uri2.trim()) != 0) {
+                    String filename = value + Name + ".nt";
+                    FileWriter fw = new FileWriter(filename, true); //the true will append the new data
                     fw.write("<" + uri + "> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <" + uri2 + "> .\n");//appends the string to the file
+                    fw.flush();
+                    fw.close();
+
+                    String filename2 = value + end + ".nt";
+                    FileWriter fw2 = new FileWriter(filename2, true);
+                    fw2.write("<" + uri2 + "> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <" + uri + "> .\n");
+                    fw2.flush();
+                    fw2.close();
                 }
-                
-                String filename2 = value + end + ".nt";
-                FileWriter fw2 = new FileWriter(filename2, true);
-                fw2.write("<" + uri2 + "> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <" + uri + "> .\n");
-                fw2.flush();
-                fw2.close();
 
             }
-            fw.flush();
-            fw.close();
+
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
