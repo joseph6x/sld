@@ -4,7 +4,7 @@
         "Output": "/home/cedia/CEPAL/Links/Output/",
         "Wildcard": "|?|",
         "CorticalThreshold": 70,
-        "LinksThreshold": 65,
+        "LinksThreshold": 20,
         "SynNumber": 20,
         "Repositories": [
             {

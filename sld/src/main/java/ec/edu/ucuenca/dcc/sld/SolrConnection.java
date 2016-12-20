@@ -39,73 +39,112 @@ public class SolrConnection {
     public boolean exists(String uri) throws SolrServerException, IOException {
 
         NamedList params = new NamedList();
-        params.add("q", "uri:"+"\""+uri+"\"");
+        params.add("q", "uri:" + "\"" + uri + "\"");
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
         QueryResponse query = Solr.query(toSolrParams);
-        
+
         return !query.getResults().isEmpty();
 
     }
-    
-    public List<String> Find (String var, String val, double minScore) throws SolrServerException, IOException{
-    
+
+    public List<String> Find2(String var, String val, String var2, String val2, int limit) throws SolrServerException, IOException {
+
         List<String> ls = new ArrayList<>();
-        
         NamedList params = new NamedList();
-        params.add("q", var+":"+""+val+"");
+        params.add("q", var + ":" + "" + val + "\nAND\n" + var2 + ":" + val2);
         params.add("fl", "*,score");
-        
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
-        
-        //System.out.println(toSolrParams.toQueryString());
-        
         QueryResponse query = Solr.query(toSolrParams);
         SolrDocumentList results = query.getResults();
-        if (!query.getResults().isEmpty()){
-            for (int i=0; i<results.size(); i++){
+        if (!query.getResults().isEmpty()) {
+            for (int i = 0; i < results.size() && i < limit; i++) {
+                SolrDocument get = results.get(i);
+                //Object fieldValue = get.getFieldValue("score");
+                Object fieldValue1 = get.getFieldValue("uri");
+                //Object fieldValueEP = get.getFieldValue("endpoint");
+                //double parseDouble = Double.parseDouble(fieldValue + "");
+                ls.add(fieldValue1 + "");
+
+            }
+
+        }
+
+        return ls;
+    }
+
+    public List<String> Find(String var, String val, double minScore) throws SolrServerException, IOException {
+
+        List<String> ls = new ArrayList<>();
+
+        NamedList params = new NamedList();
+        params.add("q", var + ":" + "" + val + "");
+        params.add("fl", "*,score");
+
+        SolrParams toSolrParams = SolrParams.toSolrParams(params);
+
+        //System.out.println(toSolrParams.toQueryString());
+        QueryResponse query = Solr.query(toSolrParams);
+        SolrDocumentList results = query.getResults();
+        if (!query.getResults().isEmpty()) {
+            for (int i = 0; i < results.size(); i++) {
                 SolrDocument get = results.get(i);
                 Object fieldValue = get.getFieldValue("score");
                 Object fieldValue1 = get.getFieldValue("uri");
                 Object fieldValueEP = get.getFieldValue("endpoint");
-                
-                double parseDouble = Double.parseDouble(fieldValue+"");
-                if (parseDouble>=minScore){
-                    ls.add(fieldValueEP + "|"+fieldValue1+"");
-                }else{
+
+                double parseDouble = Double.parseDouble(fieldValue + "");
+                if (parseDouble >= minScore) {
+                    ls.add(fieldValueEP + "|" + fieldValue1 + "");
+                } else {
                     break;
                 }
-                
-                
+
             }
-            
+
         }
-        
+
         return ls;
     }
-    
-    
-    
-    
-    public String[] FindOne(String var, String val, String vals, String uri, String syn, String ep) throws SolrServerException, IOException{
-        String txt[]=null;
+
+    public String[] FindOne(String var, String val, String vals, String uri, String syn, String ep) throws SolrServerException, IOException {
+        String txt[] = null;
         NamedList params = new NamedList();
-        params.add("q", var+":"+"\""+val+"\"");
+        params.add("q", var + ":" + "\"" + val + "\"");
         params.add("fl", "*,score");
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
         QueryResponse query = Solr.query(toSolrParams);
         SolrDocumentList results = query.getResults();
-        if (!query.getResults().isEmpty()){
+        if (!query.getResults().isEmpty()) {
             SolrDocument get = results.get(0);
             Object fieldValue = get.getFieldValue(vals);
             Object fieldValue2 = get.getFieldValue(uri);
             Object fieldValue3 = get.getFieldValue(syn);
             Object fieldValue4 = get.getFieldValue(ep);
-            txt = new String []{fieldValue2+"",fieldValue+"",fieldValue3+"",fieldValue4+""};
+            txt = new String[]{fieldValue2 + "", fieldValue + "", fieldValue3 + "", fieldValue4 + ""};
+        }
+        return txt;
+    }
+
+    public String[] FindOne2(String var, String val, String vals, String uri, String syn, String ep) throws SolrServerException, IOException {
+        String txt[] = null;
+        NamedList params = new NamedList();
+        params.add("q", var + ":" + "" + val + "");
+        params.add("fl", "*,score");
+        SolrParams toSolrParams = SolrParams.toSolrParams(params);
+        QueryResponse query = Solr.query(toSolrParams);
+        SolrDocumentList results = query.getResults();
+        if (!query.getResults().isEmpty()) {
+            SolrDocument get = results.get(0);
+            Object fieldValue = get.getFieldValue(vals);
+            Object fieldValue2 = get.getFieldValue(uri);
+            Object fieldValue3 = get.getFieldValue(syn);
+            Object fieldValue4 = get.getFieldValue(ep);
+            txt = new String[]{fieldValue2 + "", fieldValue + "", fieldValue3 + "", fieldValue4 + ""};
         }
         return txt;
     }
     
-
+    
     public static SolrConnection getInstance() {
         return SolrConnectionHolder.INSTANCE;
     }

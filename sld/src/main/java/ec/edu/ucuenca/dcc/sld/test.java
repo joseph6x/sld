@@ -18,16 +18,12 @@ import java.util.List;
 public class test {
 
     public static void main(String[] args) throws Exception {
+        //http://localhost:8080/cepalstat/indicador/Indicador_1973
         
-        List <String>  dsd= new ArrayList<>();
         
         
-        dsd.add("ddd");
         
-        dsd.add("ddd");
-        dsd.add("ddd");
-        
-        System.out.print(dsd);
+        System.out.println(LinksFilesUtiles.getLinks(1, "26171"));
         
         
         //SPARQL sp = new SPARQL();
