@@ -39,29 +39,25 @@ public class Query extends HttpServlet {
             String res = "";
             try {
 
-                String parameter_ = request.getParameter("repositories");
-                String parameter__ = request.getParameter("type");
-                String parameter___ = request.getParameter("query");
+                String RepositoriesList = request.getParameter("repositories");
+                String QueryType = request.getParameter("type");
+                String QueryText = request.getParameter("query");
 
-                if (parameter_ != null && !parameter_.isEmpty() && parameter__ != null && !parameter__.isEmpty() && parameter___ != null && !parameter___.isEmpty()) {
+                if (RepositoriesList != null && !RepositoriesList.isEmpty() && QueryType != null && !QueryType.isEmpty() && QueryText != null && !QueryText.isEmpty()) {
 
                     SolrConnection instance = SolrConnection.getInstance();
 
-                    String[] rep = parameter_.split(";");
-                    String Repo = rep[0];
-                    String limit = rep[1];
+                    String SearchTerms = "";
 
-                    String txt = "";
-
-                    switch (parameter__) {
+                    switch (QueryType) {
                         case "handle":
-                            String[] dt = parameter___.split("_|/|#|=");
-                            parameter___ = dt[dt.length - 1];
+                            String[] dt = QueryText.split("_|/|#|=");
+                            QueryText = dt[dt.length - 1];
                         case "id":
-                            String[] FindOne = instance.FindOne2("uri", "*/" + parameter___, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne2 = instance.FindOne2("uri", "*_" + parameter___, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne3 = instance.FindOne2("uri", "*#" + parameter___, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne4 = instance.FindOne2("uri", "*=" + parameter___, "originalText", "uri", "finalText", "endpoint");
+                            String[] FindOne = instance.FindOne2("uri", "*/" + QueryText, "originalText", "uri", "finalText", "endpoint");
+                            String[] FindOne2 = instance.FindOne2("uri", "*_" + QueryText, "originalText", "uri", "finalText", "endpoint");
+                            String[] FindOne3 = instance.FindOne2("uri", "*#" + QueryText, "originalText", "uri", "finalText", "endpoint");
+                            String[] FindOne4 = instance.FindOne2("uri", "*=" + QueryText, "originalText", "uri", "finalText", "endpoint");
 
                             List<String[]> ls = new ArrayList<String[]>();
                             ls.add(FindOne);
@@ -71,63 +67,45 @@ public class Query extends HttpServlet {
                             ls.removeAll(Collections.singleton(null));
 
                             if (!ls.isEmpty()) {
-                                txt = ls.get(0)[2];
+                                SearchTerms = ls.get(0)[2];
                             } else {
-                                throw new Exception("No handle/id found..." + parameter___);
+                                throw new Exception("No handle/id found..." + QueryText);
                             }
-
-                            txt = "";
                             break;
                         case "uri":
-                            String[] FindOne_ = instance.FindOne2("uri", parameter___, "originalText", "uri", "finalText", "endpoint");
+                            String[] FindOne_ = instance.FindOne("uri", QueryText, "originalText", "uri", "finalText", "endpoint");
                             if (FindOne_ != null) {
-                                txt = FindOne_[2];
+                                SearchTerms = FindOne_[2];
                             } else {
-                                throw new Exception("No URI found..." + parameter___);
+                                throw new Exception("No URI found..." + QueryText);
                             }
                             break;
                         case "keywords":
-                            txt = parameter___;
+                            SearchTerms = QueryText;
                             break;
                     }
+                    SearchTerms = SearchTerms.replace(",", "").trim();
+                    String[] rep = RepositoriesList.split(";");
+                    List<String> FindLinks = new ArrayList<>();
 
-                }
+                    String txt2 = "";
+                    res = "[";
 
-                String parameter = request.getParameter("uri");
-                String parameter1 = request.getParameter("handle");
-                String parameter2 = request.getParameter("id");
-                String parameter3 = request.getParameter("keywords");
-
-                List<String> FindLinks = new ArrayList<>();
-
-                if (parameter != null) {
-                    URL url = new URL(parameter);
-                    FindLinks = LinksFilesUtiles.getLinks(0, parameter);
-                } else if (parameter1 != null) {
-                    String[] dt = parameter1.split("_|/|#|=");
-                    parameter1 = dt[dt.length - 1];
-                    FindLinks = LinksFilesUtiles.getLinks(1, parameter1);
-                } else if (parameter2 != null) {
-                    FindLinks = LinksFilesUtiles.getLinks(1, parameter2);
-                } else if (parameter3 != null) {
-                    SolrConnection instance = SolrConnection.getInstance();
-                    List<String> FindLinks2 = new ArrayList<>();
-                    FindLinks = instance.Find("finalText", "(" + parameter3 + ")", ConfigInfo.getInstance().getConfig().get("LinksThreshold").getAsNumber().value().doubleValue());
-                    for (int i = 0; i < FindLinks.size(); i++) {
-                        FindLinks2.add(FindLinks.get(i).split("\\|")[1]);
+                    for (int j = 0; j < rep.length; j++) {
+                        String end = rep[j];
+                        String Repo = end.split(":")[0];
+                        String limit = end.split(":")[1];
+                        List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
+                        for (int i = 0; i < FindLinks2.size(); i++) {
+                            txt2 += "{\"Title\":\""+LinksFilesUtiles.getTitle(FindLinks2.get(i))+"\", \"URI\":\"" + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\"" + Repo + "\"}";
+                            txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
+                        }
                     }
-                    FindLinks = FindLinks2;
+                    res += txt2 + "]";
+                } else {
+                    throw new Exception("No valid params found... repositories, type, query");
                 }
 
-                res = "[";
-                String txt = "";
-                for (int i = 0; i < FindLinks.size(); i++) {
-
-                    txt += "{\"URI\":\"" + FindLinks.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks.get(i)) + "\"}";
-
-                    txt += (i == FindLinks.size() - 1 ? "" : ",");
-                }
-                res += txt + "]";
             } catch (Exception e) {
                 e.printStackTrace(new PrintStream(System.out));
                 res = "{\"error\":\"" + e + "\"}";
