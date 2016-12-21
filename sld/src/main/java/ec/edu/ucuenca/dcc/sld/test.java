@@ -20,10 +20,10 @@ public class test {
     public static void main(String[] args) throws Exception {
         //http://localhost:8080/cepalstat/indicador/Indicador_1973
         
+        SolrConnection instance = SolrConnection.getInstance();
         
         
-        
-        System.out.println(LinksFilesUtiles.getLinks(1, "26171"));
+        System.out.println(instance.Find2("finalText", "(" + "Ecuador Quito" + ")", "endpoint", "repositorio", 15));
         
         
         //SPARQL sp = new SPARQL();

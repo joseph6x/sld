@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  *
@@ -97,7 +98,10 @@ public class Query extends HttpServlet {
                         String limit = end.split(":")[1];
                         List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
                         for (int i = 0; i < FindLinks2.size(); i++) {
-                            txt2 += "{\"Title\":\""+LinksFilesUtiles.getTitle(FindLinks2.get(i))+"\", \"URI\":\"" + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\"" + Repo + "\"}";
+                            txt2 += "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i)) 
+                                    + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\"" 
+                                    + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\"" 
+                                    + Repo + "\"}";
                             txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
                         }
                     }

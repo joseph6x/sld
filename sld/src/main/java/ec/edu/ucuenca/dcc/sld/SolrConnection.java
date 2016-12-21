@@ -49,24 +49,36 @@ public class SolrConnection {
 
     public List<String> Find2(String var, String val, String var2, String val2, int limit) throws SolrServerException, IOException {
 
+        int current = 0;
+
         List<String> ls = new ArrayList<>();
         NamedList params = new NamedList();
         params.add("q", var + ":" + "" + val + "\nAND\n" + var2 + ":" + val2);
         params.add("fl", "*,score");
-        SolrParams toSolrParams = SolrParams.toSolrParams(params);
-        QueryResponse query = Solr.query(toSolrParams);
-        SolrDocumentList results = query.getResults();
-        if (!query.getResults().isEmpty()) {
-            for (int i = 0; i < results.size() && i < limit; i++) {
-                SolrDocument get = results.get(i);
-                //Object fieldValue = get.getFieldValue("score");
-                Object fieldValue1 = get.getFieldValue("uri");
-                //Object fieldValueEP = get.getFieldValue("endpoint");
-                //double parseDouble = Double.parseDouble(fieldValue + "");
-                ls.add(fieldValue1 + "");
+        params.add("start", current + "");
 
+        while (true) {
+            params.setVal(2, current + "");
+            SolrParams toSolrParams = SolrParams.toSolrParams(params);
+            QueryResponse query = Solr.query(toSolrParams);
+            SolrDocumentList results = query.getResults();
+            if (!query.getResults().isEmpty()) {
+                for (int i = 0; i < results.size() && current < limit; i++) {
+                    SolrDocument get = results.get(i);
+                    //Object fieldValue = get.getFieldValue("score");
+                    Object fieldValue1 = get.getFieldValue("uri");
+                    //Object fieldValueEP = get.getFieldValue("endpoint");
+                    //double parseDouble = Double.parseDouble(fieldValue + "");
+                    ls.add(fieldValue1 + "");
+                    current += 1;
+                }
+                if (!(current < limit)) {
+                    break;
+                }
+
+            } else {
+                break;
             }
-
         }
 
         return ls;
@@ -143,8 +155,7 @@ public class SolrConnection {
         }
         return txt;
     }
-    
-    
+
     public static SolrConnection getInstance() {
         return SolrConnectionHolder.INSTANCE;
     }
