@@ -8,7 +8,6 @@ package ec.edu.ucuenca.dcc.sld;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  *
@@ -85,26 +83,36 @@ public class Query extends HttpServlet {
                             SearchTerms = QueryText;
                             break;
                     }
-                    SearchTerms = SearchTerms.replace(",", "").trim();
+                    SearchTerms = SearchTerms.replace(",", " ").trim();
                     String[] rep = RepositoriesList.split(";");
                     List<String> FindLinks = new ArrayList<>();
 
-                    String txt2 = "";
+                    
                     res = "[";
 
+                    List<String> t_= new ArrayList<>();
+                    
                     for (int j = 0; j < rep.length; j++) {
                         String end = rep[j];
                         String Repo = end.split(":")[0];
                         String limit = end.split(":")[1];
                         List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
                         for (int i = 0; i < FindLinks2.size(); i++) {
-                            txt2 += "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i)) 
+                            String txt2_ = "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i)) 
                                     + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\"" 
                                     + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\"" 
                                     + Repo + "\"}";
-                            txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
+                            t_.add(txt2_);
+                            //txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
                         }
                     }
+                    String txt2 = "";
+                    for (int j = 0; j < t_.size(); j++) {
+                        txt2+=t_.get(j);
+                        txt2 += ( j == t_.size() - 1 ? "" : ",");
+                    }
+                    
+                    
                     res += txt2 + "]";
                 } else {
                     throw new Exception("No valid params found... repositories, type, query");
