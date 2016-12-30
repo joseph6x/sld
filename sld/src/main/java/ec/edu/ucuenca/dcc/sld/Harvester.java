@@ -7,7 +7,10 @@ package ec.edu.ucuenca.dcc.sld;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -70,7 +73,11 @@ public class Harvester {
             if (a.isLiteral()) {
                 txt += a.asLiteral().getString() + ", ";
             } else {
-                txt += DbpediaLabel(a.asResource().getURI()) + ", ";
+                List<String> DbpediaLabel = DbpediaLabel(a.asResource().getURI());
+                for (int j = 0; j < DbpediaLabel.size(); j++) {
+                    txt += DbpediaLabel.get(j) + ", ";
+                }
+
             }
         }
 
@@ -89,19 +96,35 @@ public class Harvester {
 
     }
 
-    public String DbpediaLabel(String uri) {
+    public List<String> DbpediaLabel(String uri) {
 
-        String txt = "";
-        String qry = "select (str(?t) as ?T) where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?t .  filter (lang(?t) = 'en')} LIMIT 1";
+        //String txt = "";
+        //String qry = "select (str(?t) as ?T) where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?t .  filter (lang(?t) = 'en'). } ";
+        String qry2 = "select (str(?t) as ?T) where { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?t .  } ";
         SPARQL sp = new SPARQL();
-        List<RDFNode> SimpleQuery = sp.SimpleQuery(qry, "http://dbpedia.org/sparql", "T");
-        RDFNode get = null;
-        if (SimpleQuery.size() > 0) {
-            get = SimpleQuery.get(0);
-            String string = get.asLiteral().getString();
-            txt = string;
+        //List<RDFNode> SimpleQuery1 = sp.SimpleQuery(qry, "http://dbpedia.org/sparql", "T");
+        List<RDFNode> SimpleQuery2 = sp.SimpleQuery(qry2, "http://dbpedia.org/sparql", "T");
+        //List<RDFNode> SimpleQuery3 = sp.SimpleQuery(qry, "http://es.dbpedia.org/sparql", "T");
+        List<RDFNode> SimpleQuery4 = sp.SimpleQuery(qry2, "http://es.dbpedia.org/sparql", "T");
+
+        List<RDFNode> SimpleQuery = new ArrayList<>();
+        //SimpleQuery.addAll(SimpleQuery1);
+        SimpleQuery.addAll(SimpleQuery2);
+        //SimpleQuery.addAll(SimpleQuery3);
+        SimpleQuery.addAll(SimpleQuery4);
+
+        List<String> ls = new ArrayList<>();
+
+        for (RDFNode a : SimpleQuery) {
+            String string = a.asLiteral().getString();
+            ls.add(string);
         }
-        return txt;
+
+        Set<String> linkedHashSet = new LinkedHashSet<>();
+        linkedHashSet.addAll(ls);
+
+        List list = new ArrayList(linkedHashSet);
+        return list;
     }
 
     public String getEndpoint() {

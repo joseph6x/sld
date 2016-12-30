@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 /**
  *
@@ -45,7 +46,8 @@ public class LinksDiscovery {
         txt = txt.replace(",", "").trim();
         List<String> Find = new ArrayList<>();
         if (txt.compareTo("") != 0) {
-            Find = instance.Find("finalText", "(" + txt + ")", ConfigInfo.getInstance().getConfig().get("LinksThreshold").getAsNumber().value().doubleValue());
+            
+            Find = instance.Find("finalText", "(" + HttpUtils.Escape(txt) + ")", ConfigInfo.getInstance().getConfig().get("LinksThreshold").getAsNumber().value().doubleValue());
         }
 
         return Find;

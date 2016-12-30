@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -41,7 +42,7 @@ public class SolrConnection {
         NamedList params = new NamedList();
         params.add("q", "uri:" + "\"" + uri + "\"");
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
-        QueryResponse query = Solr.query(toSolrParams);
+        QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
 
         return !query.getResults().isEmpty();
 
@@ -60,7 +61,7 @@ public class SolrConnection {
         while (true) {
             params.setVal(2, current + "");
             SolrParams toSolrParams = SolrParams.toSolrParams(params);
-            QueryResponse query = Solr.query(toSolrParams);
+            QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
             SolrDocumentList results = query.getResults();
             if (!query.getResults().isEmpty()) {
                 for (int i = 0; i < results.size() && current < limit; i++) {
@@ -95,7 +96,7 @@ public class SolrConnection {
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
 
         //System.out.println(toSolrParams.toQueryString());
-        QueryResponse query = Solr.query(toSolrParams);
+        QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
         SolrDocumentList results = query.getResults();
         if (!query.getResults().isEmpty()) {
             for (int i = 0; i < results.size(); i++) {
@@ -124,7 +125,7 @@ public class SolrConnection {
         params.add("q", var + ":" + "\"" + val + "\"");
         params.add("fl", "*,score");
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
-        QueryResponse query = Solr.query(toSolrParams);
+        QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
         SolrDocumentList results = query.getResults();
         if (!query.getResults().isEmpty()) {
             SolrDocument get = results.get(0);
@@ -143,7 +144,7 @@ public class SolrConnection {
         params.add("q", var + ":" + "" + val + "");
         params.add("fl", "*,score");
         SolrParams toSolrParams = SolrParams.toSolrParams(params);
-        QueryResponse query = Solr.query(toSolrParams);
+        QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
         SolrDocumentList results = query.getResults();
         if (!query.getResults().isEmpty()) {
             SolrDocument get = results.get(0);

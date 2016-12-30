@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 /**
  *
@@ -67,6 +68,7 @@ public class Query extends HttpServlet {
 
                             if (!ls.isEmpty()) {
                                 SearchTerms = ls.get(0)[2];
+                                SearchTerms = HttpUtils.Escape(SearchTerms);
                             } else {
                                 throw new Exception("No handle/id found..." + QueryText);
                             }
@@ -75,32 +77,39 @@ public class Query extends HttpServlet {
                             String[] FindOne_ = instance.FindOne("uri", QueryText, "originalText", "uri", "finalText", "endpoint");
                             if (FindOne_ != null) {
                                 SearchTerms = FindOne_[2];
+                                SearchTerms = HttpUtils.Escape(SearchTerms);
                             } else {
                                 throw new Exception("No URI found..." + QueryText);
                             }
                             break;
                         case "keywords":
                             SearchTerms = QueryText;
+                            SearchTerms = HttpUtils.Escape2(SearchTerms);
                             break;
                     }
+                    String traductorYandex = HttpUtils.traductorYandex(SearchTerms);
+
+                    if (!traductorYandex.trim().isEmpty()) {
+                        SearchTerms = SearchTerms + "," + traductorYandex;
+                    }
+
                     SearchTerms = SearchTerms.replace(",", " ").trim();
                     String[] rep = RepositoriesList.split(";");
                     List<String> FindLinks = new ArrayList<>();
 
-                    
                     res = "[";
 
-                    List<String> t_= new ArrayList<>();
-                    
+                    List<String> t_ = new ArrayList<>();
+
                     for (int j = 0; j < rep.length; j++) {
                         String end = rep[j];
                         String Repo = end.split(":")[0];
                         String limit = end.split(":")[1];
                         List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
                         for (int i = 0; i < FindLinks2.size(); i++) {
-                            String txt2_ = "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i)) 
-                                    + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\"" 
-                                    + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\"" 
+                            String txt2_ = "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i))
+                                    + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\""
+                                    + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\""
                                     + Repo + "\"}";
                             t_.add(txt2_);
                             //txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
@@ -108,11 +117,10 @@ public class Query extends HttpServlet {
                     }
                     String txt2 = "";
                     for (int j = 0; j < t_.size(); j++) {
-                        txt2+=t_.get(j);
-                        txt2 += ( j == t_.size() - 1 ? "" : ",");
+                        txt2 += t_.get(j);
+                        txt2 += (j == t_.size() - 1 ? "" : ",");
                     }
-                    
-                    
+
                     res += txt2 + "]";
                 } else {
                     throw new Exception("No valid params found... repositories, type, query");

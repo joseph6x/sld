@@ -8,6 +8,7 @@ package ec.edu.ucuenca.dcc.sld;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 
 
@@ -19,11 +20,19 @@ public class test {
 
     public static void main(String[] args) throws Exception {
         //http://localhost:8080/cepalstat/indicador/Indicador_1973
+        // SolrConnection instance = SolrConnection.getInstance();
+       // List<String> FindLinks = LinksDiscovery.FindLinks("http://localhost:8080/cepalstat/indicador/Indicador_2947");
+       SolrConnection instance = SolrConnection.getInstance();
+        List<String> FindLinks2 = instance.Find2("finalText", "(" + ClientUtils.escapeQueryChars("'pobreza' 'poverty'") + ")", "endpoint", "cepalstat", 10);
         
-        SolrConnection instance = SolrConnection.getInstance();
+       
         
         
-        System.out.println(instance.Find2("finalText", "(" + "Ecuador Quito" + ")", "endpoint", "repositorio", 15));
+        
+        
+        
+       
+        System.out.println(FindLinks2);
         
         
         //SPARQL sp = new SPARQL();

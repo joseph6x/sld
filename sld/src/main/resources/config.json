@@ -11,17 +11,17 @@
                 "Name": "cepalstat",
                 "Endpoint": "http://localhost:8891/cepalstat/sparql",
                 "MainClass": "http://purl.org/linked-data/cube#DataSet",
-                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
+                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } UNION { select (str(?l) as ?d) where { <|?|> <http://purl.org/linked-data/cube#dataSet> ?c . ?c ?b ?x . ?x <http://www.w3.org/2000/01/rdf-schema#label>  ?l.   } } }"
             },{
                 "Name": "biblioguias",
                 "Endpoint": "http://localhost:8891/biblioguias/sparql",
                 "MainClass": "http://dbpedia.org/resource/Guide_to_information_sources",
-                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"
+                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
             },{
                 "Name": "repositorio",
                 "Endpoint": "http://localhost:8891/repositorio/sparql",
                 "MainClass": "http://purl.org/dc/terms/BibliographicResource",
-                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } }"
+                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
             }
             ]
     }
