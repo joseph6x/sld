@@ -22,19 +22,19 @@ import java.util.List;
  */
 public class SPARQL {
 
-    public List<RDFNode> SimpleQuery(String qry, String end, String var) {
-        List<RDFNode> lista = new ArrayList();
+    public static synchronized List<RDFNode> SimpleQuery(String qry, String end, String var) {
+        List<RDFNode> lista = null;
         String endpoint = end;
         String consulta = qry;
         Query query = QueryFactory.create(consulta);
         QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
         try {
             ResultSet rs = qexec.execSelect();
+            lista = new ArrayList();
             while (rs.hasNext()) {
                 QuerySolution soln = rs.nextSolution();
                 lista.add(soln.get(var));
             }
-            return lista;
         } catch (Exception e) {
             System.out.println("Verificar consulta, no existen datos para mostrar" + e);
         } finally {

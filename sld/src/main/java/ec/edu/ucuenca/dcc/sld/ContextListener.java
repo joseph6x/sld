@@ -14,36 +14,21 @@ import javax.servlet.ServletContextListener;
  */
 public class ContextListener implements ServletContextListener {
 
-    private HarvestingDemon D1 = null;
-    private SynonymsDemon D2 = null;
-    private CorticalDemon D3 = null;
-    private LinksDemon D4 = null;
+    //private HarvestingDemon D1 = null;
+
 
     public void contextInitialized(ServletContextEvent sce) {
-        if ((D1 == null) || (!D1.isAlive())) {
-            D1 = new HarvestingDemon();
-            D1.start();
-        }
-        if ((D2 == null) || (!D2.isAlive())) {
-            D2 = new SynonymsDemon();
-            D2.start();
-        }
-        if ((D3 == null) || (!D3.isAlive())) {
-            D3 = new CorticalDemon();
-            D3.start();
-        }
-        if ((D4 == null) || (!D4.isAlive())) {
-            D4 = new LinksDemon();
-            D4.start();
-        }
+       // if ((D1 == null) || (!D1.isAlive())) {
+      //      D1 = new HarvestingDemon();
+       ////     D1.start();
+     //   }
+
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
         try {
-            D1.interrupt();
-            D2.interrupt();
-            D3.interrupt();
-            D4.interrupt();
+            //D1.interrupt();
+
         } catch (Exception ex) {
         }
     }

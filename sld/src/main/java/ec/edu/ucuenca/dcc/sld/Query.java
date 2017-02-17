@@ -8,14 +8,15 @@ package ec.edu.ucuenca.dcc.sld;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.solr.client.solrj.util.ClientUtils;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.Element;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -37,95 +38,47 @@ public class Query extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String res = "";
+            CacheResults instance = CacheResults.getInstance();
+            Cache diskCache = instance.getDiskCache();
+
             try {
-
-                String RepositoriesList = request.getParameter("repositories");
-                String QueryType = request.getParameter("type");
-                String QueryText = request.getParameter("query");
-
-                if (RepositoriesList != null && !RepositoriesList.isEmpty() && QueryType != null && !QueryType.isEmpty() && QueryText != null && !QueryText.isEmpty()) {
-
-                    SolrConnection instance = SolrConnection.getInstance();
-
-                    String SearchTerms = "";
-
-                    switch (QueryType) {
-                        case "handle":
-                            String[] dt = QueryText.split("_|/|#|=");
-                            QueryText = dt[dt.length - 1];
-                        case "id":
-                            String[] FindOne = instance.FindOne2("uri", "*/" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne2 = instance.FindOne2("uri", "*_" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne3 = instance.FindOne2("uri", "*#" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne4 = instance.FindOne2("uri", "*=" + QueryText, "originalText", "uri", "finalText", "endpoint");
-
-                            List<String[]> ls = new ArrayList<String[]>();
-                            ls.add(FindOne);
-                            ls.add(FindOne2);
-                            ls.add(FindOne3);
-                            ls.add(FindOne4);
-                            ls.removeAll(Collections.singleton(null));
-
-                            if (!ls.isEmpty()) {
-                                SearchTerms = ls.get(0)[2];
-                                SearchTerms = HttpUtils.Escape(SearchTerms);
-                            } else {
-                                throw new Exception("No handle/id found..." + QueryText);
+                String InputText = request.getParameter("InputText");
+                String InputURI = request.getParameter("URI");
+                //SearchType:
+                //0:No valid input submitted, error
+                //1:Text, use NER and Geonames
+                //2:URI, use DBpedia
+                int SearchType = (InputText != null && !InputText.isEmpty()) ? 1 : (InputURI != null && !InputURI.isEmpty()) ? 2 : 0;
+                if (SearchType != 0) {
+                    String InputValue = SearchType == 1 ? InputText : InputURI;
+                    Element cacheItem = diskCache.get(InputValue);
+                    if (cacheItem != null) {
+                        res = (String) cacheItem.getObjectValue();
+                    } else {
+                        JSONArray Results = new JSONArray();
+                        if (SearchType == 1) {
+                            Geonames instanceGeonames = Geonames.getInstance();
+                            SNER instanceSNER = SNER.getInstance();
+                            List<String> NamedEntities = instanceSNER.GetNamedEntities(InputValue);
+                            for (String aLocation : NamedEntities) {
+                                JSONObject location = instanceGeonames.getLocation(aLocation);
+                                if (location != null) {
+                                    Results.add(location);
+                                }
                             }
-                            break;
-                        case "uri":
-                            String[] FindOne_ = instance.FindOne("uri", QueryText, "originalText", "uri", "finalText", "endpoint");
-                            if (FindOne_ != null) {
-                                SearchTerms = FindOne_[2];
-                                SearchTerms = HttpUtils.Escape(SearchTerms);
-                            } else {
-                                throw new Exception("No URI found..." + QueryText);
+                        } else {
+                            DBpedia instanceDBpedia = DBpedia.getInstance();
+                            JSONObject location = instanceDBpedia.getLocation(InputValue);
+                            if (location != null) {
+                                Results.add(location);
                             }
-                            break;
-                        case "keywords":
-                            SearchTerms = QueryText;
-                            SearchTerms = HttpUtils.Escape2(SearchTerms);
-                            break;
-                    }
-                    String traductorYandex = HttpUtils.traductorYandex(SearchTerms);
-
-                    if (!traductorYandex.trim().isEmpty()) {
-                        SearchTerms = SearchTerms + "," + traductorYandex;
-                    }
-
-                    SearchTerms = SearchTerms.replace(",", " ").trim();
-                    String[] rep = RepositoriesList.split(";");
-                    List<String> FindLinks = new ArrayList<>();
-
-                    res = "[";
-
-                    List<String> t_ = new ArrayList<>();
-
-                    for (int j = 0; j < rep.length; j++) {
-                        String end = rep[j];
-                        String Repo = end.split(":")[0];
-                        String limit = end.split(":")[1];
-                        List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
-                        for (int i = 0; i < FindLinks2.size(); i++) {
-                            String txt2_ = "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i))
-                                    + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\""
-                                    + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\""
-                                    + Repo + "\"}";
-                            t_.add(txt2_);
-                            //txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
                         }
+                        res = Results.toJSONString();
+                        diskCache.put(new Element(InputValue, res));
                     }
-                    String txt2 = "";
-                    for (int j = 0; j < t_.size(); j++) {
-                        txt2 += t_.get(j);
-                        txt2 += (j == t_.size() - 1 ? "" : ",");
-                    }
-
-                    res += txt2 + "]";
                 } else {
-                    throw new Exception("No valid params found... repositories, type, query");
+                    throw new Exception("No valid params found... Required: InputText or InputURI");
                 }
-
             } catch (Exception e) {
                 e.printStackTrace(new PrintStream(System.out));
                 res = "{\"error\":\"" + e + "\"}";
