@@ -6,10 +6,13 @@
 package ec.edu.ucuenca.dcc.sld;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -31,7 +34,17 @@ public class DBpedia {
         private static final DBpedia INSTANCE = new DBpedia();
     }
 
-    public synchronized JSONObject getLocation(String URI) {
+    public synchronized JSONObject getLocation(String URI) throws SQLException, ParseException {
+        JSONParser parser = new JSONParser();
+        Cache instanceCache = Cache.getInstance();
+        String CacheItem = instanceCache.get("DBpediaQuery=" + URI);
+        if (CacheItem != null) {
+            if (CacheItem.compareTo("null") == 0) {
+                return null;
+            }
+            return (JSONObject) parser.parse(CacheItem);
+        }
+
         String QueryLon = "select ?lon { <" + URI + "> <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lon . } limit 1";
         String QueryLat = "select ?lat { <" + URI + "> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat . } limit 1";
         String lon = null;
@@ -51,11 +64,11 @@ public class DBpedia {
                     break;
                 }
                 try {
-                    Thread.sleep(1000*5);
+                    Thread.sleep(1000 * 5);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(DBpedia.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             } while (true);
         }
         JSONObject LocationResult = null;
@@ -64,7 +77,11 @@ public class DBpedia {
             LocationResult.put("URI", URI);
             LocationResult.put("Longitude", lon);
             LocationResult.put("Latitude", lat);
+            instanceCache.put("DBpediaQuery=" + URI, LocationResult.toJSONString());
+        } else {
+            instanceCache.put("DBpediaQuery=" + URI, "null");
         }
+
         return LocationResult;
     }
 

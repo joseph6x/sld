@@ -13,8 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -37,54 +36,68 @@ public class Query extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String res = "";
-            CacheResults instance = CacheResults.getInstance();
-            Cache diskCache = instance.getDiskCache();
 
+            String ResultJSON = "";
+            Cache instanceCache = Cache.getInstance();
             try {
-                String InputText = request.getParameter("InputText");
-                String InputURI = request.getParameter("URI");
-                //SearchType:
-                //0:No valid input submitted, error
-                //1:Text, use NER and Geonames
-                //2:URI, use DBpedia
-                int SearchType = (InputText != null && !InputText.isEmpty()) ? 1 : (InputURI != null && !InputURI.isEmpty()) ? 2 : 0;
-                if (SearchType != 0) {
-                    String InputValue = SearchType == 1 ? InputText : InputURI;
-                    Element cacheItem = diskCache.get(InputValue);
-                    if (cacheItem != null) {
-                        res = (String) cacheItem.getObjectValue();
+                String Forward = request.getParameter("ForwardCacheURL");
+                if (Forward != null && !Forward.isEmpty()) {
+                    RequestWrapper Wrapper = new RequestWrapper(request);
+                    String DataToText = Wrapper.DataToText();
+                    String CacheItem = instanceCache.get("QueryForward=" + DataToText);
+                    if (CacheItem != null) {
+                        ResultJSON = CacheItem;
                     } else {
-                        JSONArray Results = new JSONArray();
-                        if (SearchType == 1) {
-                            Geonames instanceGeonames = Geonames.getInstance();
-                            SNER instanceSNER = SNER.getInstance();
-                            List<String> NamedEntities = instanceSNER.GetNamedEntities(InputValue);
-                            for (String aLocation : NamedEntities) {
-                                JSONObject location = instanceGeonames.getLocation(aLocation);
+                        String RunRequestResult = Wrapper.RunRequest();
+                        ResultJSON = RunRequestResult;
+                        instanceCache.put("QueryForward=" + DataToText, RunRequestResult);
+                    }
+                } else {
+                    String InputText = request.getParameter("InputText");
+                    String InputURI = request.getParameter("URI");
+                    //SearchType:
+                    //0:No valid input submitted, error
+                    //1:Text, use NER and Geonames
+                    //2:URI, use DBpedia
+                    int SearchType = (InputText != null && !InputText.isEmpty()) ? 1 : (InputURI != null && !InputURI.isEmpty()) ? 2 : 0;
+                    if (SearchType != 0) {
+                        String InputValue = SearchType == 1 ? InputText : InputURI;
+                        String cacheItem = instanceCache.get("QueryText=" + InputValue);
+                        if (cacheItem != null) {
+                            ResultJSON = cacheItem;
+                        } else {
+                            JSONArray Results = new JSONArray();
+                            if (SearchType == 1) {
+                                Geonames instanceGeonames = Geonames.getInstance();
+                                SNER instanceSNER = SNER.getInstance();
+                                List<String> NamedEntities = instanceSNER.GetNamedEntities(InputValue);
+                                for (String aLocation : NamedEntities) {
+                                    JSONObject location = instanceGeonames.getLocation(aLocation);
+                                    if (location != null) {
+                                        Results.add(location);
+                                    }
+                                }
+                            } else {
+                                DBpedia instanceDBpedia = DBpedia.getInstance();
+                                JSONObject location = instanceDBpedia.getLocation(InputValue);
                                 if (location != null) {
                                     Results.add(location);
                                 }
                             }
-                        } else {
-                            DBpedia instanceDBpedia = DBpedia.getInstance();
-                            JSONObject location = instanceDBpedia.getLocation(InputValue);
-                            if (location != null) {
-                                Results.add(location);
-                            }
+                            ResultJSON = Results.toJSONString();
+                            instanceCache.put("QueryText=" + InputValue, ResultJSON);
                         }
-                        res = Results.toJSONString();
-                        diskCache.put(new Element(InputValue, res));
+                    } else {
+                        throw new Exception("No valid params found... Required: InputText or InputURI");
                     }
-                } else {
-                    throw new Exception("No valid params found... Required: InputText or InputURI");
                 }
+
             } catch (Exception e) {
                 e.printStackTrace(new PrintStream(System.out));
-                res = "{\"error\":\"" + e + "\"}";
+                ResultJSON = "{\"error\":\"" + e + "\"}";
             }
 
-            out.println(res);
+            out.println(ResultJSON);
             out.flush();
             out.close();
 
