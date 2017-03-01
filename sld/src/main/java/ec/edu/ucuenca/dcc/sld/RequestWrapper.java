@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RequestWrapper {
 
     private HttpServletRequest Request = null;
+    private String Body = null;
 
     public HttpServletRequest getRequest() {
         return Request;
@@ -55,19 +56,22 @@ public class RequestWrapper {
         }
         return map;
     }
-    
+
     private String getBodyInfo() throws IOException {
-        String collect = Request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        String collect = Body;
+        if (Body == null) {
+            collect = Request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+            Body = collect;
+        }
         return collect;
     }
-    
 
     public String DataToText() throws IOException {
         Map<String, String> headersInfo = getHeadersInfo();
         Map<String, String> parametersInfo = getParametersInfo();
         String bodyInfo = getBodyInfo();
-        
-        return headersInfo.toString() + parametersInfo.toString()+bodyInfo;
+
+        return headersInfo.toString() + parametersInfo.toString() + bodyInfo;
     }
 
     public String RunRequest() throws IOException {
@@ -77,16 +81,22 @@ public class RequestWrapper {
         Map<String, String> parametersInfo = getParametersInfo();
         String bodyInfo = getBodyInfo();
         String ForwardURL = parametersInfo.remove("ForwardCacheURL");
-        
+        headersInfo.remove("host");
+        headersInfo.remove("content-length");
+        headersInfo.remove("content-type");
+        //headersInfo.remove("user-agent");
+
         do {
 
             try {
-                Result = HTTPUtils.Http(ForwardURL, parametersInfo, headersInfo,bodyInfo);
-                break;
+                Result = HTTPUtils.sendPost(ForwardURL, parametersInfo, headersInfo, bodyInfo);
+                if (Result != null) {
+                    break;
+                }
             } catch (Exception ex) {
                 try {
-                    Thread.sleep(1000 * 5);
-                } catch (InterruptedException ex1) {
+                    Thread.sleep(1000 * 1);
+                } catch (Exception ex1) {
                     Logger.getLogger(RequestWrapper.class.getName()).log(Level.SEVERE, null, ex1);
                 }
                 Logger.getLogger(RequestWrapper.class.getName()).log(Level.SEVERE, null, ex);

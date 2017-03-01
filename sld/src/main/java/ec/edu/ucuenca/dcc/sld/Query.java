@@ -45,11 +45,14 @@ public class Query extends HttpServlet {
                     RequestWrapper Wrapper = new RequestWrapper(request);
                     String DataToText = Wrapper.DataToText();
                     String CacheItem = instanceCache.get("QueryForward=" + DataToText);
+                    //System.out.println(DataToText);
                     if (CacheItem != null) {
                         ResultJSON = CacheItem;
                     } else {
                         String RunRequestResult = Wrapper.RunRequest();
                         ResultJSON = RunRequestResult;
+                        
+                        //System.out.println(RunRequestResult);
                         instanceCache.put("QueryForward=" + DataToText, RunRequestResult);
                     }
                 } else {

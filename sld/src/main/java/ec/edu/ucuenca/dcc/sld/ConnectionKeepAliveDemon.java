@@ -19,9 +19,9 @@ public class ConnectionKeepAliveDemon extends Thread {
     public void run() {
         while (true) {
             try {
-                Cache instance = Cache.getInstance();
-                String get = instance.get("hola");
                 Thread.sleep(1000 * 60);
+                Cache instance = Cache.getInstance();
+                instance.Alive();
             } catch (Exception ex) {
                 Logger.getLogger(ConnectionKeepAliveDemon.class.getName()).log(Level.SEVERE, null, ex);
             }

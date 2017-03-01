@@ -8,6 +8,7 @@ package ec.edu.ucuenca.dcc.sld;
 //import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 //import org.apache.solr.client.solrj.util.ClientUtils;
 
 /**
@@ -18,12 +19,38 @@ public class test {
 
     public static void main(String[] args) throws Exception {
 
+        for (int i = 0; i < 400; i++) {
+
+            long currentTimeMillis = System.currentTimeMillis();
+
+            Map<String, String> mp = new HashMap<>();
+            Map<String, String> mh = new HashMap<>();
+
+            mp.put("ForwardCacheURL", "https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch=felicidad+or+" + i);
+
+            String sendPost = HTTPUtils.sendPost("http://localhost:8080/sld/Query", mp, mh, "");
+
+            System.out.println(sendPost);
+
+            currentTimeMillis = System.currentTimeMillis() - currentTimeMillis;
+
+            System.out.println(currentTimeMillis);
+        }
+        ///
+        //Map <String, String> mp = new HashMap<>();
+        //Map <String, String> mh = new HashMap<>();
+        //mh.put("content-type", "application/json");
+        //  mh.put("user-agent", "Jakarta Commons-HttpClient/3.1");
+        // mh.put("accept", "application/json");
+        //   mp.put("confidence", "0.5");
+        //  mp.put("text", "el presente proyecto ha sido realizado en el centro de documentación regional “juan bautista vázquez” y ha tenido como objetivo la actualización tecnológica en el área informática hacia un nuevo sistema de uso y frecuencia internacionales como lo es la estructura de datos marc, el sistema d-space para tratamiento de archivos digitales, entre otros. basándose en lenguajes de programación conocidos como php, sql, javascript. \n" +
+//"la construcción de este proyecto ha llevado un proceso complejo de cambios, capacitaciones y adaptaciones en los procesos de generar y administrar información en el centro de documentación. como resultado se ha obtenido un sistema basado en una estructura de datos muy usada a nivel internacional, lo cual permite estar al centro de documentación como pioneros en uso de la tecnología marc y bibliotecas nivel nacional.");
+        //  mp.put("support", "0");
+        //  String sendPost = HTTPUtils.sendPost("http://www.dbpedia-spotlight.com/es/annotate",mp,mh, "");
+        //  System.out.println(sendPost);
         //http://ws.geonames.org/searchJSON?q=gualleturo&country=ec&maxRows=1&username=cedia
-        Geonames instance = Geonames.getInstance();
-        
-       
-        System.out.println(instance.getLocation("guallejhjhjuro"));
-        
+        // Geonames instance = Geonames.getInstance();
+        //System.out.println(instance.getLocation("guallejhjhjuro"));
         //SNER instance = SNER.getInstance();
         // List<String> GetNamedEntities = instance.GetNamedEntities("La presente investigación es un análisis de las actividades turísticas que demandaron los jubilados estadounidenses residentes en Cuenca-Ecuador en el año 2012. Este trabajo se basó en un trabajo de campo con una muestra de 340 encuestas. La investigación analizó la demanda de los servicios turísticos que son reconocidos como actividades turísticas en el Art. 5 de la Ley de Turismo del Ecuador. La investigación tiene dos partes: la primera busca establecer si los jubilados estadounidenses demandaron servicios turísticos en Cuenca; la segunda parte es una contribución a la discusión del concepto Turismo Residencial. Al final de la investigación se establece que de acuerdo a los resultados, el 30% de jubilados estadounidenses demandaron las actividades de alimentos y bebidas y oferta complementaria tales como centros comerciales, cines y las actividades culturales. Finalmente, se determinó que el 26% de la muestra representó a los turistas residenciales que vivieron en Cuenca.");
         // System.out.println(GetNamedEntities);

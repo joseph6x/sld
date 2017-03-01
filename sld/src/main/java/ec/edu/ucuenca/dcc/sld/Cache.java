@@ -28,27 +28,48 @@ public class Cache {
     //  Database credentials
     String USER = "root";
     String PASS = "cedia";
-    Connection conn = null;
+    Connection connW = null;
+
+    Connection connR1 = null;
+    Connection connR2 = null;
 
     private Cache() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            connW = DriverManager.getConnection(DB_URL, USER, PASS);
+            connR1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            connR2 = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (Exception ex) {
             Logger.getLogger(Cache.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public synchronized void put(String key, String value) throws SQLException {
-        PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO Cache (Cache.key, value) values (?, ?)");
+        PreparedStatement stmt2 = connW.prepareStatement("INSERT INTO Cache (Cache.key, value) values (?, ?)");
         stmt2.setString(1, getMD5(key));
         stmt2.setString(2, value);
         stmt2.executeUpdate();
         stmt2.close();
     }
 
-    public synchronized String get(String key) throws SQLException {
+    public void Alive() throws SQLException {
+        Connection[] ls = new Connection[]{connW, connR1, connR2};
+        for (Connection conn : ls) {
+            String sql = "select now()";
+            Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+            }
+            rs.close();
+            stmt.close();
+        }
+    }
+
+    public String get(String key) throws SQLException {
         String sql = "SELECT * FROM Cache where Cache.key='" + getMD5(key) + "'";
+        Connection conn = null;
+        double random = Math.random();
+        conn = random > 0.5 ? connR1 : connR2;
         Statement stmt = conn.createStatement();
         java.sql.ResultSet rs = stmt.executeQuery(sql);
         String DataResult = null;
