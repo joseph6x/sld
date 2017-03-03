@@ -1,0 +1,526 @@
+@prefix rr:      <http://www.w3.org/ns/r2rml#> .
+@prefix OWL:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdaa:    <http://rdaregistry.info/Elements/a#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix bibo:    <http://purl.org/ontology/bibo/> .
+@prefix bibtex:  <http://purl.org/net/nknouf/ns/bibtex#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix saws:    <http://purl.org/saws/ontology#> .
+
+<#TriplesMapA009>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A009_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'Bundle/ORIGINAL'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A009_DATA"
+                        ] ;
+                rr:predicate bibo:uri
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapC001>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'identifier'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Document ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapC009>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C009_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'TechnicalReport'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Report ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C009_ID}"
+              ] .
+
+<#TriplesMapA012>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A012_DATA, ID_RECORD AS C012_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'Nombre'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A012_DATA"
+                        ] ;
+                rr:predicate foaf:firstName
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C012_ID}"
+              ] .
+
+<#TriplesMapC013>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT UPPER(DATA) AS C013_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/contributor/advisor/%'"
+              ] ;
+      rr:subjectMap
+              [ rr:class foaf:Person ;
+                rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C013_ID}"
+              ] .
+
+<#TriplesMapC012>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT UPPER(DATA) AS C012_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/contributor/author/%'"
+              ] ;
+      rr:subjectMap
+              [ rr:class foaf:Person ;
+                rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C012_ID}"
+              ] .
+
+<#TriplesMapIR004>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT UPPER(DATA) AS C012_ID, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/contributor/author/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+                        ] ;
+                rr:predicate <http://rdaregistry.info/Elements/a/P50195>
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C012_ID}"
+              ] .
+
+<#TriplesMapC008>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C008_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Working Paper'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Journal ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C008_ID}"
+              ] .
+
+<#TriplesMapA013>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A013_DATA, ID_RECORD AS C012_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'Apellido'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A013_DATA"
+                        ] ;
+                rr:predicate foaf:lastName
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C012_ID}"
+              ] .
+
+<#TriplesMapA001>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A001_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/title/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A001_DATA" ;
+                          rr:datatype xsd:string
+                        ] ;
+                rr:predicate dcterms:title
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapIR005>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT UPPER(DATA) AS C013_ID, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/contributor/advisor/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+                        ] ;
+                rr:predicate <http://rdaregistry.info/Elements/a/P50161>
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C013_ID}"
+              ] .
+
+<#TriplesMapA002>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A002_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/description/abstract/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A002_DATA" ;
+                          rr:datatype xsd:string
+                        ] ;
+                rr:predicate bibo:abstract
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapA014>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A014_DATA, ID_RECORD AS C013_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'NombreContributor'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A014_DATA"
+                        ] ;
+                rr:predicate foaf:name
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C013_ID}"
+              ] .
+
+<#TriplesMapC015>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C015_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'masterThesis'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibtex:Mastersthesis ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C015_ID}"
+              ] .
+
+<#TriplesMapC003>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C003_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Article'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Article ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C003_ID}"
+              ] .
+
+<#TriplesMapIR006>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS C014_ID, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'setSpec'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+                        ] ;
+                rr:predicate dcterms:hasPart
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/coleccion/{C014_ID}"
+              ] .
+
+<#TriplesMapA003>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A003_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/date/available/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A003_DATA" ;
+                          rr:datatype xsd:string
+                        ] ;
+                rr:predicate dcterms:available
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapR007>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C001_ID, DATA AS C016_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'menciona'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "C016_ID" ;
+                          rr:termType rr:IRI
+                        ] ;
+                rr:predicate <http://schema.org/mentions>
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapA015>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A015_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/description/provenance/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A015_DATA"
+                        ] ;
+                rr:predicate dcterms:provenance
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapC002>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C002_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Book Chapter'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Chapter ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C002_ID}"
+              ] .
+
+<#TriplesMapC014>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS C014_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'setSpec'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Collection ;
+                rr:template "http://190.15.141.66:8899/ucuenca/coleccion/{C014_ID}"
+              ] .
+
+<#TriplesMapC005>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C005_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Image'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Image ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C005_ID}"
+              ] .
+
+<#TriplesMapA004>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A004_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/date/accessioned/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A004_DATA" ;
+                          rr:datatype xsd:string
+                        ] ;
+                rr:predicate dcterms:dateSubmitted
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapA016>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A016_DATA, ID_RECORD AS C014_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'setSpec/Description'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A016_DATA"
+                        ] ;
+                rr:predicate dcterms:description
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/coleccion/{C014_ID}"
+              ] .
+
+<#TriplesMapR001>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C001_ID, UPPER(DATA) AS C012_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/contributor/author/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C012_ID}"
+                        ] ;
+                rr:predicate dcterms:creator
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapA017>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A017_DATA, ID_RECORD AS C013_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'Nombre'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A017_DATA"
+                        ] ;
+                rr:predicate foaf:firstName
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C013_ID}"
+              ] .
+
+<#TriplesMapC004>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C004_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Video'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Film ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C004_ID}"
+              ] .
+
+<#TriplesMapC016>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS C016_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'menciona'"
+              ] ;
+      rr:subjectMap
+              [ rr:class OWL:Thing ;
+                rr:column "C016_ID"
+              ] .
+
+<#TriplesMapA005>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A005_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/date/issued/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A005_DATA" ;
+                          rr:datatype xsd:string
+                        ] ;
+                rr:predicate dcterms:issued
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapA019>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A019_DATA, ID_RECORD AS C016_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'refiere'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A019_DATA"
+                        ] ;
+                rr:predicate saws:refersTo
+              ] ;
+      rr:subjectMap
+              [ rr:column "C016_ID"
+              ] .
+
+<#TriplesMapC011>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C011_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Thesis'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Thesis ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C011_ID}"
+              ] .
+
+<#TriplesMapA010>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A010_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/identifier/uri/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A010_DATA"
+                        ] ;
+                rr:predicate bibo:handle
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapR002>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C001_ID, UPPER(DATA) AS C013_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/contributor/advisor/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C013_ID}"
+                        ] ;
+                rr:predicate dcterms:contributor
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapC007>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C007_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Audio'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:AudioDocument ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C007_ID}"
+              ] .
+
+<#TriplesMapA006>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A006_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/subject/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A006_DATA" ;
+                          rr:datatype xsd:string
+                        ] ;
+                rr:predicate dcterms:subject
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapA018>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A018_DATA, ID_RECORD AS C013_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'Apellido'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A018_DATA"
+                        ] ;
+                rr:predicate foaf:lastName
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C013_ID}"
+              ] .
+
+<#TriplesMapA008>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A008_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'Bundle/LICENSE'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A008_DATA"
+                        ] ;
+                rr:predicate dcterms:license
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapC010>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C010_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Book'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Book ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C010_ID}"
+              ] .
+
+<#TriplesMapR003>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C001_ID, DATA AS C014_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'setSpec'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:template "http://190.15.141.66:8899/ucuenca/coleccion/{C014_ID}"
+                        ] ;
+                rr:predicate dcterms:isPartOf
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
+
+<#TriplesMapC006>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT SUBSTRING(ID_RECORD,37) AS C006_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/type/%' AND DATA LIKE 'Map'"
+              ] ;
+      rr:subjectMap
+              [ rr:class bibo:Map ;
+                rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C006_ID}"
+              ] .
+
+<#TriplesMapA011>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A011_DATA, ID_RECORD AS C012_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'NombreCreator'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A011_DATA"
+                        ] ;
+                rr:predicate foaf:name
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/contribuyente/{C012_ID}"
+              ] .
+
+<#TriplesMapA007>
+      rr:logicalTable
+              [ rr:sqlQuery "SELECT DATA AS A007_DATA, SUBSTRING(ID_RECORD,37) AS C001_ID FROM OAIPMHDATA WHERE TRANSID = 'TRASNFUCUENCADOC' AND STEPID = 'DATA PRECATCHING' AND FIELD LIKE 'dc/language/iso/%'"
+              ] ;
+      rr:predicateObjectMap
+              [ rr:objectMap
+                        [ rr:column "A007_DATA"
+                        ] ;
+                rr:predicate dcterms:language
+              ] ;
+      rr:subjectMap
+              [ rr:template "http://190.15.141.66:8899/ucuenca/recurso/{C001_ID}"
+              ] .
