@@ -101,7 +101,7 @@ public class HTTPUtils {
             for (Entry<String, String> mcc : mp.entrySet()) {
                 postParameters.add(new BasicNameValuePair(mcc.getKey(), mcc.getValue()));
             }
-            post.setEntity(new UrlEncodedFormEntity(postParameters,HTTP.UTF_8));
+            post.setEntity(new UrlEncodedFormEntity(postParameters, HTTP.UTF_8));
         }
 
         for (Entry<String, String> mcc : mh.entrySet()) {
@@ -111,7 +111,7 @@ public class HTTPUtils {
         //post.setHeader("Accept-Encoding", "gzip,deflate");
 
         if (body != null && !body.trim().isEmpty()) {
-            StringEntity params = new StringEntity(body,HTTP.UTF_8);
+            StringEntity params = new StringEntity(body, HTTP.UTF_8);
             post.setEntity(params);
         }
 
@@ -137,6 +137,59 @@ public class HTTPUtils {
             return result.toString();
         }
     }
+
+/*    public static String sendPostNew(String s, Map<String, String> mp, Map<String, String> mh, String body) throws Exception {
+
+        HttpPost httpPost = new HttpPost(s);
+
+        //System.out.println(s);
+        Properties props = System.getProperties();
+        props.setProperty("java.net.preferIPv4Stack", "true");
+        String url = s;
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpPost post = new HttpPost(url);
+        ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+
+        if (!mp.isEmpty()) {
+            for (Entry<String, String> mcc : mp.entrySet()) {
+                postParameters.add(new BasicNameValuePair(mcc.getKey(), mcc.getValue()));
+            }
+            post.setEntity(new UrlEncodedFormEntity(postParameters, HTTP.UTF_8));
+        }
+
+        for (Entry<String, String> mcc : mh.entrySet()) {
+            post.setHeader(mcc.getKey(), mcc.getValue());
+        }
+        //post.setHeader("charset", "utf-8");
+        //post.setHeader("Accept-Encoding", "gzip,deflate");
+
+        if (body != null && !body.trim().isEmpty()) {
+            StringEntity params = new StringEntity(body, HTTP.UTF_8);
+            post.setEntity(params);
+        }
+
+        HttpResponse response = client.execute(post);
+        BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+
+        int code = response.getStatusLine().getStatusCode();
+        //System.out.println(code);
+        if (200 != code) {
+            System.out.println(s);
+            System.out.println(mp);
+            System.out.println(mh);
+            System.out.println(code);
+            System.out.println(result);
+
+            return null;
+        } else {
+            return result.toString();
+        }
+    }*/
 
     public static String sendPost2(String operation, String body) throws Exception {
         //   System.out.println ("body "+body);

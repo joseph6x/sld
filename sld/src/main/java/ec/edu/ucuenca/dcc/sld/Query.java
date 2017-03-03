@@ -35,6 +35,7 @@ public class Query extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             String ResultJSON = "";
@@ -44,14 +45,15 @@ public class Query extends HttpServlet {
                 if (Forward != null && !Forward.isEmpty()) {
                     RequestWrapper Wrapper = new RequestWrapper(request);
                     String DataToText = Wrapper.DataToText();
+
                     String CacheItem = instanceCache.get("QueryForward=" + DataToText);
-                    //System.out.println(DataToText);
+
                     if (CacheItem != null) {
                         ResultJSON = CacheItem;
                     } else {
                         String RunRequestResult = Wrapper.RunRequest();
                         ResultJSON = RunRequestResult;
-                        
+
                         //System.out.println(RunRequestResult);
                         instanceCache.put("QueryForward=" + DataToText, RunRequestResult);
                     }
@@ -94,7 +96,6 @@ public class Query extends HttpServlet {
                         throw new Exception("No valid params found... Required: InputText or InputURI");
                     }
                 }
-
             } catch (Exception e) {
                 e.printStackTrace(new PrintStream(System.out));
                 ResultJSON = "{\"error\":\"" + e + "\"}";

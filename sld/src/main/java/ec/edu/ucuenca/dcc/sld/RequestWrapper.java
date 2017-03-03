@@ -22,6 +22,7 @@ public class RequestWrapper {
 
     private HttpServletRequest Request = null;
     private String Body = null;
+    private long WaitTime = 0;
 
     public HttpServletRequest getRequest() {
         return Request;
@@ -43,6 +44,9 @@ public class RequestWrapper {
             String value = Request.getHeader(key);
             map.put(key, value);
         }
+        map.remove("host");
+        map.remove("content-length");
+        map.remove("content-type");
         return map;
     }
 
@@ -80,10 +84,16 @@ public class RequestWrapper {
         Map<String, String> headersInfo = getHeadersInfo();
         Map<String, String> parametersInfo = getParametersInfo();
         String bodyInfo = getBodyInfo();
+        
+        
+        //Strange bug in cortical.io
+        if (bodyInfo.contains("nick meijer")){
+            bodyInfo= bodyInfo.replace("nick meijer", "");
+        }
+        ///
+        
+        
         String ForwardURL = parametersInfo.remove("ForwardCacheURL");
-        headersInfo.remove("host");
-        headersInfo.remove("content-length");
-        headersInfo.remove("content-type");
         //headersInfo.remove("user-agent");
 
         do {
@@ -94,13 +104,26 @@ public class RequestWrapper {
                     break;
                 }
             } catch (Exception ex) {
-                try {
-                    Thread.sleep(1000 * 1);
-                } catch (Exception ex1) {
-                    Logger.getLogger(RequestWrapper.class.getName()).log(Level.SEVERE, null, ex1);
+                if (WaitTime > 10000) {
+                    Logger.getLogger(RequestWrapper.class.getName()).log(Level.SEVERE, null, ex);
+                    WaitTime -= 100;
                 }
-                Logger.getLogger(RequestWrapper.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            if (WaitTime > 10000) {
+                WaitTime -= 100;
+                System.out.println("FW:" + ForwardURL);
+                System.out.println("PA:" + parametersInfo);
+                System.out.println("HE:" + headersInfo);
+                System.out.println("BO:" + bodyInfo);
+            }
+            try {
+                Thread.sleep(WaitTime);
+                WaitTime += 100;
+            } catch (Exception ex1) {
+                //Logger.getLogger(RequestWrapper.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
         } while (true);
         return Result;
     }

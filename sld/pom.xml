@@ -20,6 +20,15 @@
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
         </dependency>
+        
+                <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+       <!-- <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+        -->
+        
 
         <dependency>
             <groupId>javax</groupId>
@@ -48,11 +57,13 @@
             <version>2.13.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mapdb/mapdb -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+            <groupId>org.mapdb</groupId>
+            <artifactId>mapdb</artifactId>
+            <version>3.0.3</version>
         </dependency>
+
 
     </dependencies>
 

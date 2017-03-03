@@ -15,22 +15,25 @@ import java.util.logging.Logger;
  */
 public class ConnectionKeepAliveDemon extends Thread {
 
+    private boolean run = false;
+
     @Override
     public void run() {
-        while (true) {
+        run = true;
+        while (run) {
             try {
                 Thread.sleep(1000 * 60);
                 Cache instance = Cache.getInstance();
-                instance.Alive();
+                //instance.Alive();
             } catch (Exception ex) {
-                Logger.getLogger(ConnectionKeepAliveDemon.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(ConnectionKeepAliveDemon.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
     }
 
     public void interrupt() {
-
+        run = false;
     }
 
 }

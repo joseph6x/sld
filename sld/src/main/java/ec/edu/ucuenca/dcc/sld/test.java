@@ -19,23 +19,28 @@ public class test {
 
     public static void main(String[] args) throws Exception {
 
-        for (int i = 0; i < 400; i++) {
-
-            long currentTimeMillis = System.currentTimeMillis();
+       // for (int i = 0; i < 400; i++) {
+//
+        //    long currentTimeMillis = System.currentTimeMillis();
 
             Map<String, String> mp = new HashMap<>();
             Map<String, String> mh = new HashMap<>();
 
-            mp.put("ForwardCacheURL", "https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch=felicidad+or+" + i);
+            mh.put("api-key", "0e30f600-7b62-11e6-a057-97f4c970893c");
+            mh.put("user-agent", "USER_AGENT");
+            
+            
 
-            String sendPost = HTTPUtils.sendPost("http://localhost:8080/sld/Query", mp, mh, "");
+            String sendPost = HTTPUtils.sendPost("http://api.cortical.io/rest/text/detect_language", mp, mh, "curriculum vitae nick meijer");
 
             System.out.println(sendPost);
+            //this is othe text more interesting i guess
+            //curriculum vitae nick meijer   
 
-            currentTimeMillis = System.currentTimeMillis() - currentTimeMillis;
+       //     currentTimeMillis = System.currentTimeMillis() - currentTimeMillis;
 
-            System.out.println(currentTimeMillis);
-        }
+       //     System.out.println(currentTimeMillis);
+      //  }
         ///
         //Map <String, String> mp = new HashMap<>();
         //Map <String, String> mh = new HashMap<>();

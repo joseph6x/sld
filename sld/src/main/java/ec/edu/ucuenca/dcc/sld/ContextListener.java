@@ -15,25 +15,30 @@ import javax.servlet.ServletContextListener;
 public class ContextListener implements ServletContextListener {
 
     //private HarvestingDemon D1 = null;
-    private ConnectionKeepAliveDemon Demon = null;
-
+    // private ConnectionKeepAliveDemon Demon = null;
     public void contextInitialized(ServletContextEvent sce) {
         // if ((D1 == null) || (!D1.isAlive())) {
         //      D1 = new HarvestingDemon();
         ////     D1.start();
         //   }
+        //   if ((Demon == null) || (!Demon.isAlive())) {
+        // Demon = new ConnectionKeepAliveDemon();
+        // Demon.start();
+        Cache instance = Cache.getInstance();
 
-        if ((Demon == null) || (!Demon.isAlive())) {
-            Demon = new ConnectionKeepAliveDemon();
-            Demon.start();
-        }
+        instance.get("");
+        //  }
 
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
         try {
             //D1.interrupt();
-            Demon.interrupt();
+            // Demon.interrupt();
+            Cache instance = Cache.getInstance();
+
+            instance.Kill();
+
         } catch (Exception ex) {
         }
     }
