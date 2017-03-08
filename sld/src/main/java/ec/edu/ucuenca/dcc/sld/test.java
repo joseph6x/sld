@@ -6,9 +6,8 @@
 package ec.edu.ucuenca.dcc.sld;
 
 //import com.hp.hpl.jena.rdf.model.RDFNode;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
 //import org.apache.solr.client.solrj.util.ClientUtils;
 
 /**
@@ -19,28 +18,40 @@ public class test {
 
     public static void main(String[] args) throws Exception {
 
-       // for (int i = 0; i < 400; i++) {
+        Cache instance = Cache.getInstance();
+        instance.get("");
+
+        List<String> ls = new ArrayList();
+
+        instance.create.forEach((k, v) -> {
+            if (k.contains("dbpedia.org/")) {
+
+                ls.add(k);
+
+            }
+
+        });
+
+        for (String x : ls) {
+            instance.create.remove(x);
+        }
+
+        instance.Kill();
+
+        // for (int i = 0; i < 400; i++) {
 //
         //    long currentTimeMillis = System.currentTimeMillis();
-
-            Map<String, String> mp = new HashMap<>();
-            Map<String, String> mh = new HashMap<>();
-
-            mh.put("api-key", "0e30f600-7b62-11e6-a057-97f4c970893c");
-            mh.put("user-agent", "USER_AGENT");
-            
-            
-
-            String sendPost = HTTPUtils.sendPost("http://api.cortical.io/rest/text/detect_language", mp, mh, "curriculum vitae nick meijer");
-
-            System.out.println(sendPost);
-            //this is othe text more interesting i guess
-            //curriculum vitae nick meijer   
-
-       //     currentTimeMillis = System.currentTimeMillis() - currentTimeMillis;
-
-       //     System.out.println(currentTimeMillis);
-      //  }
+        //Map<String, String> mp = new HashMap<>();
+        //Map<String, String> mh = new HashMap<>();
+        //mh.put("api-key", "0e30f600-7b62-11e6-a057-97f4c970893c");
+        //mh.put("user-agent", "USER_AGENT");
+        ///String sendPost = HTTPUtils.sendPost("http://api.cortical.io/rest/text/detect_language", mp, mh, "curriculum vitae nick");
+        //System.out.println(sendPost);
+        //this is othe text more interesting i guess
+        //curriculum vitae nick meijer
+        //     currentTimeMillis = System.currentTimeMillis() - currentTimeMillis;
+        //     System.out.println(currentTimeMillis);
+        //  }
         ///
         //Map <String, String> mp = new HashMap<>();
         //Map <String, String> mh = new HashMap<>();

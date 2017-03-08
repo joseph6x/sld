@@ -65,6 +65,7 @@ public class RequestWrapper {
         String collect = Body;
         if (Body == null) {
             collect = Request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+            //collect = org.apache.commons.io.IOUtils.toString(Request.getReader());
             Body = collect;
         }
         return collect;
@@ -84,15 +85,7 @@ public class RequestWrapper {
         Map<String, String> headersInfo = getHeadersInfo();
         Map<String, String> parametersInfo = getParametersInfo();
         String bodyInfo = getBodyInfo();
-        
-        
-        //Strange bug in cortical.io
-        if (bodyInfo.contains("nick meijer")){
-            bodyInfo= bodyInfo.replace("nick meijer", "");
-        }
-        ///
-        
-        
+
         String ForwardURL = parametersInfo.remove("ForwardCacheURL");
         //headersInfo.remove("user-agent");
 
@@ -109,7 +102,6 @@ public class RequestWrapper {
                     WaitTime -= 100;
                 }
             }
-
             if (WaitTime > 10000) {
                 WaitTime -= 100;
                 System.out.println("FW:" + ForwardURL);
@@ -117,6 +109,12 @@ public class RequestWrapper {
                 System.out.println("HE:" + headersInfo);
                 System.out.println("BO:" + bodyInfo);
             }
+            //Strange bug in cortical.io
+            if (ForwardURL.compareTo("http://api.cortical.io/rest/text/detect_language") == 0 && WaitTime == 10000) {
+                Result = "{\"language\":\"Romansh\",\"iso_tag\":\"ro\",\"wiki_url\":\"http://en.wikipedia.org/wiki/Romanian_language\"}";
+                break;
+            }
+            //
             try {
                 Thread.sleep(WaitTime);
                 WaitTime += 100;

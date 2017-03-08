@@ -55,10 +55,13 @@ public class Geonames {
         String Name = null;
         String Lon = null;
         String Lat = null;
+        int sta=0;
         do {
+            
             try {
+                sta=0;
                 String Http1 = HTTPUtils.Http("http://ws.geonames.org/searchJSON", mp);
-
+                sta=1;
                 JSONObject MainObject = (JSONObject) parser.parse(Http1);
                 JSONArray results = (JSONArray) MainObject.get("geonames");
                 if (results.size() != 0) {
@@ -72,7 +75,12 @@ public class Geonames {
             } catch (Exception ex) {
                 Logger.getLogger(Geonames.class.getName()).log(Level.SEVERE, null, ex);
                 try {
-                    Thread.sleep(1000 * 3600 * 1);
+                    if (sta==1){
+                        Thread.sleep(1000 * 3600 * 1);
+                    }else{
+                        Thread.sleep(100);
+                    }
+                    
                 } catch (InterruptedException ex1) {
                     Logger.getLogger(Geonames.class.getName()).log(Level.SEVERE, null, ex1);
                 }

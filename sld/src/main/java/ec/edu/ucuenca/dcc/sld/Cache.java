@@ -9,6 +9,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
@@ -23,6 +25,7 @@ public class Cache {
 
     DB db = null;
     HTreeMap<String, String> create =null;
+    List <String> BlackList = new ArrayList();
     
     
     private Cache() {
