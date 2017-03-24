@@ -37,7 +37,7 @@ public class Query extends HttpServlet {
             throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         boolean JSONP = false;
-        String Callback_="";
+        String Callback_ = "";
         try (PrintWriter out = response.getWriter()) {
             String res = "";
             try {
@@ -45,7 +45,7 @@ public class Query extends HttpServlet {
                 String Callback = request.getParameter("callback");
                 if (Callback != null && !Callback.isEmpty()) {
                     JSONP = true;
-                    Callback_=Callback;
+                    Callback_ = Callback;
                 }
 
                 String RepositoriesList = request.getParameter("repositories");
@@ -124,7 +124,14 @@ public class Query extends HttpServlet {
                             // t_.add(txt2_);
 
                             JSONObject OneResult = new JSONObject();
-                            OneResult.put("Icon", LinksFilesUtiles.getIcon(FindLinks2.get(i)));
+
+                            String Img = LinksFilesUtiles.getIcon(FindLinks2.get(i));
+                            if (Img.compareTo(FindLinks2.get(i)) == 0) {
+                                OneResult.put("Icon", ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value());
+                            } else {
+                                OneResult.put("Icon", Img);
+                            }
+
                             OneResult.put("Title", LinksFilesUtiles.getTitle(FindLinks2.get(i)));
                             OneResult.put("URI", FindLinks2.get(i));
                             OneResult.put("Handle", LinksFilesUtiles.getHandle(FindLinks2.get(i)));
@@ -152,12 +159,12 @@ public class Query extends HttpServlet {
             }
             if (JSONP) {
                 response.setContentType("application/javascript;charset=UTF-8");
-                out.println(Callback_+"("+res+");");
+                out.println(Callback_ + "(" + res + ");");
             } else {
                 response.setContentType("application/json;charset=UTF-8");
                 out.println(res);
             }
-            
+
             out.flush();
             out.close();
 

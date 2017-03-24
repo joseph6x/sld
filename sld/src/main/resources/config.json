@@ -3,6 +3,7 @@
         "SolrServer": "http://localhost:8983/solr/cepal",
         "Output": "/home/cedia/CEPAL/Links/Output/",
         "Wildcard": "|?|",
+        "DefaultImg": "https://image.freepik.com/iconos-gratis/pagina-del-documento-ios-simbolo-interfaz-7_318-36333.jpg",
         "CorticalThreshold": 70,
         "LinksThreshold": 20,
         "SynNumber": 20,
