@@ -8,6 +8,7 @@ package ec.edu.ucuenca.dcc.sld;
 //import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 //import org.apache.solr.client.solrj.util.ClientUtils;
 
 /**
@@ -17,26 +18,29 @@ import java.util.List;
 public class test {
 
     public static void main(String[] args) throws Exception {
+        
+        
+        System.out.println();
 
-        Cache instance = Cache.getInstance();
-        instance.get("");
+        //Cache instance = Cache.getInstance();
+       // instance.get("");
 
-        List<String> ls = new ArrayList();
+       // List<String> ls = new ArrayList();
 
-        instance.create.forEach((k, v) -> {
-            if (k.contains("dbpedia.org/")) {
+      //  instance.create.forEach((k, v) -> {
+        //    if (k.contains("dbpedia.org/")) {
 
-                ls.add(k);
+        //        ls.add(k);
 
-            }
+        //    }
 
-        });
+     //   });
 
-        for (String x : ls) {
-            instance.create.remove(x);
-        }
+     //   for (String x : ls) {
+     //       instance.create.remove(x);
+      //  }
 
-        instance.Kill();
+      //  instance.Kill();
 
         // for (int i = 0; i < 400; i++) {
 //

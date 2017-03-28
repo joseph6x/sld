@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,10 @@ public class Query extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        long currentTimeMillis = System.currentTimeMillis();
+        String UUIDHash = UUID.randomUUID().toString();
+        System.out.println("ID="+UUIDHash+";Type=Start");
+        
         try (PrintWriter out = response.getWriter()) {
 
             String ResultJSON = "";
@@ -43,6 +48,7 @@ public class Query extends HttpServlet {
             try {
                 String Forward = request.getParameter("ForwardCacheURL");
                 if (Forward != null && !Forward.isEmpty()) {
+                    System.out.println("ID="+UUIDHash+";URI="+Forward);
                     RequestWrapper Wrapper = new RequestWrapper(request);
                     String DataToText = Wrapper.DataToText();
 
@@ -67,6 +73,7 @@ public class Query extends HttpServlet {
                     int SearchType = (InputText != null && !InputText.isEmpty()) ? 1 : (InputURI != null && !InputURI.isEmpty()) ? 2 : 0;
                     if (SearchType != 0) {
                         String InputValue = SearchType == 1 ? InputText : InputURI;
+                        System.out.println("ID="+UUIDHash+";Geo="+InputValue);
                         String cacheItem = instanceCache.get("QueryText=" + InputValue);
                         if (cacheItem != null) {
                             ResultJSON = cacheItem;
@@ -100,7 +107,8 @@ public class Query extends HttpServlet {
                 e.printStackTrace(new PrintStream(System.out));
                 ResultJSON = "{\"error\":\"" + e + "\"}";
             }
-
+            long currentTimeMillis1 = System.currentTimeMillis()-currentTimeMillis;
+            System.out.println("ID="+UUIDHash+";Type=End;Time="+currentTimeMillis1);
             out.println(ResultJSON);
             out.flush();
             out.close();

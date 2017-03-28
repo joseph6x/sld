@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
@@ -29,8 +30,8 @@ public class Cache {
     
     
     private Cache() {
-        db = DBMaker.fileDB("/home/cedia/cache.db").make();
-        create = db.hashMap("cache", Serializer.STRING, new SerializerCompressionWrapper(Serializer.STRING)).createOrOpen();
+        db = DBMaker.fileDB("/home/pirbuts/TempCache/cache.db").make();
+        create = db.hashMap("cache", Serializer.STRING, new SerializerCompressionWrapper(Serializer.STRING)).expireAfterCreate(30, TimeUnit.DAYS).createOrOpen();
     }
 
     public void put(String key, String value)  {
