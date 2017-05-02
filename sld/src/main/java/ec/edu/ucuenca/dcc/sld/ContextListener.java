@@ -24,11 +24,18 @@ public class ContextListener implements ServletContextListener {
         //   if ((Demon == null) || (!Demon.isAlive())) {
         // Demon = new ConnectionKeepAliveDemon();
         // Demon.start();
-        Cache instance = Cache.getInstance();
 
-        instance.get("");
+        try {
+            Cache instance = Cache.getInstance();
+
+            instance.get("");
+
+            FedXSPARQL instance1 = FedXSPARQL.getInstance();
+
+        } catch (Exception ex) {
+        }
+
         //  }
-
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
@@ -38,6 +45,10 @@ public class ContextListener implements ServletContextListener {
             Cache instance = Cache.getInstance();
 
             instance.Kill();
+
+            FedXSPARQL instance1 = FedXSPARQL.getInstance();
+
+            instance1.Kill();
 
         } catch (Exception ex) {
         }

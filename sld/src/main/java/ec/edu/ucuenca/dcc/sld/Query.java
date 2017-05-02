@@ -40,6 +40,7 @@ public class Query extends HttpServlet {
         long currentTimeMillis = System.currentTimeMillis();
         String UUIDHash = UUID.randomUUID().toString();
         System.out.println("ID="+UUIDHash+";Type=Start");
+        System.out.println("ID="+UUIDHash+";Origin="+request.getQueryString());
         
         try (PrintWriter out = response.getWriter()) {
 
@@ -72,7 +73,9 @@ public class Query extends HttpServlet {
                     //2:URI, use DBpedia
                     int SearchType = (InputText != null && !InputText.isEmpty()) ? 1 : (InputURI != null && !InputURI.isEmpty()) ? 2 : 0;
                     if (SearchType != 0) {
-                        String InputValue = SearchType == 1 ? InputText : InputURI;
+                        RequestWrapper Wrapper = new RequestWrapper(request);
+                        
+                        String InputValue = SearchType == 1 ? Wrapper.getBodyInfo() : InputURI;
                         System.out.println("ID="+UUIDHash+";Geo="+InputValue);
                         String cacheItem = instanceCache.get("QueryText=" + InputValue);
                         if (cacheItem != null) {

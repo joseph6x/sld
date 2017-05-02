@@ -23,6 +23,7 @@ public class RequestWrapper {
     private HttpServletRequest Request = null;
     private String Body = null;
     private long WaitTime = 0;
+    private String Text = null;
 
     public HttpServletRequest getRequest() {
         return Request;
@@ -50,7 +51,7 @@ public class RequestWrapper {
         return map;
     }
 
-    private Map<String, String> getParametersInfo() {
+    private Map<String, String> getParametersInfo() throws IOException {
         Map<String, String> map = new HashMap<String, String>();
         Enumeration headerNames = Request.getParameterNames();
         while (headerNames.hasMoreElements()) {
@@ -58,10 +59,22 @@ public class RequestWrapper {
             String value = Request.getParameter(key);
             map.put(key, value);
         }
+        if (map.keySet().contains("text")) {
+            map.remove("text");
+            if (Text == null) {
+                Text=getBodyInfo().replaceAll("\\P{IsLatin}", " ");
+                if (Text.trim().compareTo("")==0){
+                    Text = "none";
+                }
+                
+                Body = "";
+            }
+            map.put("text", Text);
+        }
         return map;
     }
 
-    private String getBodyInfo() throws IOException {
+    public String getBodyInfo() throws IOException {
         String collect = Body;
         if (Body == null) {
             collect = Request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
@@ -99,7 +112,7 @@ public class RequestWrapper {
             } catch (Exception ex) {
                 if (WaitTime > 10000) {
                     Logger.getLogger(RequestWrapper.class.getName()).log(Level.SEVERE, null, ex);
-                    WaitTime -= 100;
+                    //WaitTime -= 100;
                 }
             }
             if (WaitTime > 10000) {

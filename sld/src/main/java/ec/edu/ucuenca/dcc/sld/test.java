@@ -18,30 +18,26 @@ import java.util.UUID;
 public class test {
 
     public static void main(String[] args) throws Exception {
-        
-        
+
+        System.out.println("h olá ññ 􀀹|-_?􀂾mundo".replaceAll("\\P{IsLatin}", " "));
+        if (true) {
+            return;
+        }
+
         System.out.println();
 
         //Cache instance = Cache.getInstance();
-       // instance.get("");
-
-       // List<String> ls = new ArrayList();
-
-      //  instance.create.forEach((k, v) -> {
+        // instance.get("");
+        // List<String> ls = new ArrayList();
+        //  instance.create.forEach((k, v) -> {
         //    if (k.contains("dbpedia.org/")) {
-
         //        ls.add(k);
-
         //    }
-
-     //   });
-
-     //   for (String x : ls) {
-     //       instance.create.remove(x);
-      //  }
-
-      //  instance.Kill();
-
+        //   });
+        //   for (String x : ls) {
+        //       instance.create.remove(x);
+        //  }
+        //  instance.Kill();
         // for (int i = 0; i < 400; i++) {
 //
         //    long currentTimeMillis = System.currentTimeMillis();

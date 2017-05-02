@@ -111,7 +111,7 @@ public class HTTPUtils {
         //post.setHeader("Accept-Encoding", "gzip,deflate");
 
         if (body != null && !body.trim().isEmpty()) {
-            StringEntity params = new StringEntity(body, HTTP.UTF_8);
+            StringEntity params = new StringEntity(body.replaceAll("\\P{IsLatin}", " "), HTTP.UTF_8);
             post.setEntity(params);
         }
 

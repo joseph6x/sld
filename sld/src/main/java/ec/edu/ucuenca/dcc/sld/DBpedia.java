@@ -63,7 +63,7 @@ public class DBpedia {
                 + "			<" + URI + "> <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lon .\n"
                 + "			<" + URI + "> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .\n"
                 + "		} limit 1\n"
-                + "	}} "+"union{service silent <http://es.dbpedia.org/sparql>{\n"
+                + "	}} " + "union{service silent <http://es.dbpedia.org/sparql>{\n"
                 + "		select ?lon ?lat {\n"
                 + "			<" + URI + "> <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?lon .\n"
                 + "			<" + URI + "> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .\n"
@@ -98,9 +98,14 @@ public class DBpedia {
                 List<List<RDFNode>> ResultLonLat = SPARQL.SimpleDoubleQuery(CompleteQuery, Endpoint, "lon", "lat");
                 if (ResultLonLat != null && ResultLonLat.size() == 2 && ResultLonLat.get(0) != null && ResultLonLat.get(1) != null) {
                     if (!ResultLonLat.get(0).isEmpty() && !ResultLonLat.get(1).isEmpty()) {
-                        lon = ResultLonLat.get(0).get(0).asLiteral().getString();
-                        lat = ResultLonLat.get(1).get(0).asLiteral().getString();
+                        if (ResultLonLat.get(0).get(0) != null && ResultLonLat.get(1).get(0) != null) {
+                            lon = ResultLonLat.get(0).get(0).asLiteral().getString();
+                            lat = ResultLonLat.get(1).get(0).asLiteral().getString();
+                        }else{
+                            instanceCache.BlackList.clear();
+                        }
                     }
+
                     data = true;
                     break;
 

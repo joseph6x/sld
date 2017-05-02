@@ -30,7 +30,8 @@ public class Cache {
     
     
     private Cache() {
-        db = DBMaker.fileDB("/home/pirbuts/TempCache/cache.db").make();
+        //db = DBMaker.fileDB("/home/pirbuts/TempCache/cache.db").make();
+        db = DBMaker.fileDB("/tmp/cache.db").make();
         create = db.hashMap("cache", Serializer.STRING, new SerializerCompressionWrapper(Serializer.STRING)).expireAfterCreate(30, TimeUnit.DAYS).createOrOpen();
     }
 
