@@ -25,4 +25,8 @@
         <servlet-name>sparql</servlet-name>
         <url-pattern>/sparql</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Query</servlet-name>
+        <url-pattern>/Query</url-pattern>
+    </servlet-mapping>
 </web-app>
