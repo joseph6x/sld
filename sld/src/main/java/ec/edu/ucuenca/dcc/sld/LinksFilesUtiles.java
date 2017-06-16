@@ -5,6 +5,7 @@
  */
 package ec.edu.ucuenca.dcc.sld;
 
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.io.BufferedReader;
 import java.io.File;
@@ -73,8 +74,15 @@ public class LinksFilesUtiles {
 
                 SPARQL s = new SPARQL();
                 List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { {<" + uri + "> <http://purl.org/dc/terms/title> ?h .} union { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?h . } } limit 1", value, "h");
+                RDFNode get2 = SimpleQuery.get(0);
+                Literal asLiteral = get2.asLiteral();
+                String title= asLiteral.getString();
+
+                
                 if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
-                    return SimpleQuery.get(0).toString();
+                    //return SimpleQuery.get(0).toString();
+                    return title;
+                    
                 }
             } catch (Exception ex) {
                 ex.printStackTrace(new PrintStream(System.out));
@@ -86,6 +94,39 @@ public class LinksFilesUtiles {
         
         return r;
     }
+    
+    public static String getLang(String uri) {
+        ConfigInfo instance = ConfigInfo.getInstance();
+        JsonArray get = instance.getConfig().get("Repositories").getAsArray();
+        for (int i = 0; i < get.size(); i++) {
+            try {
+                JsonObject get1 = get.get(i).getAsObject();
+                String value = get1.get("Endpoint").getAsString().value();
+
+                SPARQL s = new SPARQL();
+                List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { {<" + uri + "> <http://purl.org/dc/terms/title> ?h .} union { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?h . } } limit 1", value, "h");
+                RDFNode get2 = SimpleQuery.get(0);
+                Literal asLiteral = get2.asLiteral();
+                String titleLan= asLiteral.getLanguage();
+
+                
+                if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
+                    //return SimpleQuery.get(0).toString();
+                    return titleLan;
+                    
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace(new PrintStream(System.out));
+            }
+        }
+
+        
+        String r=uri;
+        
+        return r;
+    }
+    
+    
     
     
     public static String getHandle(String uri) {

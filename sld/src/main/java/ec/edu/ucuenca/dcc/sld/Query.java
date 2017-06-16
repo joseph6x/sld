@@ -133,6 +133,7 @@ public class Query extends HttpServlet {
                             }
 
                             OneResult.put("Title", LinksFilesUtiles.getTitle(FindLinks2.get(i)));
+                            OneResult.put("Language", LinksFilesUtiles.getLang(FindLinks2.get(i)));
                             OneResult.put("URI", FindLinks2.get(i));
                             OneResult.put("Handle", LinksFilesUtiles.getHandle(FindLinks2.get(i)));
                             OneResult.put("Repository", Repo);
