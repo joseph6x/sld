@@ -30,18 +30,31 @@ public class Harvester {
     private String Query;
     private String Name;
 
-    public Harvester(String Name, String Endpoint, String MainClass, String Query) {
+    private String Filter;
+
+    public Harvester(String Name, String Endpoint, String MainClass, String Query, String Filter) {
         this.Endpoint = Endpoint;
         this.MainClass = MainClass;
         this.Query = Query;
         this.Name = Name;
+        this.Filter = Filter;
     }
 
     public void Harvest() throws SolrServerException, IOException {
         int bulk = 1000;
         SPARQL sp = new SPARQL();
-        String Count = "select (count(*) as ?c) where { ?r a <" + MainClass + "> }";
-        String resources = "select ?r where { ?r a <" + MainClass + "> } limit " + bulk;
+        String Count = "select (count(*) as ?c) where { ?r a <" + MainClass + "> . @@@ }";
+        String resources = "select ?r where { ?r a <" + MainClass + "> . @@@  } limit " + bulk;
+
+        //
+        if (Filter != null) {
+            Count = Count.replaceAll("@@@", "filter contains(str(?r),'" + Filter + "') . ");
+            resources = resources.replaceAll("@@@", "filter contains(str(?r),'" + Filter + "') . ");
+        } else {
+            Count = Count.replaceAll("@@@", "");
+            resources = resources.replaceAll("@@@", "");
+        }
+
         List<RDFNode> SimpleQuery = sp.SimpleQuery(Count, Endpoint, "c");
         RDFNode get = SimpleQuery.get(0);
         int aInt = get.asLiteral().getInt();

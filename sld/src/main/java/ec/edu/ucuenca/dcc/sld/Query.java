@@ -54,102 +54,128 @@ public class Query extends HttpServlet {
 
                 if (RepositoriesList != null && !RepositoriesList.isEmpty() && QueryType != null && !QueryType.isEmpty() && QueryText != null && !QueryText.isEmpty()) {
 
-                    SolrConnection instance = SolrConnection.getInstance();
+                    Cache instanceCache = Cache.getInstance();
+                    String KeyCache = QueryType + "+" + RepositoriesList + "+" + QueryText;
+                    String mD5Key = instanceCache.getMD5(KeyCache);
 
-                    String SearchTerms = "";
+                    String CacheResult = instanceCache.get("L1=" + mD5Key);
 
-                    switch (QueryType) {
-                        case "handle":
-                            String[] dt = QueryText.split("_|/|#|=");
-                            QueryText = dt[dt.length - 1];
-                        case "id":
-                            String[] FindOne = instance.FindOne2("uri", "*/" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne2 = instance.FindOne2("uri", "*_" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne3 = instance.FindOne2("uri", "*#" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                            String[] FindOne4 = instance.FindOne2("uri", "*=" + QueryText, "originalText", "uri", "finalText", "endpoint");
+                    if (CacheResult != null) {
+                        res = CacheResult;
+                    } else {
+                        SolrConnection instance = SolrConnection.getInstance();
 
-                            List<String[]> ls = new ArrayList<String[]>();
-                            ls.add(FindOne);
-                            ls.add(FindOne2);
-                            ls.add(FindOne3);
-                            ls.add(FindOne4);
-                            ls.removeAll(Collections.singleton(null));
+                        String SearchTerms = "";
 
-                            if (!ls.isEmpty()) {
-                                SearchTerms = ls.get(0)[2];
-                                SearchTerms = HttpUtils.Escape(SearchTerms);
-                            } else {
-                                throw new Exception("No handle/id found..." + QueryText);
-                            }
-                            break;
-                        case "uri":
-                            String[] FindOne_ = instance.FindOne("uri", QueryText, "originalText", "uri", "finalText", "endpoint");
-                            if (FindOne_ != null) {
-                                SearchTerms = FindOne_[2];
-                                SearchTerms = HttpUtils.Escape(SearchTerms);
-                            } else {
-                                throw new Exception("No URI found..." + QueryText);
-                            }
-                            break;
-                        case "keywords":
-                            SearchTerms = QueryText;
-                            SearchTerms = HttpUtils.Escape2(SearchTerms);
-                            break;
-                    }
-                    String traductorYandex = HttpUtils.traductorYandex(SearchTerms);
+                        switch (QueryType) {
+                            case "handle":
+                                String[] dt = QueryText.split("_|/|#|=");
+                                QueryText = dt[dt.length - 1];
+                            case "id":
+                                String[] FindOne = instance.FindOne2("uri", "*/" + QueryText, "originalText", "uri", "finalText", "endpoint");
+                                String[] FindOne2 = instance.FindOne2("uri", "*_" + QueryText, "originalText", "uri", "finalText", "endpoint");
+                                String[] FindOne3 = instance.FindOne2("uri", "*#" + QueryText, "originalText", "uri", "finalText", "endpoint");
+                                String[] FindOne4 = instance.FindOne2("uri", "*=" + QueryText, "originalText", "uri", "finalText", "endpoint");
 
-                    if (!traductorYandex.trim().isEmpty()) {
-                        SearchTerms = SearchTerms + "," + traductorYandex;
-                    }
+                                List<String[]> ls = new ArrayList<String[]>();
+                                ls.add(FindOne);
+                                ls.add(FindOne2);
+                                ls.add(FindOne3);
+                                ls.add(FindOne4);
+                                ls.removeAll(Collections.singleton(null));
 
-                    SearchTerms = SearchTerms.replace(",", " ").trim();
-                    String[] rep = RepositoriesList.split(";");
-                    //List<String> FindLinks = new ArrayList<>();
-
-                    //res = "[";
-                    JSONArray Results = new JSONArray();
-
-                    List<String> t_ = new ArrayList<>();
-
-                    for (int j = 0; j < rep.length; j++) {
-                        String end = rep[j];
-                        String Repo = end.split(":")[0];
-                        String limit = end.split(":")[1];
-                        List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
-                        for (int i = 0; i < FindLinks2.size(); i++) {
-                            //String txt2_ = "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i))
-                            //          + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\""
-                            //        + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\""
-                            //        + Repo + "\"}";
-                            // t_.add(txt2_);
-
-                            JSONObject OneResult = new JSONObject();
-
-                            String Img = LinksFilesUtiles.getIcon(FindLinks2.get(i));
-                            if (Img.compareTo(FindLinks2.get(i)) == 0) {
-                                OneResult.put("Icon", ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value());
-                            } else {
-                                OneResult.put("Icon", Img);
-                            }
-
-                            OneResult.put("Title", LinksFilesUtiles.getTitle(FindLinks2.get(i)));
-                            OneResult.put("Language", LinksFilesUtiles.getLang(FindLinks2.get(i)));
-                            OneResult.put("URI", FindLinks2.get(i));
-                            OneResult.put("Handle", LinksFilesUtiles.getHandle(FindLinks2.get(i)));
-                            OneResult.put("Repository", Repo);
-                            Results.add(OneResult);
-
-                            //txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
+                                if (!ls.isEmpty()) {
+                                    SearchTerms = ls.get(0)[2];
+                                    SearchTerms = HttpUtils.Escape(SearchTerms);
+                                } else {
+                                    throw new Exception("No handle/id found..." + QueryText);
+                                }
+                                break;
+                            case "uri":
+                                String[] FindOne_ = instance.FindOne("uri", QueryText, "originalText", "uri", "finalText", "endpoint");
+                                if (FindOne_ != null) {
+                                    SearchTerms = FindOne_[2];
+                                    SearchTerms = HttpUtils.Escape(SearchTerms);
+                                } else {
+                                    throw new Exception("No URI found..." + QueryText);
+                                }
+                                break;
+                            case "keywords":
+                                SearchTerms = QueryText;
+                                SearchTerms = HttpUtils.Escape2(SearchTerms);
+                                break;
                         }
-                    }
-                    //String txt2 = "";
-                    // for (int j = 0; j < t_.size(); j++) {
-                    //    txt2 += t_.get(j);
-                    //    txt2 += (j == t_.size() - 1 ? "" : ",");
-                    // }
+                        String traductorYandex = HttpUtils.traductorYandex(SearchTerms);
 
-                    //res += txt2 + "]";
-                    res = Results.toJSONString();
+                        if (!traductorYandex.trim().isEmpty()) {
+                            SearchTerms = SearchTerms + "," + traductorYandex;
+                        }
+
+                        SearchTerms = SearchTerms.replace(",", " ").trim();
+                        String[] rep = RepositoriesList.split(";");
+                        //List<String> FindLinks = new ArrayList<>();
+
+                        //res = "[";
+                        JSONArray Results = new JSONArray();
+
+                        List<String> t_ = new ArrayList<>();
+
+                        for (int j = 0; j < rep.length; j++) {
+                            String end = rep[j];
+                            String Repo = end.split(":")[0];
+                            String limit = end.split(":")[1];
+                            List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
+                            for (int i = 0; i < FindLinks2.size(); i++) {
+                                //String txt2_ = "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i))
+                                //          + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\""
+                                //        + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\""
+                                //        + Repo + "\"}";
+                                // t_.add(txt2_);
+
+                                JSONObject OneResult = new JSONObject();
+
+                                String Img = LinksFilesUtiles.getIcon(FindLinks2.get(i));
+                                if (Img.compareTo(FindLinks2.get(i)) == 0) {
+                                    OneResult.put("Icon", ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value());
+                                } else {
+                                    OneResult.put("Icon", Img);
+                                }
+
+                                OneResult.put("Title", LinksFilesUtiles.getTitle(FindLinks2.get(i)));
+                                OneResult.put("Language", LinksFilesUtiles.getLang(FindLinks2.get(i)));
+                                OneResult.put("URI", FindLinks2.get(i));
+                                OneResult.put("Handle", LinksFilesUtiles.getHandle(FindLinks2.get(i)));
+                                OneResult.put("Repository", Repo);
+
+                                if (Repo == "repositorio") {
+
+                                    JSONArray OneArray = new JSONArray();
+                                    OneArray.addAll(LinksFilesUtiles.getCallNumber(FindLinks2.get(i)));
+                                    if (!OneArray.isEmpty()) {
+                                        OneResult.put("CallNumber", OneArray);
+                                    }
+                                    OneArray = new JSONArray();
+                                    OneArray.addAll(LinksFilesUtiles.getBibLevel(FindLinks2.get(i)));
+                                    if (!OneArray.isEmpty()) {
+                                        OneResult.put("BibLevel", OneArray);
+                                    }
+                                }
+
+                                Results.add(OneResult);
+
+                                //txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
+                            }
+                        }
+                        //String txt2 = "";
+                        // for (int j = 0; j < t_.size(); j++) {
+                        //    txt2 += t_.get(j);
+                        //    txt2 += (j == t_.size() - 1 ? "" : ",");
+                        // }
+
+                        //res += txt2 + "]";
+                        res = Results.toJSONString();
+                        instanceCache.put(mD5Key, "L1=" + res);
+                    }
                 } else {
                     throw new Exception("No valid params found... repositories, type, query");
                 }

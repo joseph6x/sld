@@ -65,6 +65,12 @@ public class LinksFilesUtiles {
     }
 
     public static String getTitle(String uri) {
+
+        String getCache = Cache.getInstance().get("Title=" + uri);
+        if (getCache != null) {
+            return getCache;
+        }
+
         ConfigInfo instance = ConfigInfo.getInstance();
         JsonArray get = instance.getConfig().get("Repositories").getAsArray();
         for (int i = 0; i < get.size(); i++) {
@@ -76,26 +82,81 @@ public class LinksFilesUtiles {
                 List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { {<" + uri + "> <http://purl.org/dc/terms/title> ?h .} union { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?h . } } limit 1", value, "h");
                 RDFNode get2 = SimpleQuery.get(0);
                 Literal asLiteral = get2.asLiteral();
-                String title= asLiteral.getString();
+                String title = asLiteral.getString();
 
-                
                 if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
                     //return SimpleQuery.get(0).toString();
                     return title;
-                    
+
                 }
             } catch (Exception ex) {
                 ex.printStackTrace(new PrintStream(System.out));
             }
         }
 
-        
-        String r=uri;
-        
+        String r = uri;
+        Cache.getInstance().put("Title=" + uri, r);
         return r;
     }
-    
+
+    public static List<String> getBibLevel(String uri) {
+
+        List<String> results = new ArrayList<>();
+        ConfigInfo instance = ConfigInfo.getInstance();
+        JsonArray get = instance.getConfig().get("Repositories").getAsArray();
+        for (int i = 0; i < get.size(); i++) {
+            try {
+                JsonObject get1 = get.get(i).getAsObject();
+                String value = get1.get("Endpoint").getAsString().value();
+
+                SPARQL s = new SPARQL();
+                List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { <" + uri + "> <http://myontology.org/bibLevel> ?h . } ", value, "h");
+
+                if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
+                    for (RDFNode oneNode : SimpleQuery) {
+                        String string = oneNode.asLiteral().getString();
+                        results.add(string);
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace(new PrintStream(System.out));
+            }
+        }
+
+        return results;
+    }
+
+    public static List<String> getCallNumber(String uri) {
+        List<String> results = new ArrayList<>();
+        ConfigInfo instance = ConfigInfo.getInstance();
+        JsonArray get = instance.getConfig().get("Repositories").getAsArray();
+        for (int i = 0; i < get.size(); i++) {
+            try {
+                JsonObject get1 = get.get(i).getAsObject();
+                String value = get1.get("Endpoint").getAsString().value();
+
+                SPARQL s = new SPARQL();
+                List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { <" + uri + "> <http://myontology.org/callNumber> ?h . } ", value, "h");
+
+                if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
+                    for (RDFNode oneNode : SimpleQuery) {
+                        String string = oneNode.asLiteral().getString();
+                        results.add(string);
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace(new PrintStream(System.out));
+            }
+        }
+
+        return results;
+    }
+
     public static String getLang(String uri) {
+        String getCache = Cache.getInstance().get("Lang=" + uri);
+        if (getCache != null) {
+            return getCache;
+        }
         ConfigInfo instance = ConfigInfo.getInstance();
         JsonArray get = instance.getConfig().get("Repositories").getAsArray();
         for (int i = 0; i < get.size(); i++) {
@@ -107,29 +168,28 @@ public class LinksFilesUtiles {
                 List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { {<" + uri + "> <http://purl.org/dc/terms/title> ?h .} union { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?h . } } limit 1", value, "h");
                 RDFNode get2 = SimpleQuery.get(0);
                 Literal asLiteral = get2.asLiteral();
-                String titleLan= asLiteral.getLanguage();
+                String titleLan = asLiteral.getLanguage();
 
-                
                 if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
                     //return SimpleQuery.get(0).toString();
                     return titleLan;
-                    
+
                 }
             } catch (Exception ex) {
                 ex.printStackTrace(new PrintStream(System.out));
             }
         }
 
-        
-        String r=uri;
-        
+        String r = uri;
+        Cache.getInstance().put("Lang=" + uri, r);
         return r;
     }
-    
-    
-    
-    
+
     public static String getHandle(String uri) {
+        String getCache = Cache.getInstance().get("Handle=" + uri);
+        if (getCache != null) {
+            return getCache;
+        }
         ConfigInfo instance = ConfigInfo.getInstance();
         JsonArray get = instance.getConfig().get("Repositories").getAsArray();
         for (int i = 0; i < get.size(); i++) {
@@ -150,12 +210,16 @@ public class LinksFilesUtiles {
         String[] dt = uri.split("_|/|#|=");
         String ID = dt[dt.length - 1];
 
-        String r="http://interwp.cepal.org/sisgen/ConsultaIntegrada.asp?idIndicador="+ID;
-        
+        String r = "http://interwp.cepal.org/sisgen/ConsultaIntegrada.asp?idIndicador=" + ID;
+        Cache.getInstance().put("Handle=" + uri, r);
         return r;
     }
 
     public static String getIcon(String uri) {
+        String getCache = Cache.getInstance().get("Icon=" + uri);
+        if (getCache != null) {
+            return getCache;
+        }
         ConfigInfo instance = ConfigInfo.getInstance();
         JsonArray get = instance.getConfig().get("Repositories").getAsArray();
         for (int i = 0; i < get.size(); i++) {
@@ -173,11 +237,10 @@ public class LinksFilesUtiles {
             }
         }
 
-        
-        String r=uri;
-        
+        String r = uri;
+
+        Cache.getInstance().put("Icon=" + uri, r);
         return r;
     }
-    
-    
+
 }

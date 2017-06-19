@@ -36,6 +36,11 @@ public class ContextListener implements ServletContextListener {
             D4 = new LinksDemon();
             D4.start();
         }
+        try {
+            Cache instance = Cache.getInstance();
+            instance.get("");
+        } catch (Exception ex) {
+        }
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
@@ -44,6 +49,8 @@ public class ContextListener implements ServletContextListener {
             D2.interrupt();
             D3.interrupt();
             D4.interrupt();
+            Cache instance = Cache.getInstance();
+            instance.Kill();
         } catch (Exception ex) {
         }
     }
