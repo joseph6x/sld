@@ -80,12 +80,13 @@ public class LinksFilesUtiles {
 
                 SPARQL s = new SPARQL();
                 List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { {<" + uri + "> <http://purl.org/dc/terms/title> ?h .} union { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?h . } } limit 1", value, "h");
-                RDFNode get2 = SimpleQuery.get(0);
-                Literal asLiteral = get2.asLiteral();
-                String title = asLiteral.getString();
 
                 if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
+                    RDFNode get2 = SimpleQuery.get(0);
+                    Literal asLiteral = get2.asLiteral();
+                    String title = asLiteral.getString();
                     //return SimpleQuery.get(0).toString();
+                    Cache.getInstance().put("Title=" + uri, title);
                     return title;
 
                 }
@@ -166,12 +167,13 @@ public class LinksFilesUtiles {
 
                 SPARQL s = new SPARQL();
                 List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h { {<" + uri + "> <http://purl.org/dc/terms/title> ?h .} union { <" + uri + "> <http://www.w3.org/2000/01/rdf-schema#label> ?h . } } limit 1", value, "h");
-                RDFNode get2 = SimpleQuery.get(0);
-                Literal asLiteral = get2.asLiteral();
-                String titleLan = asLiteral.getLanguage();
 
                 if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
+                    RDFNode get2 = SimpleQuery.get(0);
+                    Literal asLiteral = get2.asLiteral();
+                    String titleLan = asLiteral.getLanguage();
                     //return SimpleQuery.get(0).toString();
+                    Cache.getInstance().put("Lang=" + uri, titleLan);
                     return titleLan;
 
                 }
@@ -200,7 +202,10 @@ public class LinksFilesUtiles {
                 SPARQL s = new SPARQL();
                 List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h {<" + uri + "> <http://purl.org/ontology/bibo/handle> ?h . } limit 1", value, "h");
                 if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
-                    return SimpleQuery.get(0).toString();
+
+                    String Handle = SimpleQuery.get(0).toString();
+                    Cache.getInstance().put("Handle=" + uri, Handle);
+                    return Handle;
                 }
             } catch (Exception ex) {
                 ex.printStackTrace(new PrintStream(System.out));
@@ -230,7 +235,9 @@ public class LinksFilesUtiles {
                 SPARQL s = new SPARQL();
                 List<RDFNode> SimpleQuery = s.SimpleQuery("select ?h {<" + uri + "> <http://www.w3.org/1999/xhtml/vocab#icon> ?h . } limit 1", value, "h");
                 if (SimpleQuery != null && !SimpleQuery.isEmpty()) {
-                    return SimpleQuery.get(0).toString();
+                    String Icon = SimpleQuery.get(0).toString();
+                    Cache.getInstance().put("Icon=" + uri, Icon);
+                    return Icon;
                 }
             } catch (Exception ex) {
                 ex.printStackTrace(new PrintStream(System.out));

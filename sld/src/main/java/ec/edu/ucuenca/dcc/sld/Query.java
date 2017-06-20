@@ -147,7 +147,7 @@ public class Query extends HttpServlet {
                                 OneResult.put("Handle", LinksFilesUtiles.getHandle(FindLinks2.get(i)));
                                 OneResult.put("Repository", Repo);
 
-                                if (Repo == "repositorio") {
+                                if ("repositorio".equals(Repo)) {
 
                                     JSONArray OneArray = new JSONArray();
                                     OneArray.addAll(LinksFilesUtiles.getCallNumber(FindLinks2.get(i)));
