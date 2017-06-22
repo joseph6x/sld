@@ -15,12 +15,33 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author cedia
  */
 public class SPARQL {
+
+    public List<String> SimpleQueryString(String qry, String end, String var) {
+        List<String> lista = new ArrayList();
+        List<RDFNode> SimpleQuery = SimpleQuery(qry, end, var);
+        for (RDFNode nd : SimpleQuery) {
+            String string = nd.asLiteral().getString();
+            lista.add(string);
+        }
+
+        return lista;
+    }
+    public List<String> SimpleQueryStringLang(String qry, String end, String var) {
+        List<String> lista = new ArrayList();
+        List<RDFNode> SimpleQuery = SimpleQuery(qry, end, var);
+        for (RDFNode nd : SimpleQuery) {
+            String string = nd.asLiteral().getLanguage();
+            lista.add(string);
+        }
+
+        return lista;
+    }
+    
 
     public List<RDFNode> SimpleQuery(String qry, String end, String var) {
         List<RDFNode> lista = new ArrayList();
@@ -36,6 +57,7 @@ public class SPARQL {
             }
             return lista;
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Verificar consulta, no existen datos para mostrar" + e);
         } finally {
             qexec.close();

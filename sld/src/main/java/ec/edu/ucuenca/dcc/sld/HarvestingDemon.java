@@ -28,7 +28,15 @@ public class HarvestingDemon extends Thread {
                     String FilterURI = get1.get("FilterURI").getAsString().value();
                     FilterURI = ApplyFilter ? FilterURI : null;
 
-                    Harvester hv = new Harvester(get1.get("Name").getAsString().value(), get1.get("Endpoint").getAsString().value(), get1.get("MainClass").getAsString().value(), get1.get("Query").getAsString().value(), FilterURI);
+                    boolean DateBoost = get1.get("DateBoost").getAsBoolean().value();
+                    String Date = get1.get("Date").getAsString().value();
+                    Date = DateBoost ? Date : null;
+
+                    boolean TwoSteps = get1.get("TwoSteps").getAsBoolean().value();
+                    String Query2 = get1.get("Query2").getAsString().value();
+                    Query2 = TwoSteps ? Query2 : null;
+
+                    Harvester hv = new Harvester(get1.get("Name").getAsString().value(), get1.get("Endpoint").getAsString().value(), get1.get("MainClass").getAsString().value(), get1.get("Query").getAsString().value(), FilterURI, Date, Query2);
                     hv.Harvest();
                 } catch (Exception ex) {
                     ex.printStackTrace(new PrintStream(System.out));

@@ -28,15 +28,18 @@ public class SynonymsDemon extends Thread {
 
             try {
                 SolrConnection instance = SolrConnection.getInstance();
-                String[] FindOne = instance.FindOne("state", "0", "originalText", "uri", "originalTextSyn", "endpoint");
+                List<String[]> FindOne = instance.Find(new String[]{"state"}, new String[]{"0"}, new boolean[]{true}, new String[]{"uri", "endpoint", "originalText", "pathText"}, true, 1, false);
+                //String[] FindOne = instance.FindOne("state", "0", "originalText", "uri", "originalTextSyn", "endpoint");
 
-                if (FindOne == null) {
-                    Thread.sleep(1000*60*60*6);
+                if (FindOne.isEmpty()) {
+                    Thread.sleep(1000 * 60 * 60 * 6);
                 } else {
                     boolean upd = true;
-                    String uri = FindOne[0];
-                    String orgtxt = FindOne[1];
-                    String ep = FindOne[3];
+                    String uri = FindOne.get(0)[0];
+                    String orgtxt = FindOne.get(0)[2];
+                    String pathtxt = FindOne.get(0)[3];
+                    String ep = FindOne.get(0)[1];
+
                     ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(orgtxt.split(",")));
                     arrayList.removeAll(Arrays.asList("", null));
 
@@ -56,28 +59,27 @@ public class SynonymsDemon extends Thread {
 
                         } else {
                             upd = false;
-                            Thread.sleep(1000*60*60*6);
+                            Thread.sleep(1000 * 60 * 60 * 6);
                             break;
                         }
                     }
                     if (upd) {
 
-                        SolrConnection instance1 = SolrConnection.getInstance();
-                        SolrClient solr = instance1.getSolr();
-                        solr.deleteByQuery("uri:\"" + uri + "\"");
-                        solr.commit();
+                        //SolrConnection instance1 = SolrConnection.getInstance();
+                        instance.remove(new String[]{"uri"}, new String[]{uri}, new boolean[]{true}, true);
+                        instance.insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
+                                new Object[]{uri, orgtxt, nsyn, orgtxt + " " + nsyn, 1, ep,pathtxt});
 
-                        SolrInputDocument document = new SolrInputDocument();
-                        document.addField("uri", uri);
-                        document.addField("originalText", orgtxt);
-                        document.addField("originalTextSyn", nsyn);
-                        document.addField("finalText", orgtxt + " " + nsyn);
-                        document.addField("state", 1);
-                        document.addField("endpoint", ep);
-
-                        UpdateResponse add = solr.add(document);
-                        solr.commit();
-
+//                        SolrInputDocument document = new SolrInputDocument();
+//                        document.addField("uri", uri);
+//                        document.addField("originalText", orgtxt);
+//                        document.addField("originalTextSyn", nsyn);
+//                        document.addField("finalText", orgtxt + " " + nsyn);
+//                        document.addField("state", 1);
+//                        document.addField("endpoint", ep);
+//
+//                        UpdateResponse add = solr.add(document);
+//                        solr.commit();
                     }
                 }
             } catch (Exception ex) {

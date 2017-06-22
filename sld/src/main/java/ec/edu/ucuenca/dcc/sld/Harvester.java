@@ -32,15 +32,20 @@ public class Harvester {
 
     private String Filter;
 
-    public Harvester(String Name, String Endpoint, String MainClass, String Query, String Filter) {
+    private String TwoSteps;
+    private String Date;
+
+    public Harvester(String Name, String Endpoint, String MainClass, String Query, String Filter, String Date, String TwoSteps) {
         this.Endpoint = Endpoint;
         this.MainClass = MainClass;
         this.Query = Query;
         this.Name = Name;
         this.Filter = Filter;
+        this.Date = Date;
+        this.TwoSteps = TwoSteps;
     }
 
-    public void Harvest() throws SolrServerException, IOException {
+    public void Harvest() throws SolrServerException, IOException, Exception {
         int bulk = 1000;
         SPARQL sp = new SPARQL();
         String Count = "select (count(*) as ?c) where { ?r a <" + MainClass + "> . @@@ }";
@@ -64,9 +69,16 @@ public class Harvester {
             for (RDFNode d : SimpleQuery1) {
                 String uri = d.asResource().getURI();
                 if (!SolrConnection.getInstance().exists(uri)) {
+                    List<String> SimpleQuery2_ = new ArrayList<>();
+                    if (TwoSteps != null) {
+                        String QueryTwo = TwoSteps.replaceAll("\\|\\?\\|", uri);
+                        SimpleQuery2_ = sp.SimpleQueryString(QueryTwo, Endpoint, "l");
+                    }
+
                     String Query2 = Query.replaceAll("\\|\\?\\|", uri);
                     List<RDFNode> SimpleQuery2 = sp.SimpleQuery(Query2, Endpoint, "d");
-                    AddUpdate(uri, SimpleQuery2);
+
+                    AddUpdate(uri, SimpleQuery2, SimpleQuery2_);
                 } else {
                     //System.out.println("Ya existe" + uri);
 
@@ -75,11 +87,9 @@ public class Harvester {
         }
     }
 
-    public void AddUpdate(String uri, List<RDFNode> ls) throws SolrServerException, IOException {
+    public void AddUpdate(String uri, List<RDFNode> ls, List<String> lsTwo) throws SolrServerException, IOException, Exception {
 
         //System.out.println(ls);
-        SolrClient solr = SolrConnection.getInstance().getSolr();
-
         String txt = "";
 
         for (RDFNode a : ls) {
@@ -93,19 +103,14 @@ public class Harvester {
 
             }
         }
+        String txtTwo = "";
+        for (String a : lsTwo) {
+            txtTwo += a + ", ";
+        }
 
-        SolrInputDocument document = new SolrInputDocument();
-        document.addField("uri", uri);
-        document.addField("originalText", txt);
-        document.addField("originalTextSyn", "");
-        document.addField("finalText", txt);
-        document.addField("state", 0);
-        document.addField("endpoint", this.Name);
         //state
-
-        UpdateResponse response = solr.add(document);
-
-        solr.commit();
+        SolrConnection.getInstance().insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
+                new Object[]{uri, txt, "", txt, 0, this.Name, txtTwo});
 
     }
 
@@ -170,6 +175,30 @@ public class Harvester {
 
     public void setName(String Name) {
         this.Name = Name;
+    }
+
+    public String getFilter() {
+        return Filter;
+    }
+
+    public void setFilter(String Filter) {
+        this.Filter = Filter;
+    }
+
+    public String getTwoSteps() {
+        return TwoSteps;
+    }
+
+    public void setTwoSteps(String TwoSteps) {
+        this.TwoSteps = TwoSteps;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String Date) {
+        this.Date = Date;
     }
 
 }

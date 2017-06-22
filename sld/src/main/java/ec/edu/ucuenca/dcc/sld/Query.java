@@ -124,55 +124,99 @@ public class Query extends HttpServlet {
                             String end = rep[j];
                             String Repo = end.split(":")[0];
                             String limit = end.split(":")[1];
-                            List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
+                            //List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
+                            List<String[]> FindLinks2 = instance.Find(new String[]{"endpoint", "finalText", "pathText"},
+                                    new String[]{Repo, "(" + SearchTerms + ")", "(" + SearchTerms + ")"},
+                                    new boolean[]{true, false, false},
+                                    new String[]{"uri"}, false,
+                                    Integer.parseInt(limit), true);
+                            JSONArray Results2 = new JSONArray();
                             for (int i = 0; i < FindLinks2.size(); i++) {
-                                //String txt2_ = "{\"Icon\":\"" + LinksFilesUtiles.getIcon(FindLinks2.get(i))
-                                //          + "\", \"Title\":\"" + LinksFilesUtiles.getTitle(FindLinks2.get(i)).replaceAll("\"", "'") + "\", \"URI\":\""
-                                //        + FindLinks2.get(i) + "\", \"Handle\":\"" + LinksFilesUtiles.getHandle(FindLinks2.get(i)) + "\", \"Repository\":\""
-                                //        + Repo + "\"}";
-                                // t_.add(txt2_);
 
                                 JSONObject OneResult = new JSONObject();
 
-                                String Img = LinksFilesUtiles.getIcon(FindLinks2.get(i));
-                                if (Img.compareTo(FindLinks2.get(i)) == 0) {
-                                    OneResult.put("Icon", ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value());
-                                } else {
-                                    OneResult.put("Icon", Img);
-                                }
-
-                                OneResult.put("Title", LinksFilesUtiles.getTitle(FindLinks2.get(i)));
-                                OneResult.put("Language", LinksFilesUtiles.getLang(FindLinks2.get(i)));
-                                OneResult.put("URI", FindLinks2.get(i));
-                                OneResult.put("Handle", LinksFilesUtiles.getHandle(FindLinks2.get(i)));
-                                OneResult.put("Repository", Repo);
+                                String URI_ = FindLinks2.get(i)[0];
 
                                 if ("repositorio".equals(Repo)) {
+                                    LinksFilesUtiles.addProperty(OneResult, "Icon", Repo, URI_, true,
+                                            false, ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value(), false,
+                                            "http://www.w3.org/1999/xhtml/vocab#icon");
 
-                                    JSONArray OneArray = new JSONArray();
-                                    OneArray.addAll(LinksFilesUtiles.getCallNumber(FindLinks2.get(i)));
-                                    if (!OneArray.isEmpty()) {
-                                        OneResult.put("CallNumber", OneArray);
-                                    }
-                                    OneArray = new JSONArray();
-                                    OneArray.addAll(LinksFilesUtiles.getBibLevel(FindLinks2.get(i)));
-                                    if (!OneArray.isEmpty()) {
-                                        OneResult.put("BibLevel", OneArray);
-                                    }
+                                }
+                                LinksFilesUtiles.addProperty(OneResult, "Title", Repo, URI_, true,
+                                        false, URI_, false,
+                                        "http://purl.org/dc/terms/title", "http://www.w3.org/2000/01/rdf-schema#label");
+
+                                LinksFilesUtiles.addProperty(OneResult, "Language", Repo, URI_, true,
+                                        false, URI_, true,
+                                        "http://purl.org/dc/terms/title", "http://www.w3.org/2000/01/rdf-schema#label");
+
+                                LinksFilesUtiles.addProperty(OneResult, "URI", URI_, URI_, false);
+
+                                LinksFilesUtiles.addProperty(OneResult, "Handle", Repo, URI_, true,
+                                        true, "http://interwp.cepal.org/sisgen/ConsultaIntegrada.asp?idIndicador=", false,
+                                        "http://purl.org/ontology/bibo/handle");
+
+                                LinksFilesUtiles.addProperty(OneResult, "Repository", URI_, Repo, false);
+//
+//                                LinksFilesUtiles.addProperty(OneResult, "Repository", Repo, URI_, true,
+//                                        false, Repo, false,
+//                                        "http://none/");
+
+                                //Only for dspace repository!!!
+                                if ("repositorio".equals(Repo)) {
+
+                                    LinksFilesUtiles.addProperty(OneResult, "CallNumber", Repo, URI_, false,
+                                            false, URI_, false,
+                                            "http://myontology.org/callNumber");
+
+                                    LinksFilesUtiles.addProperty(OneResult, "BibLevel", Repo, URI_, true,
+                                            false, URI_, false,
+                                            "http://myontology.org/bibLevel");
+
                                 }
 
-                                Results.add(OneResult);
+                                LinksFilesUtiles.addProperty(OneResult, "Date", Repo, URI_, true,
+                                        false, "", false,
+                                        "http://purl.org/dc/terms/date", "http://purl.org/dc/terms/issued", "http://purl.org/dc/terms/modified");
 
-                                //txt2 += (i == FindLinks2.size() - 1 && j == rep.length - 1 ? "" : ",");
+//                                String Img = LinksFilesUtiles.getIcon(FindLinks2.get(i));
+//                                if (Img.compareTo(FindLinks2.get(i)) == 0) {
+//                                    OneResult.put("Icon", ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value());
+//                                } else {
+//                                    OneResult.put("Icon", Img);
+//                                }
+//
+//                                OneResult.put("Title", LinksFilesUtiles.getTitle(FindLinks2.get(i)));
+//                                OneResult.put("Language", LinksFilesUtiles.getLang(FindLinks2.get(i)));
+//                                OneResult.put("URI", FindLinks2.get(i));
+//                                OneResult.put("Handle", LinksFilesUtiles.getHandle(FindLinks2.get(i)));
+//                                OneResult.put("Repository", Repo);
+//
+//                                if ("repositorio".equals(Repo)) {
+//
+//                                    JSONArray OneArray = new JSONArray();
+//                                    OneArray.addAll(LinksFilesUtiles.getCallNumber(FindLinks2.get(i)));
+//                                    if (!OneArray.isEmpty()) {
+//                                        OneResult.put("CallNumber", OneArray);
+//                                    }
+//                                    OneArray = new JSONArray();
+//                                    OneArray.addAll(LinksFilesUtiles.getBibLevel(FindLinks2.get(i)));
+//                                    if (!OneArray.isEmpty()) {
+//                                        OneResult.put("BibLevel", OneArray);
+//                                    }
+//                                }
+                                Results2.add(OneResult);
+
                             }
-                        }
-                        //String txt2 = "";
-                        // for (int j = 0; j < t_.size(); j++) {
-                        //    txt2 += t_.get(j);
-                        //    txt2 += (j == t_.size() - 1 ? "" : ",");
-                        // }
 
-                        //res += txt2 + "]";
+                            //sort
+                            LinksFilesUtiles.sortDate(Results2);
+
+                            Results.addAll(Results2);
+
+                        }
+
                         res = Results.toJSONString();
                         instanceCache.put(mD5Key, "L1=" + res);
                     }

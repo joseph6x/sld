@@ -14,8 +14,10 @@ import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 
@@ -48,6 +50,7 @@ public class SolrConnection {
 
     }
 
+    @Deprecated
     public List<String> Find2(String var, String val, String var2, String val2, int limit) throws SolrServerException, IOException {
 
         int current = 0;
@@ -85,6 +88,7 @@ public class SolrConnection {
         return ls;
     }
 
+    @Deprecated
     public List<String> Find(String var, String val, double minScore) throws SolrServerException, IOException {
 
         List<String> ls = new ArrayList<>();
@@ -119,6 +123,7 @@ public class SolrConnection {
         return ls;
     }
 
+    @Deprecated
     public String[] FindOne(String var, String val, String vals, String uri, String syn, String ep) throws SolrServerException, IOException {
         String txt[] = null;
         NamedList params = new NamedList();
@@ -138,6 +143,7 @@ public class SolrConnection {
         return txt;
     }
 
+    @Deprecated
     public String[] FindOne2(String var, String val, String vals, String uri, String syn, String ep) throws SolrServerException, IOException {
         String txt[] = null;
         NamedList params = new NamedList();
@@ -155,6 +161,112 @@ public class SolrConnection {
             txt = new String[]{fieldValue2 + "", fieldValue + "", fieldValue3 + "", fieldValue4 + ""};
         }
         return txt;
+    }
+
+    public void insert(String[] var, Object[] val) throws SolrServerException, IOException, Exception {
+        if (var.length == val.length) {
+        } else {
+            throw new Exception("Var != Val != Quo");
+        }
+
+        SolrInputDocument document = new SolrInputDocument();
+        for (int i = 0; i < var.length; i++) {
+            document.addField(var[i], val[i]);
+        }
+
+        UpdateResponse add = Solr.add(document);
+        Solr.commit();
+    }
+
+    public List<String[]> Find(String[] var, String[] val, boolean[] quo, String[] out, boolean and, int limit, boolean firstAnd) throws SolrServerException, IOException, Exception {
+
+        int current = 0;
+        List<String[]> lsResults = new ArrayList<>();
+
+        if (var.length == val.length && val.length == quo.length) {
+        } else {
+            throw new Exception("Var != Val != Quo");
+        }
+        if (var.length <= 1 && firstAnd) {
+            System.err.println("Ignoring firstAnd..");
+            firstAnd = false;
+        }
+
+        NamedList params = new NamedList();
+        String qry = "";
+        for (int i = 0; i < var.length; i++) {
+
+            qry += var[i] + ":" + "" + (quo[i] ? "\"" : "") + val[i] + (quo[i] ? "\"" : "") + "";
+            if (i != var.length - 1) {
+                if (and || firstAnd && i == 0) {
+                    qry += " AND ";
+                    if (firstAnd && i == 0) {
+                        qry += " ( ";
+                    }
+                } else {
+                    qry += " OR ";
+                }
+            } else {
+                if (firstAnd) {
+                    qry += " ) ";
+                }
+            }
+        }
+        params.add("q", qry);
+        params.add("fl", "*,score");
+        params.add("start", current + "");
+        while (true) {
+            params.setVal(2, current + "");
+            SolrParams toSolrParams = SolrParams.toSolrParams(params);
+            QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
+            SolrDocumentList results = query.getResults();
+            if (!query.getResults().isEmpty()) {
+                boolean end = false;
+                for (int i = 0; i < results.size(); i++) {
+                    String txt[] = new String[out.length];
+                    SolrDocument get = results.get(i);
+                    current++;
+                    for (int ix = 0; ix < out.length; ix++) {
+                        txt[ix] = get.getFieldValue(out[ix]).toString();
+                    }
+                    lsResults.add(txt);
+                    if (limit != -1 && current >= limit) {
+                        end = true;
+                        break;
+                    }
+                }
+                if (end) {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+
+        return lsResults;
+    }
+
+    public void remove(String[] var, String[] val, boolean[] quo, boolean and) throws SolrServerException, IOException, Exception {
+
+        if (var.length == val.length && val.length == quo.length) {
+        } else {
+            throw new Exception("Var != Val != Quo");
+        }
+
+        String qry = "";
+        for (int i = 0; i < var.length; i++) {
+            qry += var[i] + ":" + "" + (quo[i] ? "\"" : "") + val[i] + (quo[i] ? "\"" : "") + "";
+            if (i != var.length - 1) {
+                if (and) {
+                    qry += " AND ";
+                } else {
+                    qry += " OR ";
+                }
+            }
+        }
+        Solr.deleteByQuery(qry);
+        Solr.commit();
+
     }
 
     public static SolrConnection getInstance() {
