@@ -25,12 +25,18 @@ public class SPARQL {
         List<String> lista = new ArrayList();
         List<RDFNode> SimpleQuery = SimpleQuery(qry, end, var);
         for (RDFNode nd : SimpleQuery) {
-            String string = nd.asLiteral().getString();
+            String string = "";
+            if (nd.isLiteral()) {
+                string=nd.asLiteral().getString();
+            }else{
+                string=nd.asResource().getURI();
+            }
             lista.add(string);
         }
 
         return lista;
     }
+
     public List<String> SimpleQueryStringLang(String qry, String end, String var) {
         List<String> lista = new ArrayList();
         List<RDFNode> SimpleQuery = SimpleQuery(qry, end, var);
@@ -41,7 +47,6 @@ public class SPARQL {
 
         return lista;
     }
-    
 
     public List<RDFNode> SimpleQuery(String qry, String end, String var) {
         List<RDFNode> lista = new ArrayList();
