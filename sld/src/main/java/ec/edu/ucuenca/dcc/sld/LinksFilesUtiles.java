@@ -137,7 +137,10 @@ public class LinksFilesUtiles {
             } else {
                 dat = property1.get(0);
             }
-            obj.put(Name, dat);
+            if (dat != null && dat.trim().compareTo("") != 0) {
+                obj.put(Name, dat);
+            }
+
         } else {
 
             if (property1.isEmpty()) {
@@ -215,7 +218,7 @@ public class LinksFilesUtiles {
                     JSONArray jsonArray = new JSONArray();
                     jsonArray.addAll(lsResults);
                     obj.put("data", jsonArray);
-                    Cache.getInstance().put("PropertiesCache=" +key, obj.toJSONString());
+                    Cache.getInstance().put("PropertiesCache=" + key, obj.toJSONString());
 
                 } catch (Exception ex) {
                     ex.printStackTrace(new PrintStream(System.out));
