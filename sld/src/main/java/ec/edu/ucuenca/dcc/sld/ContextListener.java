@@ -32,10 +32,10 @@ public class ContextListener implements ServletContextListener {
             D3 = new CorticalDemon();
             D3.start();
         }
-        if ((D4 == null) || (!D4.isAlive())) {
-            D4 = new LinksDemon();
-            D4.start();
-        }
+//        if ((D4 == null) || (!D4.isAlive())) {
+//            D4 = new LinksDemon();
+//            D4.start();
+//        }
         try {
             Cache instance = Cache.getInstance();
             instance.get("");
@@ -48,7 +48,7 @@ public class ContextListener implements ServletContextListener {
             D1.interrupt();
             D2.interrupt();
             D3.interrupt();
-            D4.interrupt();
+//            D4.interrupt();
             Cache instance = Cache.getInstance();
             instance.Kill();
         } catch (Exception ex) {
