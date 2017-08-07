@@ -175,11 +175,11 @@ public class Query extends HttpServlet {
                                             "http://myontology.org/bibLevel");
 
                                 }
-                                if ("cepalstat".equals(Repo)) {
-                                    LinksFilesUtiles.addProperty(OneResult, "Date", Repo, URI_, true,
-                                            false, "", false,
-                                            "http://purl.org/dc/terms/date", "http://purl.org/dc/terms/issued", "http://purl.org/dc/terms/modified");
-                                }
+                                //if ("cepalstat".equals(Repo)) {
+                                //    LinksFilesUtiles.addProperty(OneResult, "Date", Repo, URI_, true,
+                                //            false, "", false,
+                                //            "http://purl.org/dc/terms/date", "http://purl.org/dc/terms/issued", "http://purl.org/dc/terms/modified");
+                                //}
 //                                String Img = LinksFilesUtiles.getIcon(FindLinks2.get(i));
 //                                if (Img.compareTo(FindLinks2.get(i)) == 0) {
 //                                    OneResult.put("Icon", ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value());
@@ -211,9 +211,9 @@ public class Query extends HttpServlet {
                             }
 
                             //sort
-                            if ("cepalstat".equals(Repo)) {
-                                LinksFilesUtiles.sortDate(Results2);
-                            }
+                            //if ("cepalstat".equals(Repo)) {
+                                //LinksFilesUtiles.sortDate(Results2);
+                            //}
                             Results.addAll(Results2);
 
                         }
