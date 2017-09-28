@@ -14,6 +14,7 @@ import org.apache.jena.atlas.json.JSON;
 import org.apache.jena.atlas.json.JsonArray;
 import org.apache.jena.atlas.json.JsonObject;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -22,11 +23,24 @@ import org.apache.solr.client.solrj.util.ClientUtils;
 public class test {
 
     public static void main(String[] args) throws Exception {
-
-        System.out.println(YandexDictionary.Syn("cat", 10));
-
-
-
+        SolrConnection instance = SolrConnection.getInstance();
+        List<String[]> Find = instance.Find(new String[]{"endpoint"}, new String[]{"cepalstat"}, new boolean[]{true}, new String[]{"uri"}, true, -1, true);
+        System.out.println(Find.get(0)[0]);
+        
+//        JSONObject OneResult = new JSONObject();
+//        
+//        OneResult.put("algo", "áéćááá");
+//        
+//        Cache.getInstance().put("a", OneResult.toJSONString());
+//        String get = Cache.getInstance().get("a");
+//        
+//        JsonObject parse = JSON.parse(get);
+//        
+//        String value = parse.get("algo").getAsString().value();
+//        
+//        System.out.println(value);
+//        
+        //System.out.println(YandexDictionary.Syn("cat", 10));
 //        SPARQL sp = new SPARQL();
 //
 //        List<String> SimpleQueryString = sp.SimpleQueryString("select ?d { ?c <http://purl.org/dc/terms/date> ?d .  }", "http://10.0.29.117:8891/biblioguias/sparql", "d");

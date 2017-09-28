@@ -48,6 +48,27 @@ public class SPARQL {
         return lista;
     }
 
+    
+    
+    public boolean SimpleQueryAsk(String qry, String end) {
+        String endpoint = end;
+        String consulta = qry;
+        Query query = QueryFactory.create(consulta);
+        boolean ask=false;
+        QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
+        try {
+            ask = qexec.execAsk();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Verificar consulta, no existen datos para mostrar" + e);
+        } finally {
+            qexec.close();
+
+        }
+        return ask;
+    }
+    
+    
     public List<RDFNode> SimpleQuery(String qry, String end, String var) {
         List<RDFNode> lista = new ArrayList();
         String endpoint = end;

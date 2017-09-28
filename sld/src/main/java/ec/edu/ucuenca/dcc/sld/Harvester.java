@@ -45,6 +45,22 @@ public class Harvester {
         this.TwoSteps = TwoSteps;
     }
 
+    public void GarbageCollector() throws IOException, Exception {
+        SPARQL sp = new SPARQL();
+        SolrConnection instance = SolrConnection.getInstance();
+        List<String[]> Find = instance.Find(new String[]{"endpoint"}, new String[]{Name}, new boolean[]{true}, new String[]{"uri"}, true, -1, true);
+        for (String[] oneF : Find) {
+            String uri = oneF[0];
+            String qr = "ask { <" + uri + "> ?s ?c . }";
+            boolean SimpleQueryAsk = sp.SimpleQueryAsk(qr, Endpoint);
+            if (!SimpleQueryAsk) {
+                //Remove old index entry.
+                instance.remove(new String[]{"uri"}, new String[]{uri}, new boolean[]{true}, true);
+            }
+        }
+
+    }
+
     public void Harvest() throws SolrServerException, IOException, Exception {
         int bulk = 1000;
         SPARQL sp = new SPARQL();
@@ -96,7 +112,9 @@ public class Harvester {
             if (a.isLiteral()) {
                 txt += a.asLiteral().getString() + ", ";
             } else {
-                List<String> DbpediaLabel = DbpediaLabel(a.asResource().getURI());
+                List<String> DbpediaLabel = new ArrayList<>();//DbpediaLabel(a.asResource().getURI());
+                DbpediaLabel.add(HttpUtils.Escape2(a.asResource().getLocalName()).trim());
+
                 for (int j = 0; j < DbpediaLabel.size(); j++) {
                     txt += DbpediaLabel.get(j) + ", ";
                 }

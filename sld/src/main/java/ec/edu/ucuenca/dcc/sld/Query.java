@@ -38,6 +38,7 @@ public class Query extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         boolean JSONP = false;
         String Callback_ = "";
+        response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String res = "";
             try {
@@ -102,23 +103,23 @@ public class Query extends HttpServlet {
                                 break;
                             case "keywords":
                                 SearchTerms = QueryText;
-                                SearchTerms = HttpUtils.Escape2(SearchTerms);
+                                SearchTerms = HttpUtils.split(SearchTerms);
                                 break;
                         }
-                        String traductorYandex = HttpUtils.traductorYandex(SearchTerms);
+                        //String traductorYandex = HttpUtils.traductorYandex(SearchTerms);
 
-                        if (!traductorYandex.trim().isEmpty()) {
-                            SearchTerms = SearchTerms + "," + traductorYandex;
-                        }
+                        //if (!traductorYandex.trim().isEmpty()) {
+                        //    SearchTerms = SearchTerms + "," + traductorYandex;
+                        //}
 
-                        SearchTerms = SearchTerms.replace(",", " ").trim();
+                        //SearchTerms = SearchTerms.replace(",", " ").trim();
                         String[] rep = RepositoriesList.split(";");
                         //List<String> FindLinks = new ArrayList<>();
 
                         //res = "[";
                         JSONArray Results = new JSONArray();
 
-                        List<String> t_ = new ArrayList<>();
+                        //List<String> t_ = new ArrayList<>();
 
                         for (int j = 0; j < rep.length; j++) {
                             String end = rep[j];

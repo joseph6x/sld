@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -159,7 +159,6 @@ public class HttpUtils {
                 case '/':
                 case '"':
 
-
                     break;
                 default:
                     r = palabras.charAt(i);
@@ -168,6 +167,24 @@ public class HttpUtils {
             txt += r;
         }
         return txt;
+    }
+
+    public static String split(String palabras) {
+        String[] split = palabras.toLowerCase().split(" \\+ |   ");
+        String resq = "";
+        int is = 0;
+        for (String p : split) {
+            String Escape2 = Escape2(p).trim().replaceAll("\\s+", " ");
+            String[] split1 = Escape2.split(" ");
+            String Res = "";
+            for (int i = 0; i < split1.length; i++) {
+                Res += split1[i] + (i == split1.length - 1 ? "" : " AND ");
+            }
+            Res = "(" + Res + ")";
+            resq += Res + (is == split.length - 1 ? "" : " OR ");
+            is++;
+        }
+        return resq;
     }
 
     public static String Escape2(String palabras) {
@@ -193,6 +210,8 @@ public class HttpUtils {
                 case ':':
                 case '\\':
                 case '/':
+                case '_':
+                case '¿':
                     break;
                 default:
                     r = palabras.charAt(i);
@@ -202,7 +221,7 @@ public class HttpUtils {
         }
         return txt;
     }
-    
+
     public static String traductorYandex(String palabras) {
         String url = "https://translate.yandex.net/api/v1.5/tr.json/translate";
         //String url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20160321T160516Z.43cfb95e23a69315.6c0a2ae19f56388c134615f4740fbb1d400f15d3&lang=en&text=" + URLEncoder.encode(palabras, "UTF-8");

@@ -18,7 +18,7 @@
                 "Query2":"Select distinct ?l where { { <|?|> <http://purl.org/dc/terms/isPartOf> ?a . ?a <http://purl.org/dc/terms/isPartOf>* ?b . ?b <http://www.w3.org/2000/01/rdf-schema#label> ?l . } union { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?l . } }",
                 "Endpoint": "http://10.0.29.117:8891/cepalstat/sparql",
                 "MainClass": "http://purl.org/linked-data/cube#DataSet",
-                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d . } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d . } UNION { select (str(?l) as ?d) where { <|?|> <http://purl.org/linked-data/cube#dataSet> ?c . ?c ?b ?x . ?x <http://www.w3.org/2000/01/rdf-schema#label>  ?l.   } } }"
+                "Query": "select distinct ?d where {  { <|?|> <http://purl.org/dc/terms/subject> ?d . } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d . } UNION { select (str(?l) as ?d) where { <|?|> <http://purl.org/linked-data/cube#dataSet> ?c . ?c ?b ?x . ?x <http://www.w3.org/2000/01/rdf-schema#label>  ?l.   } } }"
             }, {
                 "Name": "biblioguias",
                 "ApplyFilter": true,

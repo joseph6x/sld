@@ -38,6 +38,7 @@ public class HarvestingDemon extends Thread {
 
                     Harvester hv = new Harvester(get1.get("Name").getAsString().value(), get1.get("Endpoint").getAsString().value(), get1.get("MainClass").getAsString().value(), get1.get("Query").getAsString().value(), FilterURI, Date, Query2);
                     hv.Harvest();
+                    hv.GarbageCollector();
                 } catch (Exception ex) {
                     ex.printStackTrace(new PrintStream(System.out));
                 }

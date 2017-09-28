@@ -212,6 +212,7 @@ public class SolrConnection {
                 }
             }
         }
+        System.out.println("LOG_Solr_" + qry);
         params.add("q", qry);
         params.add("fl", "*,score");
         params.add("start", current + "");
