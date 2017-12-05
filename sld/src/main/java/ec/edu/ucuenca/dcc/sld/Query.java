@@ -103,7 +103,7 @@ public class Query extends HttpServlet {
                                 break;
                             case "keywords":
                                 SearchTerms = QueryText;
-                                SearchTerms = HttpUtils.split(SearchTerms);
+                                SearchTerms = HttpUtils.split2(SearchTerms);
                                 break;
                         }
                         //String traductorYandex = HttpUtils.traductorYandex(SearchTerms);
@@ -126,11 +126,18 @@ public class Query extends HttpServlet {
                             String Repo = end.split(":")[0];
                             String limit = end.split(":")[1];
                             //List<String> FindLinks2 = instance.Find2("finalText", "(" + SearchTerms + ")", "endpoint", Repo, Integer.parseInt(limit));
-                            List<String[]> FindLinks2 = instance.Find(new String[]{"endpoint", "finalText", "pathText"},
-                                    new String[]{Repo, "(" + SearchTerms + ")", "(" + SearchTerms + ")"},
-                                    new boolean[]{true, false, false},
-                                    new String[]{"uri"}, false,
-                                    Integer.parseInt(limit), true);
+//                            List<String[]> FindLinks2 = instance.Find(new String[]{"endpoint", "finalText", "pathText"},
+//                                    new String[]{Repo, "(" + SearchTerms + ")", "(" + SearchTerms + ")"},
+//                                    new boolean[]{true, false, false},
+//                                    new String[]{"uri"}, false,
+//                                    Integer.parseInt(limit), true);
+                            
+
+                            List<String[]> FindLinks2 = instance.FindMod(Repo,SearchTerms,Integer.parseInt(limit), "30%");
+
+                            
+                            
+                            
                             JSONArray Results2 = new JSONArray();
                             for (int i = 0; i < FindLinks2.size(); i++) {
 

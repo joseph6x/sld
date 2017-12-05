@@ -187,6 +187,23 @@ public class HttpUtils {
         return resq;
     }
 
+        public static String split2(String palabras) {
+        String[] split = palabras.toLowerCase().split(" \\+ |   ");
+        String resq = "";
+        int is = 0;
+        for (String p : split) {
+            String Escape2 = Escape2(p).trim().replaceAll("\\s+", " ");
+            
+            String Res = "(finalText:\"" + Escape2 + "\")";
+            resq += Res + (is == split.length - 1 ? " " : " ");
+            is++;
+        }
+        return resq;
+    }
+    
+    
+    
+    
     public static String Escape2(String palabras) {
         String txt = "";
         for (int i = 0; i < palabras.length(); i++) {

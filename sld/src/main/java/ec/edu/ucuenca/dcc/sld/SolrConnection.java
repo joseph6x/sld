@@ -178,6 +178,57 @@ public class SolrConnection {
         Solr.commit();
     }
 
+    
+    public List<String[]>  FindMod(String endpoint, String pquery, int limit, String mm) throws SolrServerException, IOException{
+        
+        String [] out ={"uri"};
+        int current = 0;
+        List<String[]> lsResults = new ArrayList<>();
+        NamedList params = new NamedList();
+        
+        String newquery=pquery+" +(endpoint:\""+endpoint+"\")";
+        System.out.println("LOG_Solr_" + newquery);
+        params.add("q",newquery );
+        params.add("fl", "*,score");
+        params.add("start", current + "");
+        params.add("defType", "edismax");
+        params.add("mm", ""+mm);
+        params.add("qf", "finalText");
+        while (true) {
+            params.setVal(2, current + "");
+            SolrParams toSolrParams = SolrParams.toSolrParams(params);
+            QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
+            SolrDocumentList results = query.getResults();
+            if (!query.getResults().isEmpty()) {
+                boolean end = false;
+                for (int i = 0; i < results.size(); i++) {
+                    String txt[] = new String[out.length];
+                    SolrDocument get = results.get(i);
+                    current++;
+                    for (int ix = 0; ix < out.length; ix++) {
+                        txt[ix] = get.getFieldValue(out[ix]).toString();
+                    }
+                    lsResults.add(txt);
+                    if (limit != -1 && current >= limit) {
+                        end = true;
+                        break;
+                    }
+                }
+                if (end) {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+
+        return lsResults;
+    
+    }
+    
+    
+    
+    
     public List<String[]> Find(String[] var, String[] val, boolean[] quo, String[] out, boolean and, int limit, boolean firstAnd) throws SolrServerException, IOException, Exception {
 
         int current = 0;

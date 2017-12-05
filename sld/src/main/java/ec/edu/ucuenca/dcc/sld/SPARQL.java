@@ -59,6 +59,7 @@ public class SPARQL {
         try {
             ask = qexec.execAsk();
         } catch (Exception e) {
+            ask=true;
             e.printStackTrace();
             System.out.println("Verificar consulta, no existen datos para mostrar" + e);
         } finally {
