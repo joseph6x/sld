@@ -178,21 +178,20 @@ public class SolrConnection {
         Solr.commit();
     }
 
-    
-    public List<String[]>  FindMod(String endpoint, String pquery, int limit, String mm) throws SolrServerException, IOException{
-        
-        String [] out ={"uri"};
+    public List<String[]> FindMod(String endpoint, String pquery, int limit, String mm) throws SolrServerException, IOException {
+
+        String[] out = {"uri"};
         int current = 0;
         List<String[]> lsResults = new ArrayList<>();
         NamedList params = new NamedList();
-        
-        String newquery=pquery+" +(endpoint:\""+endpoint+"\")";
+
+        String newquery = "+(" + pquery + ") +(endpoint:\"" + endpoint + "\")";
         System.out.println("LOG_Solr_" + newquery);
-        params.add("q",newquery );
+        params.add("q", newquery);
         params.add("fl", "*,score");
         params.add("start", current + "");
         params.add("defType", "edismax");
-        params.add("mm", ""+mm);
+        //params.add("mm", ""+mm);
         params.add("qf", "finalText");
         while (true) {
             params.setVal(2, current + "");
@@ -208,7 +207,9 @@ public class SolrConnection {
                     for (int ix = 0; ix < out.length; ix++) {
                         txt[ix] = get.getFieldValue(out[ix]).toString();
                     }
-                    lsResults.add(txt);
+                    if (Double.parseDouble(get.getFieldValue("score").toString()) > 1.0) {
+                        lsResults.add(txt);
+                    }
                     if (limit != -1 && current >= limit) {
                         end = true;
                         break;
@@ -223,12 +224,9 @@ public class SolrConnection {
         }
 
         return lsResults;
-    
+
     }
-    
-    
-    
-    
+
     public List<String[]> Find(String[] var, String[] val, boolean[] quo, String[] out, boolean and, int limit, boolean firstAnd) throws SolrServerException, IOException, Exception {
 
         int current = 0;

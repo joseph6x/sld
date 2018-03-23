@@ -7,16 +7,18 @@
         "CorticalThreshold": 70,
         "LinksThreshold": 20,
         "SynNumber": 20,
+        "Stopwords": ["brazil","cuba", "ecuador", "colombia", "perú", "peru", "venezuela", "colombia", "argentina", "latin america", "uruguay", "paraguay"
+                    , "bolivia", "chile", "america latina"],
         "Repositories": [
             {
                 "Name": "cepalstat",
                 "ApplyFilter": false,
                 "FilterURI": "",
                 "DateBoost": false,
-                "Date":"",
+                "Date": "",
                 "TwoSteps": false,
-                "Query2":"",
-                "Endpoint": "http://10.0.29.117:8891/cepalstat/sparql",
+                "Query2": "",
+                "Endpoint": "http://localhost:8891/cepalstat/sparql",
                 "MainClass": "http://purl.org/linked-data/cube#DataSet",
                 "Query": "select distinct ?d{ { select * { <|?|> <http://purl.org/dc/terms/isPartOf> ?a . ?a <http://purl.org/dc/terms/isPartOf>* ?b . ?b <http://www.w3.org/2000/01/rdf-schema#label> ?d . } limit 4 } union { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d . filter (regex(?d,',','i')) }union{ select * { <|?|> <http://www.w3.org/2000/01/rdf-schema#label> ?d. }  }}"
             }, {
@@ -24,10 +26,10 @@
                 "ApplyFilter": true,
                 "FilterURI": "guides_",
                 "DateBoost": false,
-                "Date":"",
+                "Date": "",
                 "TwoSteps": false,
-                "Query2":"",
-                "Endpoint": "http://10.0.29.117:8891/biblioguias/sparql",
+                "Query2": "",
+                "Endpoint": "http://localhost:8891/biblioguias/sparql",
                 "MainClass": "http://dbpedia.org/resource/Guide_to_information_sources",
                 "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
             }, {
@@ -35,10 +37,10 @@
                 "ApplyFilter": false,
                 "FilterURI": "",
                 "DateBoost": false,
-                "Date":"",
+                "Date": "",
                 "TwoSteps": false,
-                "Query2":"",
-                "Endpoint": "http://10.0.29.117:8891/repositorio/sparql",
+                "Query2": "",
+                "Endpoint": "http://localhost:8891/repositorio/sparql",
                 "MainClass": "http://purl.org/dc/terms/BibliographicResource",
                 "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
             }

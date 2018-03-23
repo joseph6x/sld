@@ -61,6 +61,7 @@ public class SPARQL {
         } catch (Exception e) {
             ask=true;
             e.printStackTrace();
+            System.out.println(qry);
             System.out.println("Verificar consulta, no existen datos para mostrar" + e);
         } finally {
             qexec.close();
@@ -84,6 +85,7 @@ public class SPARQL {
             }
             return lista;
         } catch (Exception e) {
+            System.out.println(qry);
             e.printStackTrace();
             System.out.println("Verificar consulta, no existen datos para mostrar" + e);
         } finally {

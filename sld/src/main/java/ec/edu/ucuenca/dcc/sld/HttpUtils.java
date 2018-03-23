@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -68,8 +69,8 @@ public class HttpUtils {
         post.setHeader("api-key", "0e30f600-7b62-11e6-a057-97f4c970893c");
         post.setHeader("content-type", "application/json");
         //   post.setHeader("api-key","0e30f600-7b62-11e6-a057-97f4c970893c");
-        post.setHeader("charset", "utf-8");
-        StringEntity params = new StringEntity(body);
+        //post.setHeader("charset", "utf-8");
+        StringEntity params = new StringEntity(body, Charset.defaultCharset());
         //List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
         //urlParameters.add(new BasicNameValuePair("body", body));
         //urlParameters.add(new BasicNameValuePair("retina_name","en_associative"));
@@ -247,20 +248,16 @@ public class HttpUtils {
         mp.put("lang", "en");
         mp.put("text", palabras);
         mp.put("options", "1");
-
-        String rpalabras = "";
-
-        String rs = "";
+        String rpalabras = palabras;
         try {
             String Http = Http2_(url, mp);
-            rs = Http;
             String res = Http;
             JsonObject parse = JSON.parse(res).getAsObject();
             JsonArray asArray = parse.get("text").getAsArray();
             res = asArray.get(0).getAsString().value();
             rpalabras = res;
         } catch (Exception e) {
-            e.printStackTrace(new PrintStream(System.out));
+            e.printStackTrace();
         }
         return rpalabras;
     }
