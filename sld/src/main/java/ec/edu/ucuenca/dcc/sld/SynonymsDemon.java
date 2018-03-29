@@ -9,11 +9,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrInputDocument;
 
 /**
  *
@@ -65,21 +60,12 @@ public class SynonymsDemon extends Thread {
                     }
                     if (upd) {
 
-                        //SolrConnection instance1 = SolrConnection.getInstance();
-                        instance.remove(new String[]{"uri"}, new String[]{uri}, new boolean[]{true}, true);
-                        instance.insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
-                                new Object[]{uri, orgtxt, nsyn, orgtxt + " " + nsyn, 1, ep,pathtxt});
-
-//                        SolrInputDocument document = new SolrInputDocument();
-//                        document.addField("uri", uri);
-//                        document.addField("originalText", orgtxt);
-//                        document.addField("originalTextSyn", nsyn);
-//                        document.addField("finalText", orgtxt + " " + nsyn);
-//                        document.addField("state", 1);
-//                        document.addField("endpoint", ep);
-//
-//                        UpdateResponse add = solr.add(document);
-//                        solr.commit();
+                        //instance.remove(new String[]{"uri"}, new String[]{uri}, new boolean[]{true}, true);
+                        //instance.insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
+                        //        new Object[]{uri, orgtxt, nsyn, orgtxt + " " + nsyn, 1, ep,pathtxt});
+                        
+                        instance.update(uri, new String[] {"originalTextSyn","finalText","state"}, new String[]{nsyn, orgtxt + " " + nsyn,"1"});
+                        
                     }
                 }
             } catch (Exception ex) {

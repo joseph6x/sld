@@ -7,9 +7,11 @@ package ec.edu.ucuenca.dcc.sld;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -20,6 +22,8 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -178,6 +182,16 @@ public class SolrConnection {
         Solr.commit();
     }
 
+    public void insert(List<Map.Entry<String, String>> mp) throws SolrServerException, IOException, Exception {
+
+        SolrInputDocument document = new SolrInputDocument();
+        for (Map.Entry<String, String> amp : mp) {
+            document.addField(amp.getKey(), amp.getValue());
+        }
+        UpdateResponse add = Solr.add(document);
+        Solr.commit();
+    }
+
     public List<String[]> FindMod(String endpoint, String pquery, int limit, String mm) throws SolrServerException, IOException {
 
         String[] out = {"uri"};
@@ -209,6 +223,69 @@ public class SolrConnection {
                     }
                     if (Double.parseDouble(get.getFieldValue("score").toString()) > 1.0) {
                         lsResults.add(txt);
+                    }
+                    if (limit != -1 && current >= limit) {
+                        end = true;
+                        break;
+                    }
+                }
+                if (end) {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+
+        return lsResults;
+
+    }
+
+    public JSONArray FindModX(String endpoint, String pquery, int limit, String mm) throws SolrServerException, IOException {
+
+        String[] out = {"uri", "Icon", "Title", "Language", "Handle", "endpoint", "CallNumber", "BibLevel"};
+        String[] outr = {"URI", "Icon", "Title", "Language", "Handle", "Repository", "CallNumber", "BibLevel"};
+        boolean[] outt = {true, true, true, true, true, true, false, true};
+        int current = 0;
+        JSONArray lsResults = new JSONArray();
+        NamedList params = new NamedList();
+
+        String newquery = "+(" + pquery + ") +(endpoint:\"" + endpoint + "\")";
+        System.out.println("LOG_Solr_" + newquery);
+        params.add("q", newquery);
+        params.add("fl", "*,score");
+        params.add("start", current + "");
+        params.add("defType", "edismax");
+        //params.add("mm", ""+mm);
+        params.add("qf", "finalText");
+        while (true) {
+            params.setVal(2, current + "");
+            SolrParams toSolrParams = SolrParams.toSolrParams(params);
+            QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
+            SolrDocumentList results = query.getResults();
+            if (!query.getResults().isEmpty()) {
+                boolean end = false;
+                for (int i = 0; i < results.size(); i++) {
+                    SolrDocument get = results.get(i);
+                    current++;
+                    JSONObject mp = new JSONObject();
+                    for (int ix = 0; ix < out.length; ix++) {
+                        if (get.containsKey(out[ix])) {
+                            if (outt[ix]) {
+                                String toString = get.getFieldValue(out[ix]).toString();
+                                mp.put(outr[ix], toString);
+                            } else {
+                                Collection<Object> fieldValues = get.getFieldValues(out[ix]);
+                                JSONArray vls = new JSONArray();
+                                for (Object ob : fieldValues) {
+                                    vls.add(ob.toString());
+                                }
+                                mp.put(outr[ix], vls);
+                            }
+                        }
+                    }
+                    if (Double.parseDouble(get.getFieldValue("score").toString()) > 1.0) {
+                        lsResults.add(mp);
                     }
                     if (limit != -1 && current >= limit) {
                         end = true;
@@ -315,6 +392,36 @@ public class SolrConnection {
             }
         }
         Solr.deleteByQuery(qry);
+        Solr.commit();
+
+    }
+
+    public void update(String uri, String[] var, String[] val) throws SolrServerException, IOException {
+
+        assert var.length == val.length;
+        NamedList params = new NamedList();
+        String qry = "uri:\"" + uri + "\"";
+        params.add("q", qry);
+        params.add("fl", "*");
+        SolrParams toSolrParams = SolrParams.toSolrParams(params);
+        QueryResponse query = Solr.query(toSolrParams, SolrRequest.METHOD.POST);
+        SolrDocumentList results = query.getResults();
+        assert results.getNumFound() != 0;
+        SolrDocument get = results.get(0);
+
+        SolrInputDocument document = new SolrInputDocument();
+        Set<Map.Entry<String, Object>> entrySet = get.entrySet();
+        for (Map.Entry<String, Object> en : entrySet) {
+            document.setField(en.getKey(), en.getValue());
+        }
+        for (int i = 0; i < var.length; i++) {
+            document.remove(var[i]);
+            document.setField(var[i], val[i]);
+        }
+
+        Solr.deleteByQuery(qry);
+        Solr.commit();
+        UpdateResponse add = Solr.add(document);
         Solr.commit();
 
     }

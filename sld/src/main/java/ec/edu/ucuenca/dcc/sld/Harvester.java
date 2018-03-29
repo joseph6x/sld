@@ -7,15 +7,16 @@ package ec.edu.ucuenca.dcc.sld;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrInputDocument;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -126,10 +127,65 @@ public class Harvester {
             txtTwo += a + ", ";
         }
 
-        //state
-        SolrConnection.getInstance().insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
-                new Object[]{uri, txt, "", txt, 0, this.Name, txtTwo});
+        JSONObject OneResult = new JSONObject();
+        String Repo = Name;
+        String URI_ = uri;
+        if ("repositorio".equals(Repo)) {
+            LinksFilesUtiles.addProperty(OneResult, "Icon", Repo, URI_, true,
+                    false, ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value(), false,
+                    "http://www.w3.org/1999/xhtml/vocab#icon");
+        }
+        LinksFilesUtiles.addProperty(OneResult, "Title", Repo, URI_, true,
+                false, URI_, false,
+                "http://purl.org/dc/terms/title", "http://www.w3.org/2000/01/rdf-schema#label");
 
+        LinksFilesUtiles.addProperty(OneResult, "Language", Repo, URI_, true,
+                false, URI_, true,
+                "http://purl.org/dc/terms/title", "http://www.w3.org/2000/01/rdf-schema#label");
+
+
+        LinksFilesUtiles.addProperty(OneResult, "Handle", Repo, URI_, true,
+                true, "http://interwp.cepal.org/sisgen/ConsultaIntegrada.asp?idIndicador=", false,
+                "http://purl.org/ontology/bibo/handle");
+
+        if ("repositorio".equals(Repo)) {
+            LinksFilesUtiles.addProperty(OneResult, "CallNumber", Repo, URI_, false,
+                    false, URI_, false,
+                    "http://myontology.org/callNumber");
+            LinksFilesUtiles.addProperty(OneResult, "BibLevel", Repo, URI_, true,
+                    false, URI_, false,
+                    "http://myontology.org/bibLevel");
+        }
+        List<Map.Entry<String, String>> lsEntries = new ArrayList<>();
+        lsEntries.add(new AbstractMap.SimpleEntry("uri", uri));
+        lsEntries.add(new AbstractMap.SimpleEntry("originalText", txt));
+        lsEntries.add(new AbstractMap.SimpleEntry("originalTextSyn", ""));
+        lsEntries.add(new AbstractMap.SimpleEntry("finalText", txt));
+        lsEntries.add(new AbstractMap.SimpleEntry("state", "0"));
+        lsEntries.add(new AbstractMap.SimpleEntry("endpoint", this.Name));
+        lsEntries.add(new AbstractMap.SimpleEntry("pathText", txtTwo));
+        addItems(OneResult, lsEntries);
+        SolrConnection.getInstance().insert(lsEntries);
+        //state
+        //SolrConnection.getInstance().insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
+        //      new Object[]{uri, txt, "", txt, 0, this.Name, txtTwo});
+    }
+
+    public void addItems(JSONObject data, List<Map.Entry<String, String>> lsEntries) {
+        Set<Map.Entry> entrySet = data.entrySet();
+        for (Map.Entry amp : entrySet) {
+            String k = amp.getKey().toString();
+            if (amp.getValue() instanceof JSONArray) {
+                JSONArray v = (JSONArray) amp.getValue();
+                for (Object o : v) {
+                    String va = o.toString();
+                    lsEntries.add(new AbstractMap.SimpleEntry<>(k, va));
+                }
+            } else {
+                String v = amp.getValue().toString();
+                lsEntries.add(new AbstractMap.SimpleEntry<>(k, v));
+            }
+        }
     }
 
     public List<String> DbpediaLabel(String uri) {

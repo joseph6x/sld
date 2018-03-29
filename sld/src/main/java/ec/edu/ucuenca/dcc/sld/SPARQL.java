@@ -27,9 +27,9 @@ public class SPARQL {
         for (RDFNode nd : SimpleQuery) {
             String string = "";
             if (nd.isLiteral()) {
-                string=nd.asLiteral().getString();
-            }else{
-                string=nd.asResource().getURI();
+                string = nd.asLiteral().getString();
+            } else {
+                string = nd.asResource().getURI();
             }
             lista.add(string);
         }
@@ -48,18 +48,16 @@ public class SPARQL {
         return lista;
     }
 
-    
-    
     public boolean SimpleQueryAsk(String qry, String end) {
         String endpoint = end;
         String consulta = qry;
         Query query = QueryFactory.create(consulta);
-        boolean ask=false;
+        boolean ask = false;
         QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
         try {
             ask = qexec.execAsk();
         } catch (Exception e) {
-            ask=true;
+            ask = true;
             e.printStackTrace();
             System.out.println(qry);
             System.out.println("Verificar consulta, no existen datos para mostrar" + e);
@@ -69,28 +67,25 @@ public class SPARQL {
         }
         return ask;
     }
-    
-    
+
     public List<RDFNode> SimpleQuery(String qry, String end, String var) {
         List<RDFNode> lista = new ArrayList();
         String endpoint = end;
         String consulta = qry;
-        Query query = QueryFactory.create(consulta);
-        QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
         try {
+            Query query = QueryFactory.create(consulta);
+            QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
             ResultSet rs = qexec.execSelect();
             while (rs.hasNext()) {
                 QuerySolution soln = rs.nextSolution();
                 lista.add(soln.get(var));
             }
+            qexec.close();
             return lista;
         } catch (Exception e) {
             System.out.println(qry);
             e.printStackTrace();
             System.out.println("Verificar consulta, no existen datos para mostrar" + e);
-        } finally {
-            qexec.close();
-
         }
         return lista;
     }

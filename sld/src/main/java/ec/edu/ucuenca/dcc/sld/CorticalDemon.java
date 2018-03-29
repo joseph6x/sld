@@ -9,11 +9,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrInputDocument;
 
 /**
  *
@@ -64,9 +59,11 @@ public class CorticalDemon extends Thread {
                     //http://api.cortical.io:80/rest/compare?retina_name=en_associative
                     if (upd) {
 
-                        instance.remove(new String[]{"uri"}, new String[]{uri}, new boolean[]{true}, true);
-                        instance.insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
-                                new Object[]{uri, orgtxt, orgtxtsyn, orgtxt + " " + fntxt, 2, ep, pathtxt});
+                        //instance.remove(new String[]{"uri"}, new String[]{uri}, new boolean[]{true}, true);
+                        //instance.insert(new String[]{"uri", "originalText", "originalTextSyn", "finalText", "state", "endpoint", "pathText"},
+                            //    new Object[]{uri, orgtxt, orgtxtsyn, orgtxt + " " + fntxt, 2, ep, pathtxt});
+                        
+                        instance.update(uri, new String[] {"finalText","state"}, new String[]{orgtxt + " " + fntxt,"2"});
 
                     }
 
