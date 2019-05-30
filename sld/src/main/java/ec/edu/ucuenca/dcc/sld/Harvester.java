@@ -145,7 +145,7 @@ public class Harvester {
 
 
         LinksFilesUtiles.addProperty(OneResult, "Handle", Repo, URI_, true,
-                true, "http://interwp.cepal.org/sisgen/ConsultaIntegrada.asp?idIndicador=", false,
+                true, "https://estadisticas.cepal.org/cepalstat/tabulador/ConsultaIntegrada.asp?idIndicador=", false,
                 "http://purl.org/ontology/bibo/handle");
 
         if ("repositorio".equals(Repo)) {
