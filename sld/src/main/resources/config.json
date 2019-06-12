@@ -1,48 +1,47 @@
 {
     "Config": {
-        "SolrServer": "http://localhost:8983/solr/cepal",
-        "Output": "/home/cedia/CEPAL/Links/Output/",
+        "SolrServer": "http://localhost:8983/solr/bsrb",
+        "Output": "none",
         "Wildcard": "|?|",
-        "DefaultImg": "https://image.freepik.com/iconos-gratis/pagina-del-documento-ios-simbolo-interfaz-7_318-36333.jpg",
-        "CorticalThreshold": 70,
-        "LinksThreshold": 20,
-        "SynNumber": 20,
-        "Stopwords": ["brazil","cuba", "ecuador", "colombia", "perú", "peru", "venezuela", "colombia", "argentina", "latin america", "uruguay", "paraguay"
-                    , "bolivia", "chile", "america latina"],
+        "DefaultImg": "none",
+        "CorticalThreshold": -1,
+        "LinksThreshold": -1,
+        "SynNumber": -1,
+        "Stopwords": [],
         "Repositories": [
             {
-                "Name": "cepalstat",
+                "Name": "lbPersons",
                 "ApplyFilter": false,
                 "FilterURI": "",
                 "DateBoost": false,
                 "Date": "",
                 "TwoSteps": false,
                 "Query2": "",
-                "Endpoint": "http://localhost:8891/cepalstat/sparql",
-                "MainClass": "http://purl.org/linked-data/cube#DataSet",
-                "Query": "select distinct ?d{ { select * { <|?|> <http://purl.org/dc/terms/isPartOf> ?a . ?a <http://purl.org/dc/terms/isPartOf>* ?b . ?b <http://www.w3.org/2000/01/rdf-schema#label> ?d . } limit 4 } union { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d . filter (regex(?d,',','i')) }union{ select * { <|?|> <http://www.w3.org/2000/01/rdf-schema#label> ?d. }  }}"
+                "Endpoint": "http://localhost:3030/library/sparql",
+                "MainClass": "http://xmlns.com/foaf/0.1/Person",
+                "Query": "select ?d (count( distinct ?u) as ?key) { bind (<|?|> as ?p ) . ?p ?mock ?u . ?u <http://purl.org/dc/terms/subject> ?d . } group by ?d Order by DESC (?key) limit 30"
             }, {
-                "Name": "biblioguias",
-                "ApplyFilter": true,
-                "FilterURI": "guides_",
-                "DateBoost": false,
-                "Date": "",
-                "TwoSteps": false,
-                "Query2": "",
-                "Endpoint": "http://localhost:8891/biblioguias/sparql",
-                "MainClass": "http://dbpedia.org/resource/Guide_to_information_sources",
-                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
-            }, {
-                "Name": "repositorio",
+                "Name": "lbDocuments",
                 "ApplyFilter": false,
                 "FilterURI": "",
                 "DateBoost": false,
                 "Date": "",
                 "TwoSteps": false,
                 "Query2": "",
-                "Endpoint": "http://localhost:8891/repositorio/sparql",
-                "MainClass": "http://purl.org/dc/terms/BibliographicResource",
-                "Query": "select distinct ?d where { { <|?|> <http://schema.org/mentions> ?d .  } UNION { <|?|> <http://purl.org/dc/terms/subject> ?d. } UNION { <|?|> <http://vivoweb.org/ontology/core#freetextKeyword> ?d. } }"
+                "Endpoint": "http://localhost:3030/library/sparql",
+                "MainClass": "http://purl.org/ontology/bibo/Document",
+                "Query": "select distinct ?d {bind (<|?|> as ?u ) .  { ?u  <http://purl.org/dc/terms/subject> ?d . } union { ?u  <http://schema.org/mentions> ?m . ?m  <http://purl.org/saws/ontology#refersTo> ?d . }}"
+            }, {
+                "Name": "lbCollections",
+                "ApplyFilter": false,
+                "FilterURI": "",
+                "DateBoost": false,
+                "Date": "",
+                "TwoSteps": false,
+                "Query2": "",
+                "Endpoint": "http://localhost:3030/library/sparql",
+                "MainClass": "http://purl.org/ontology/bibo/Collection",
+                "Query": "select ?d (count( distinct ?u) as ?key) { bind (<|?|> as ?p ) . ?u ?mock ?p . ?u <http://purl.org/dc/terms/subject> ?d . } group by ?d Order by DESC (?key) limit 30"
             }
         ]
     }

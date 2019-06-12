@@ -241,7 +241,7 @@ public class SolrConnection {
 
     }
 
-    public JSONArray FindModX(String endpoint, String pquery, int limit, String mm) throws SolrServerException, IOException {
+    public JSONArray FindModX(String endpoint, String pquery, int limit, String mm, String uri) throws SolrServerException, IOException {
 
         String[] out = {"uri", "Icon", "Title", "Language", "Handle", "endpoint", "CallNumber", "BibLevel"};
         String[] outr = {"URI", "Icon", "Title", "Language", "Handle", "Repository", "CallNumber", "BibLevel"};
@@ -253,11 +253,12 @@ public class SolrConnection {
         String newquery = "+(" + pquery + ") +(endpoint:\"" + endpoint + "\")";
         System.out.println("LOG_Solr_" + newquery);
         params.add("q", newquery);
+        //params.add("fq", "NOT uri:\"" + uri + "\"");
         params.add("fl", "*,score");
         params.add("start", current + "");
         params.add("defType", "edismax");
         //params.add("mm", ""+mm);
-        params.add("qf", "finalText");
+        //params.add("qf", "finalText");
         while (true) {
             params.setVal(2, current + "");
             SolrParams toSolrParams = SolrParams.toSolrParams(params);

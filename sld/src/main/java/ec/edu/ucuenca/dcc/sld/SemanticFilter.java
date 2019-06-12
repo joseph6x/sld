@@ -215,11 +215,11 @@ public class SemanticFilter {
     }
 
     public static String klean(String k) throws Exception {
-        String[] split = k.split(" \\+ |   ");
+        String[] split = k.split(", ");
         List<String> ls = new ArrayList<>();
 
         for (int i = 0; i < split.length; i++) {
-            split[i] = Escape2(split[i].substring(1, split[i].length() - 1)).replaceAll("\\s+", " ").trim();
+            split[i] = Escape2(split[i]).replaceAll("\\s+", " ").trim();
             //if (!isStopword(split[i])) {
             ls.add(split[i]);
             //}

@@ -21,24 +21,24 @@ import org.apache.jena.atlas.json.JsonObject;
 public class ConfigInfo {
 
     private JsonObject config;
-
-
+    private String spq;
 
     private ConfigInfo() {
 
         InputStream resourceAsStream = this.getClass().getResourceAsStream("/config.json");
         String theString;
+
+        InputStream resourceAsStream2 = this.getClass().getResourceAsStream("/desc.sparql");
+
         try {
             theString = IOUtils.toString(resourceAsStream, Charset.defaultCharset().toString());
             config = JSON.parse(theString).getAsObject().get("Config").getAsObject();
+            spq = IOUtils.toString(resourceAsStream2, Charset.defaultCharset().toString());;
         } catch (IOException ex) {
             Logger.getLogger(ConfigInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
     }
-
-
 
     public static ConfigInfo getInstance() {
         return ConfigInfoHolder.INSTANCE;
@@ -55,6 +55,14 @@ public class ConfigInfo {
 
     public void setConfig(JsonObject config) {
         this.config = config;
+    }
+
+    public String getSpq() {
+        return spq;
+    }
+
+    public void setSpq(String spq) {
+        this.spq = spq;
     }
 
 }

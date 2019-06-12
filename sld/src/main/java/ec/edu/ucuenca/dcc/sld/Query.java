@@ -6,16 +6,24 @@
 package ec.edu.ucuenca.dcc.sld;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.client.methods.HttpPost;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -49,77 +57,38 @@ public class Query extends HttpServlet {
                     JSONP = true;
                     Callback_ = Callback;
                 }
+                String uri = request.getParameter("uri");
+                String limit = request.getParameter("limit");
+                if (uri != null && !uri.isEmpty() && limit != null && !limit.isEmpty()) {
 
-                String RepositoriesList = request.getParameter("repositories");
-                String QueryType = request.getParameter("type");
-                String QueryText = request.getParameter("query");
-
-                if (RepositoriesList != null && !RepositoriesList.isEmpty() && QueryType != null && !QueryType.isEmpty() && QueryText != null && !QueryText.isEmpty()) {
-
-                    Cache instanceCache = Cache.getInstance();
-                    String KeyCache = QueryType + "+" + RepositoriesList + "+" + QueryText;
-                    String mD5Key = instanceCache.getMD5(KeyCache);
-
-                    String CacheResult = instanceCache.get("L1=" + mD5Key);
-
-                    if (CacheResult != null) {
-                        res = CacheResult;
+                    //Cache instanceCache = Cache.getInstance();
+                    //SearchTerms = SemanticFilter.filter2(SearchTerms);
+                    SolrConnection instance = SolrConnection.getInstance();
+                    String[] FindOne2 = instance.FindOne("uri", uri, "endpoint", "endpoint", "finalText", "finalText");
+                    if (FindOne2 != null) {
+                        String tipo = FindOne2[0];
+                        String text = FindOne2[2];
+                        String filter2 = SemanticFilter.filter2(text);
+                        JSONArray FindModX = instance.FindModX(tipo, filter2, Integer.parseInt(limit), "0", uri);
+                        List<String> lrq = new ArrayList<>();
+                        for (Iterator it = FindModX.iterator(); it.hasNext();) {
+                            JSONObject a = (JSONObject) it.next();
+                            String toString = a.get("URI").toString();
+                            if (toString.compareTo(uri) != 0) {
+                                lrq.add("<" + toString + ">");
+                            }
+                        }
+                        String[] split = new String[lrq.size()];
+                        split = lrq.toArray(split);
+                        String join = String.join(" ", split);
+                        ConfigInfo instance1 = ConfigInfo.getInstance();
+                        String replaceAll = instance1.getSpq().replaceAll("\\|\\?\\|", join);
+                        String runQuery = runQuery(replaceAll);
+                        res = runQuery;
                     } else {
-                        SolrConnection instance = SolrConnection.getInstance();
-
-                        String SearchTerms = "";
-
-                        switch (QueryType) {
-                            case "handle":
-                                String[] dt = QueryText.split("_|/|#|=");
-                                QueryText = dt[dt.length - 1];
-                            case "id":
-                                String[] FindOne = instance.FindOne2("uri", "*/" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                                String[] FindOne2 = instance.FindOne2("uri", "*_" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                                String[] FindOne3 = instance.FindOne2("uri", "*#" + QueryText, "originalText", "uri", "finalText", "endpoint");
-                                String[] FindOne4 = instance.FindOne2("uri", "*=" + QueryText, "originalText", "uri", "finalText", "endpoint");
-
-                                List<String[]> ls = new ArrayList<String[]>();
-                                ls.add(FindOne);
-                                ls.add(FindOne2);
-                                ls.add(FindOne3);
-                                ls.add(FindOne4);
-                                ls.removeAll(Collections.singleton(null));
-
-                                if (!ls.isEmpty()) {
-                                    SearchTerms = ls.get(0)[2];
-                                    SearchTerms = HttpUtils.Escape(SearchTerms);
-                                } else {
-                                    throw new Exception("No handle/id found..." + QueryText);
-                                }
-                                break;
-                            case "uri":
-                                String[] FindOne_ = instance.FindOne("uri", QueryText, "originalText", "uri", "finalText", "endpoint");
-                                if (FindOne_ != null) {
-                                    SearchTerms = FindOne_[2];
-                                    SearchTerms = HttpUtils.Escape(SearchTerms);
-                                } else {
-                                    throw new Exception("No URI found..." + QueryText);
-                                }
-                                break;
-                            case "keywords":
-                                SearchTerms = QueryText;
-                                SearchTerms = SemanticFilter.filter2(SearchTerms);
-                                break;
-                        }
-                        String[] rep = RepositoriesList.split(";");
-                        JSONArray Results = new JSONArray();
-
-                        for (int j = 0; j < rep.length; j++) {
-                            String end = rep[j];
-                            String Repo = end.split(":")[0];
-                            String limit = end.split(":")[1];
-                            JSONArray FindLinks2 = instance.FindModX(Repo, SearchTerms, Integer.parseInt(limit), "2");
-                            Results.addAll(FindLinks2);
-                        }
-                        res = Results.toJSONString();
-                        instanceCache.put(mD5Key, "L1=" + res);
+                        throw new Exception("URI not found");
                     }
+
                 } else {
                     throw new Exception("No valid params found... repositories, type, query");
                 }
@@ -140,6 +109,37 @@ public class Query extends HttpServlet {
             out.close();
 
         }
+    }
+
+    public String runQuery(String qe) throws IOException {
+        Map<String, String> q = new HashMap<>();
+        q.put("query", qe);
+        return Http2("http://localhost:3030/library/sparql", q);
+    }
+
+    public String Http2(String s, Map<String, String> mp) throws IOException {
+        String resp = "";
+        HttpClient client = new HttpClient();
+        PostMethod method = new PostMethod(s);
+        method.getParams().setContentCharset("utf-8");
+        method.addRequestHeader("Accept", "application/sparql-results+json,*/*;q=0.9");
+        //Add any parameter if u want to send it with Post req.
+        for (Entry<String, String> mcc : mp.entrySet()) {
+            method.addParameter(mcc.getKey(), mcc.getValue());
+        }
+        int statusCode = client.executeMethod(method);
+
+        if (statusCode != -1) {
+            InputStream in = method.getResponseBodyAsStream();
+            final Scanner reader = new Scanner(in, "UTF-8");
+            while (reader.hasNextLine()) {
+                final String line = reader.nextLine();
+                resp += line + "\n";
+            }
+            reader.close();
+        }
+
+        return resp;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

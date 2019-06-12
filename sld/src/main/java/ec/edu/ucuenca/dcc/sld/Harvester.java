@@ -52,7 +52,7 @@ public class Harvester {
         List<String[]> Find = instance.Find(new String[]{"endpoint"}, new String[]{Name}, new boolean[]{true}, new String[]{"uri"}, true, -1, true);
         for (String[] oneF : Find) {
             String uri = oneF[0];
-            String qr = "ask { <" + uri + "> ?s ?c . }";
+            String qr = "ask { <" + uri + "> a <" + MainClass + "> . }";
             boolean SimpleQueryAsk = sp.SimpleQueryAsk(qr, Endpoint);
             if (!SimpleQueryAsk) {
                 //Remove old index entry.
@@ -85,7 +85,9 @@ public class Harvester {
             List<RDFNode> SimpleQuery1 = sp.SimpleQuery(qry, Endpoint, "r");
             for (RDFNode d : SimpleQuery1) {
                 String uri = d.asResource().getURI();
+                //System.out.println("Checking ...  " + i + " / " + aInt + " / " + uri);
                 if (!SolrConnection.getInstance().exists(uri)) {
+                    System.out.println("Harvesting ...  " + i + " / " + aInt + " / " + uri);
                     List<String> SimpleQuery2_ = new ArrayList<>();
                     if (TwoSteps != null) {
                         String QueryTwo = TwoSteps.replaceAll("\\|\\?\\|", uri);
@@ -110,16 +112,19 @@ public class Harvester {
         String txt = "";
 
         for (RDFNode a : ls) {
-            if (a.isLiteral()) {
-                txt += a.asLiteral().getString() + ", ";
-            } else {
-                List<String> DbpediaLabel = new ArrayList<>();//DbpediaLabel(a.asResource().getURI());
-                DbpediaLabel.add(HttpUtils.Escape2(a.asResource().getLocalName()).trim());
+            try {
+                if (a.isLiteral()) {
+                    txt += a.asLiteral().getString() + ", ";
+                } else {
+                    List<String> DbpediaLabel = new ArrayList<>();//DbpediaLabel(a.asResource().getURI());
+                    DbpediaLabel.add(HttpUtils.Escape2(a.asResource().getLocalName()).trim());
 
-                for (int j = 0; j < DbpediaLabel.size(); j++) {
-                    txt += DbpediaLabel.get(j) + ", ";
+                    for (int j = 0; j < DbpediaLabel.size(); j++) {
+                        txt += DbpediaLabel.get(j) + ", ";
+                    }
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         String txtTwo = "";
@@ -130,32 +135,30 @@ public class Harvester {
         JSONObject OneResult = new JSONObject();
         String Repo = Name;
         String URI_ = uri;
-        if ("repositorio".equals(Repo)) {
-            LinksFilesUtiles.addProperty(OneResult, "Icon", Repo, URI_, true,
-                    false, ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value(), false,
-                    "http://www.w3.org/1999/xhtml/vocab#icon");
-        }
+//        if ("repositorio".equals(Repo)) {
+//            LinksFilesUtiles.addProperty(OneResult, "Icon", Repo, URI_, true,
+//                    false, ConfigInfo.getInstance().getConfig().get("DefaultImg").getAsString().value(), false,
+//                    "http://www.w3.org/1999/xhtml/vocab#icon");
+//        }
         LinksFilesUtiles.addProperty(OneResult, "Title", Repo, URI_, true,
                 false, URI_, false,
                 "http://purl.org/dc/terms/title", "http://www.w3.org/2000/01/rdf-schema#label");
 
-        LinksFilesUtiles.addProperty(OneResult, "Language", Repo, URI_, true,
-                false, URI_, true,
-                "http://purl.org/dc/terms/title", "http://www.w3.org/2000/01/rdf-schema#label");
-
-
+//        LinksFilesUtiles.addProperty(OneResult, "Language", Repo, URI_, true,
+//                false, URI_, true,
+//                "http://purl.org/dc/terms/title", "http://www.w3.org/2000/01/rdf-schema#label");
         LinksFilesUtiles.addProperty(OneResult, "Handle", Repo, URI_, true,
-                true, "https://estadisticas.cepal.org/cepalstat/tabulador/ConsultaIntegrada.asp?idIndicador=", false,
+                true, "http://interwp.cepal.org/sisgen/ConsultaIntegrada.asp?idIndicador=", false,
                 "http://purl.org/ontology/bibo/handle");
 
-        if ("repositorio".equals(Repo)) {
-            LinksFilesUtiles.addProperty(OneResult, "CallNumber", Repo, URI_, false,
-                    false, URI_, false,
-                    "http://myontology.org/callNumber");
-            LinksFilesUtiles.addProperty(OneResult, "BibLevel", Repo, URI_, true,
-                    false, URI_, false,
-                    "http://myontology.org/bibLevel");
-        }
+//        if ("repositorio".equals(Repo)) {
+//            LinksFilesUtiles.addProperty(OneResult, "CallNumber", Repo, URI_, false,
+//                    false, URI_, false,
+//                    "http://myontology.org/callNumber");
+//            LinksFilesUtiles.addProperty(OneResult, "BibLevel", Repo, URI_, true,
+//                    false, URI_, false,
+//                    "http://myontology.org/bibLevel");
+//        }
         List<Map.Entry<String, String>> lsEntries = new ArrayList<>();
         lsEntries.add(new AbstractMap.SimpleEntry("uri", uri));
         lsEntries.add(new AbstractMap.SimpleEntry("originalText", txt));

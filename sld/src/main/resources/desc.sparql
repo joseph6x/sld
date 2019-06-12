@@ -1,0 +1,115 @@
+prefix text:<http://jena.apache.org/text#>
+ PREFIX mm: <http://marmotta.apache.org/vocabulary/sparql-functions#> 
+select *  {
+{
+select  distinct ?Score1 ('UCUENCA' AS ?Endpoint) ?EntityURI (IRI(<http://purl.org/ontology/bibo/Document>) AS ?EntityClass) ?EntityLabel (IRI(<http://purl.org/ontology/bibo/abstract>) AS ?Property) ('Abstract' AS ?PropertyLabel) ?PropertyValue  (?Year1 as ?Year) (?Lang1 as ?Lang) (?Type1 as ?Type)  (1 as ?Score )   ?Image  ?organization_des ?nameCreator ?issued ?isbn ?languaje
+{
+
+values ?EntityURI { |?| } .
+?EntityURI <http://purl.org/ontology/bibo/abstract> ?PropertyValue .
+bind (0 as ?Score1) .
+
+?EntityURI <http://purl.org/dc/terms/title> ?EntityLabel .
+filter(str(?PropertyValue)!='') .
+optional { (?EntityURI ?Score2 ?PropertyValue2) text:query (<http://purl.org/dc/terms/subject> '(_)' ) .  filter(str(?EntityURI)!='') .} 
+optional { ?EntityURI <http://purl.org/dc/terms/language> ?Lang1 .   } 
+optional { ?EntityURI <http://purl.org/dc/terms/issued>  ?Year1 .}optional { ?EntityURI <http://purl.org/ontology/bibo/Image> ?Image .  }
+optional { ?EntityURI  <http://purl.org/dc/terms/provenance> ?provenance .
+ ?provenance <http://purl.org/dc/terms/description> ?organization_des .}
+optional { ?EntityURI a ?Type1 . filter (str(?Type1) != 'http://xmlns.com/foaf/0.1/Agent' &&  str(?Type1) != 'http://purl.org/ontology/bibo/Document') .   } 
+optional { ?EntityURI  <http://purl.org/dc/terms/creator> ?creator . ?creator <http://xmlns.com/foaf/0.1/name> ?nameCreator .}
+optional { ?EntityURI  <http://purl.org/dc/terms/issued> ?issued. }
+optional { ?EntityURI  <http://purl.org/ontology/bibo/isbn> ?isbn .}
+optional { ?EntityURI  <http://purl.org/dc/terms/language> ?languaje. }
+ ?EntityURI a <http://purl.org/ontology/bibo/Document> 
+} }
+union {
+select  distinct ?Score1 ('UCUENCA' AS ?Endpoint) ?EntityURI (IRI(<http://purl.org/ontology/bibo/Document>) AS ?EntityClass) ?EntityLabel (IRI(<http://purl.org/dc/terms/title>) AS ?Property) ('Title' AS ?PropertyLabel) ?PropertyValue  (?Year1 as ?Year) (?Lang1 as ?Lang) (?Type1 as ?Type)  (1 as ?Score )   ?Image  ?organization_des ?nameCreator ?issued ?isbn ?languaje
+{
+values ?EntityURI { |?| } .
+?EntityURI <http://purl.org/dc/terms/title> ?PropertyValue .
+bind (0 as ?Score1) .
+
+
+?EntityURI <http://purl.org/dc/terms/title> ?EntityLabel .
+filter(str(?PropertyValue)!='') .
+optional { (?EntityURI ?Score2 ?PropertyValue2) text:query (<http://purl.org/dc/terms/subject> '(_)' ) .  filter(str(?EntityURI)!='') .} 
+optional { ?EntityURI <http://purl.org/dc/terms/language> ?Lang1 .   } 
+optional { ?EntityURI <http://purl.org/dc/terms/issued>  ?Year1 .}optional { ?EntityURI <http://purl.org/ontology/bibo/Image> ?Image .  }
+optional { ?EntityURI  <http://purl.org/dc/terms/provenance> ?provenance .
+ ?provenance <http://purl.org/dc/terms/description> ?organization_des .}
+optional { ?EntityURI a ?Type1 . filter (str(?Type1) != 'http://xmlns.com/foaf/0.1/Agent' &&  str(?Type1) != 'http://purl.org/ontology/bibo/Document') .   } 
+optional { ?EntityURI  <http://purl.org/dc/terms/creator> ?creator . ?creator <http://xmlns.com/foaf/0.1/name> ?nameCreator .}
+optional { ?EntityURI  <http://purl.org/dc/terms/issued> ?issued. }
+optional { ?EntityURI  <http://purl.org/ontology/bibo/isbn> ?isbn .}
+optional { ?EntityURI  <http://purl.org/dc/terms/language> ?languaje. }
+ ?EntityURI a <http://purl.org/ontology/bibo/Document> 
+} }
+union {
+select  distinct ?Score1 ('UCUENCA' AS ?Endpoint) ?EntityURI (IRI(<http://purl.org/ontology/bibo/Document>) AS ?EntityClass) ?EntityLabel (IRI(<http://purl.org/dc/terms/subject>) AS ?Property) ('Subject' AS ?PropertyLabel) ?PropertyValue  (?Year1 as ?Year) (?Lang1 as ?Lang) (?Type1 as ?Type)  (1 as ?Score )   ?Image  ?organization_des ?nameCreator ?issued ?isbn ?languaje
+{
+values ?EntityURI { |?| } .
+?EntityURI <http://purl.org/dc/terms/subject> ?PropertyValue .
+bind (0 as ?Score1) .
+
+?EntityURI <http://purl.org/dc/terms/title> ?EntityLabel .
+filter(str(?PropertyValue)!='') .
+optional { (?EntityURI ?Score2 ?PropertyValue2) text:query (<http://purl.org/dc/terms/subject> '(_)' ) .  filter(str(?EntityURI)!='') .} 
+optional { ?EntityURI <http://purl.org/dc/terms/language> ?Lang1 .   } 
+optional { ?EntityURI <http://purl.org/dc/terms/issued>  ?Year1 .}optional { ?EntityURI <http://purl.org/ontology/bibo/Image> ?Image .  }
+optional { ?EntityURI  <http://purl.org/dc/terms/provenance> ?provenance .
+ ?provenance <http://purl.org/dc/terms/description> ?organization_des .}
+optional { ?EntityURI a ?Type1 . filter (str(?Type1) != 'http://xmlns.com/foaf/0.1/Agent' &&  str(?Type1) != 'http://purl.org/ontology/bibo/Document') .   } 
+optional { ?EntityURI  <http://purl.org/dc/terms/creator> ?creator . ?creator <http://xmlns.com/foaf/0.1/name> ?nameCreator .}
+optional { ?EntityURI  <http://purl.org/dc/terms/issued> ?issued. }
+optional { ?EntityURI  <http://purl.org/ontology/bibo/isbn> ?isbn .}
+optional { ?EntityURI  <http://purl.org/dc/terms/language> ?languaje. }
+ ?EntityURI a <http://purl.org/ontology/bibo/Document> 
+} }
+union {
+select  distinct ?Score1 ('UCUENCA' AS ?Endpoint) ?EntityURI (IRI(<http://xmlns.com/foaf/0.1/Person>) AS ?EntityClass) ?EntityLabel (IRI(<http://xmlns.com/foaf/0.1/name>) AS ?Property) ('Name' AS ?PropertyLabel) ?PropertyValue  (?Year1 as ?Year) (?Lang1 as ?Lang) (?Type1 as ?Type)  (1 as ?Score )   ?Image  ?organization_des ?nameCreator ?issued ?isbn ?languaje
+{
+values ?EntityURI { |?| } .
+?EntityURI <http://xmlns.com/foaf/0.1/name> ?PropertyValue .
+bind (0 as ?Score1) .
+
+
+?EntityURI <http://xmlns.com/foaf/0.1/name> ?EntityLabel .
+filter(str(?PropertyValue)!='') .
+optional { (?EntityURI ?Score2 ?PropertyValue2) text:query (<http://purl.org/dc/terms/subject> '(_)' ) .  filter(str(?EntityURI)!='') .} 
+optional { ?EntityURI <http://purl.org/dc/terms/language> ?Lang1 .   } 
+optional { ?EntityURI <http://purl.org/dc/terms/issued>  ?Year1 .}optional { ?EntityURI <http://purl.org/ontology/bibo/Image> ?Image .  }
+optional { ?EntityURI  <http://purl.org/dc/terms/provenance> ?provenance .
+ ?provenance <http://purl.org/dc/terms/description> ?organization_des .}
+optional { ?EntityURI a ?Type1 . filter (str(?Type1) != 'http://xmlns.com/foaf/0.1/Agent' &&  str(?Type1) != 'http://purl.org/ontology/bibo/Document') .   } 
+optional { ?EntityURI  <http://purl.org/dc/terms/creator> ?creator . ?creator <http://xmlns.com/foaf/0.1/name> ?nameCreator .}
+optional { ?EntityURI  <http://purl.org/dc/terms/issued> ?issued. }
+optional { ?EntityURI  <http://purl.org/ontology/bibo/isbn> ?isbn .}
+optional { ?EntityURI  <http://purl.org/dc/terms/language> ?languaje. }
+ ?EntityURI a <http://xmlns.com/foaf/0.1/Person> 
+} }
+union {
+select  distinct ?Score1 ('UCUENCA' AS ?Endpoint) ?EntityURI (IRI(<http://purl.org/ontology/bibo/Collection>) AS ?EntityClass) ?EntityLabel (IRI(<http://purl.org/dc/terms/description>) AS ?Property) ('Description' AS ?PropertyLabel) ?PropertyValue  (?Year1 as ?Year) (?Lang1 as ?Lang) (?Type1 as ?Type)  (1 as ?Score )   ?Image  ?organization_des ?nameCreator ?issued ?isbn ?languaje
+{
+
+values ?EntityURI { |?| } .
+?EntityURI <http://purl.org/dc/terms/description> ?PropertyValue .
+bind (0 as ?Score1) .
+
+
+?EntityURI <http://purl.org/dc/terms/description> ?EntityLabel .
+filter(str(?PropertyValue)!='') .
+optional { (?EntityURI ?Score2 ?PropertyValue2) text:query (<http://purl.org/dc/terms/subject> '(_)' ) .  filter(str(?EntityURI)!='') .} 
+optional { ?EntityURI <http://purl.org/dc/terms/language> ?Lang1 .   } 
+optional { ?EntityURI <http://purl.org/dc/terms/issued>  ?Year1 .}optional { ?EntityURI <http://purl.org/ontology/bibo/Image> ?Image .  }
+optional { ?EntityURI  <http://purl.org/dc/terms/provenance> ?provenance .
+ ?provenance <http://purl.org/dc/terms/description> ?organization_des .}
+optional { ?EntityURI a ?Type1 . filter (str(?Type1) != 'http://xmlns.com/foaf/0.1/Agent' &&  str(?Type1) != 'http://purl.org/ontology/bibo/Document') .   } 
+optional { ?EntityURI  <http://purl.org/dc/terms/creator> ?creator . ?creator <http://xmlns.com/foaf/0.1/name> ?nameCreator .}
+optional { ?EntityURI  <http://purl.org/dc/terms/issued> ?issued. }
+optional { ?EntityURI  <http://purl.org/ontology/bibo/isbn> ?isbn .}
+optional { ?EntityURI  <http://purl.org/dc/terms/language> ?languaje. }
+ ?EntityURI a <http://purl.org/ontology/bibo/Collection> 
+} }
+ . filter(str(?EntityURI)!='') . }  order by DESC(?Score)  
+   
