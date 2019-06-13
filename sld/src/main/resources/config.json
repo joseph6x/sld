@@ -17,7 +17,7 @@
                 "Date": "",
                 "TwoSteps": false,
                 "Query2": "",
-                "Endpoint": "http://localhost:3030/library/sparql",
+                "Endpoint": "http://localhost:7200/repositories/library",
                 "MainClass": "http://xmlns.com/foaf/0.1/Person",
                 "Query": "select ?d (count( distinct ?u) as ?key) { bind (<|?|> as ?p ) . ?p ?mock ?u . ?u <http://purl.org/dc/terms/subject> ?d . } group by ?d Order by DESC (?key) limit 30"
             }, {
@@ -28,7 +28,7 @@
                 "Date": "",
                 "TwoSteps": false,
                 "Query2": "",
-                "Endpoint": "http://localhost:3030/library/sparql",
+                "Endpoint": "http://localhost:7200/repositories/library",
                 "MainClass": "http://purl.org/ontology/bibo/Document",
                 "Query": "select distinct ?d {bind (<|?|> as ?u ) .  { ?u  <http://purl.org/dc/terms/subject> ?d . } union { ?u  <http://schema.org/mentions> ?m . ?m  <http://purl.org/saws/ontology#refersTo> ?d . }}"
             }, {
@@ -39,7 +39,7 @@
                 "Date": "",
                 "TwoSteps": false,
                 "Query2": "",
-                "Endpoint": "http://localhost:3030/library/sparql",
+                "Endpoint": "http://localhost:7200/repositories/library",
                 "MainClass": "http://purl.org/ontology/bibo/Collection",
                 "Query": "select ?d (count( distinct ?u) as ?key) { bind (<|?|> as ?p ) . ?u ?mock ?p . ?u <http://purl.org/dc/terms/subject> ?d . } group by ?d Order by DESC (?key) limit 30"
             }
