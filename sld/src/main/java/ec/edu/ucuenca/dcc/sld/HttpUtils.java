@@ -100,7 +100,10 @@ public class HttpUtils {
         int code = response.getStatusLine().getStatusCode();
         if (400 == code) {
             return "{\"overlappingAll\":0 , \"weightedScoring\": 0 } ";
-        } else {
+        } else if (429 == code) {
+            return null;//"["+body.replace("||||", "\",\"")+"]";
+        }
+        else {
             return result.toString();
         }
     }
@@ -244,7 +247,8 @@ public class HttpUtils {
         String url = "https://translate.yandex.net/api/v1.5/tr.json/translate";
         //String url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20160321T160516Z.43cfb95e23a69315.6c0a2ae19f56388c134615f4740fbb1d400f15d3&lang=en&text=" + URLEncoder.encode(palabras, "UTF-8");
         Map<String, String> mp = new HashMap<>();
-        mp.put("key", "trnsl.1.1.20160321T160516Z.43cfb95e23a69315.6c0a2ae19f56388c134615f4740fbb1d400f15d3");
+        //mp.put("key", "trnsl.1.1.20160321T160516Z.43cfb95e23a69315.6c0a2ae19f56388c134615f4740fbb1d400f15d3");
+        mp.put("key", "trnsl.1.1.20180515T220323Z.a01167a60fd15c32.e1f33475375f91802f0e1da270a94bd99b412521");
         mp.put("lang", "en");
         mp.put("text", palabras);
         mp.put("options", "1");
@@ -253,9 +257,16 @@ public class HttpUtils {
             String Http = Http2_(url, mp);
             String res = Http;
             JsonObject parse = JSON.parse(res).getAsObject();
+            if (parse.hasKey("code") && parse.get("code").getAsNumber().value().intValue() == 404 ){
+              throw new Apiexception("This is My error Message");
+              
+            }else {
             JsonArray asArray = parse.get("text").getAsArray();
+            
             res = asArray.get(0).getAsString().value();
             rpalabras = res;
+            
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
