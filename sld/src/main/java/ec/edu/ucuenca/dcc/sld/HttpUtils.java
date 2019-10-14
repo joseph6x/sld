@@ -100,7 +100,10 @@ public class HttpUtils {
         int code = response.getStatusLine().getStatusCode();
         if (400 == code) {
             return "{\"overlappingAll\":0 , \"weightedScoring\": 0 } ";
-        } else {
+        } else if (429 == code) {
+            return null;//"["+body.replace("||||", "\",\"")+"]";
+        }
+        else {
             return result.toString();
         }
     }
@@ -253,9 +256,14 @@ public class HttpUtils {
             String Http = Http2_(url, mp);
             String res = Http;
             JsonObject parse = JSON.parse(res).getAsObject();
+            if (parse.hasKey("code") && parse.get("code").getAsNumber().value().intValue() == 404 ){
+              throw new Apiexception("This is My error Message");
+
+            }else {
             JsonArray asArray = parse.get("text").getAsArray();
             res = asArray.get(0).getAsString().value();
             rpalabras = res;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

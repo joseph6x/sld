@@ -67,7 +67,7 @@ public class Harvester {
 
   public void Harvest() throws SolrServerException, IOException, Exception {
 
-    BoundedExecutor threadPool = BoundedExecutor.getThreadPool(10);
+    BoundedExecutor threadPool = BoundedExecutor.getThreadPool(2);
 
     int bulk = 1000;
     final SPARQL sp = new SPARQL();

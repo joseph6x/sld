@@ -63,7 +63,7 @@ public class SemanticFilter {
         }
         List<String> ls = new ArrayList<>();
         ls.addAll(h);
-
+        Map<String, Integer> auxmap =new HashMap ();
         for (String ll : ls) {
             JSONArray a_ = new JSONArray();
             JSONObject o1 = new JSONObject();
@@ -73,11 +73,14 @@ public class SemanticFilter {
             a_.add(o1);
             a_.add(o2);
             a.add(a_);
+            auxmap.put(ll,1);
         }
 
-        String sendPost2 = "{\"data\":" + HttpUtils.sendPost2("compare/bulk", a.toJSONString()) + "}";
-        JsonObject parse = JSON.parse(sendPost2);
+        String resp = HttpUtils.sendPost2("compare/bulk", a.toJSONString());
         Map<String, Integer> mp = new HashMap();
+        if (resp != null ) {
+        String sendPost2 = "{\"data\":" + resp + "}";
+        JsonObject parse = JSON.parse(sendPost2);
 
         for (int ke = 0; ke < parse.get("data").getAsArray().size(); ke++) {
             JsonValue qa = parse.get("data").getAsArray().get(ke);
@@ -86,6 +89,9 @@ public class SemanticFilter {
             mp.put(get, intValue);
         }
         mp = sortByValue(mp);
+        }else {
+        mp = auxmap ;
+        }
         String query = query(mp);
         return query;
     }
@@ -136,9 +142,23 @@ public class SemanticFilter {
     public static String filter2(String k) throws Exception {
 
         String klean = klean(k);
+        String corticalk = null;
         String traductorYandex = HttpUtils.traductorYandex(klean).replaceAll("\\|\\s+\\|", "||");
-        String corticalk = HttpUtils.sendPost2("text/keywords", traductorYandex);
-        String sendPost2 = "{\"data\":" + corticalk + "}";
+        //String corticalk = HttpUtils.sendPost2("text/keywords", traductorYandex);
+        /*corticalk = HttpUtils.sendPost2("text/keywords", traductorYandex);*/
+        System.out.print (corticalk);
+        String sendPost2;
+        if (corticalk == null){
+        String basic = "[\""+klean.replace(" |||| ", "\",\"")+"\"]";  
+        sendPost2 = "{\"data\":" + basic + "}";
+        } else {
+        sendPost2 = "{\"data\":" + corticalk + "}";
+        }
+       /* System.out.print (sendPost2);*/
+       /* String corticall = HttpUtils.sendPost2("text/keywords", traductorYandex);
+        System.out.print (corticall);*/
+
+
         JsonObject parse = JSON.parse(sendPost2);
         JsonArray asArray = parse.get("data").getAsArray();
         List<String> da = new ArrayList<>();
