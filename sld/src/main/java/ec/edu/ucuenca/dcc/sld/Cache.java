@@ -5,6 +5,7 @@
  */
 package ec.edu.ucuenca.dcc.sld;
 
+import com.google.common.cache.CacheBuilder;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,11 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
-import org.mapdb.HTreeMap;
-import org.mapdb.Serializer;
-import org.mapdb.serializer.SerializerCompressionWrapper;
 
 /**
  *
@@ -24,56 +20,48 @@ import org.mapdb.serializer.SerializerCompressionWrapper;
  */
 public class Cache {
 
-    DB db = null;
-    HTreeMap<String, String> create =null;
-    List <String> BlackList = new ArrayList();
-    
-    
-    private Cache() {
-        //db = DBMaker.fileDB("/home/pirbuts/TempCache/cache.db").make();
-        db = DBMaker.fileDB("/tmp/cacheSemanticAPI.db").make();
-        create = db.hashMap("cache", Serializer.STRING, new SerializerCompressionWrapper(Serializer.STRING)).expireAfterCreate(6, TimeUnit.HOURS).createOrOpen();
+  com.google.common.cache.Cache<String, String> build;
+  List<String> BlackList = new ArrayList();
+
+  private Cache() {
+    build = CacheBuilder.newBuilder().maximumSize(100).expireAfterAccess(24, TimeUnit.HOURS).build();
+  }
+
+  public void put(String key, String value) {
+    build.asMap().put(key, value);
+  }
+
+  public void Kill() throws SQLException {
+    build.cleanUp();
+  }
+
+  public String get(String key) {
+    return build.asMap().get(key);
+  }
+
+  public static Cache getInstance() {
+    return CacheHolder.INSTANCE;
+  }
+
+  private static class CacheHolder {
+
+    private static final Cache INSTANCE = new Cache();
+  }
+
+  public String getMD5(String input) {
+    try {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      byte[] messageDigest = md.digest(input.getBytes());
+      BigInteger number = new BigInteger(1, messageDigest);
+      String hashtext = number.toString(16);
+      // Now we need to zero pad it if you actually want the full 32 chars.
+      while (hashtext.length() < 32) {
+        hashtext = "0" + hashtext;
+      }
+      return hashtext;
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
     }
-
-    public void put(String key, String value)  {
-        create.put(key, value);
-    }
-
-    public void Kill() throws SQLException {
-        create.close();
-        db.close();
-    }
-
-    public String get(String key) {
-
-        String get = create.get(key);
-        
-        return get;
-    }
-
-    public static Cache getInstance() {
-        return CacheHolder.INSTANCE;
-    }
-
-    private static class CacheHolder {
-
-        private static final Cache INSTANCE = new Cache();
-    }
-
-    public String getMD5(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(input.getBytes());
-            BigInteger number = new BigInteger(1, messageDigest);
-            String hashtext = number.toString(16);
-            // Now we need to zero pad it if you actually want the full 32 chars.
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-            return hashtext;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+  }
 
 }
