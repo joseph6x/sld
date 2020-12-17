@@ -148,7 +148,8 @@ public class SemanticFilter {
 
         String klean = klean(k);
         String corticalk = null;
-        String traductorYandex = HttpUtils.traductorYandex(klean).replaceAll("\\|\\s+\\|", "||");
+        //String traductorYandex = HttpUtils.traductorYandex(klean).replaceAll("\\|\\s+\\|", "||");
+        String traductorYandex = klean.replaceAll("\\|\\s+\\|", "||");
         //String corticalk = HttpUtils.sendPost2("text/keywords", traductorYandex);
         /*corticalk = HttpUtils.sendPost2("text/keywords", traductorYandex);*/
         System.out.print (corticalk);
